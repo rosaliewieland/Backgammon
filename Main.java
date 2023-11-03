@@ -1,6 +1,6 @@
 import basic_backend.Board;
 import basic_backend.Dice;
-// This is a Branch test
+// This is a Branch test test
 import java.util.Scanner;
 
 public class Main {
