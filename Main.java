@@ -1,3 +1,6 @@
+import basic_backend.Board;
+import basic_backend.Dice;
+
 import java.util.Scanner;
 
 public class Main {

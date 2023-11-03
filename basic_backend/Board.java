@@ -1,3 +1,5 @@
+package basic_backend;
+
 public class Board {
     private int stone;
     private int field[][] = new int[24][1];

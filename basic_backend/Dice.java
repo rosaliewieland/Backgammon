@@ -1,3 +1,5 @@
+package basic_backend;
+
 import java.util.Random;
 
 public class Dice {
