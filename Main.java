@@ -33,6 +33,7 @@ public class Main {
         System.out.println("Ausgabe von Eignabe: " + eingabe);
         b1.moveStone(eingabe+prev, prev);
         b1.printBoard();*/
+        System.out.println("Test");
 
     }
 }
