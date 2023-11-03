@@ -34,6 +34,6 @@ public class Main {
         b1.moveStone(eingabe+prev, prev);
         b1.printBoard();*/
         System.out.println("Test");
-
+        System.out.println("Marco");
     }
 }
