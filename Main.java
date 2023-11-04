@@ -5,6 +5,8 @@ import basic_backend.PrintBoard;
 public class Main {
     public static void main(String[] args)
     {
+
+    // Anfang: Spiel mit einem Stein ohne die neue Klasse Board.java
         /*
         Scanner scanner = new Scanner(System.in);
         int prev = 0;
@@ -34,7 +36,9 @@ public class Main {
         b1.moveStone(eingabe+prev, prev);
         b1.printBoard();
         */
+    // Ende: Spiel mit einem Stein ohne die neue Klasse Board.java
 
+    // Anfang: Spiel mit fuenf Steinen und der neuen Klasse Board.java
         // Initialisierung von zwei Würfeln die beiden Spieler zum Würfeln zur Verfügung stehen
         Dice diceOne = new Dice();
         Dice diceTwo = new Dice();
@@ -52,5 +56,6 @@ public class Main {
         int field[][] = new int[24][5];
 
         PrintBoard.printBoard(field);
+    // Ende:  Spiel mit fuenf Steinen und der neuen Klasse Board.java
     }
 }
