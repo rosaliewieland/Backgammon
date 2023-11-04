@@ -1,11 +1,11 @@
-import basic_backend.Board;
 import basic_backend.Dice;
-
-import java.util.Scanner;
+import basic_backend.Player;
+import basic_backend.PrintBoard;
 
 public class Main {
     public static void main(String[] args)
     {
+        /*
         Scanner scanner = new Scanner(System.in);
         int prev = 0;
         int randomNumber = 0;
@@ -32,8 +32,25 @@ public class Main {
         eingabe = scanner.nextInt();
         System.out.println("Ausgabe von Eignabe: " + eingabe);
         b1.moveStone(eingabe+prev, prev);
-        b1.printBoard();*/
-        System.out.println("Test");
-        System.out.println("Marco");
+        b1.printBoard();
+        */
+
+        // Initialisierung von zwei Würfeln die beiden Spieler zum Würfeln zur Verfügung stehen
+        Dice diceOne = new Dice();
+        Dice diceTwo = new Dice();
+
+        // Initialisierung von zwei Spielern.
+        Player playerOne = new Player("Marco", false);
+        Player playerTwo = new Player("Cey", true);
+
+        playerOne.rollDice(diceOne, diceTwo);
+        playerTwo.rollDice(diceOne, diceTwo);
+
+        System.out.println(playerOne.toString() + " " + playerOne.getDiceNumber1() + " " + playerOne.getDiceNumber2());
+        System.out.println(playerTwo.toString() + " " + playerTwo.getDiceNumber1() + " " + playerTwo.getDiceNumber2());
+
+        int field[][] = new int[24][5];
+
+        PrintBoard.printBoard(field);
     }
 }

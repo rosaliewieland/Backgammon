@@ -1,20 +1,20 @@
 package basic_backend;
+
 public class Player {
     private String name;
-    private int stone;
     private boolean isBlack;
+    private int stone = 15;
 
-    private int dice1;
-    private int dice2;
+    private int diceNumber1;
+    private int diceNumber2;
 
     // Konstruktor
     public Player() {
 
     }
 
-    public Player(String name, int stone, boolean isBlack) {
+    public Player(String name, boolean isBlack) {
         this.name = name;
-        this.stone = stone;
         this.isBlack = isBlack;
     }
 
@@ -29,11 +29,11 @@ public class Player {
     public boolean isBlack() {
         return isBlack;
     }
-    public int getDice1() {
-        return dice1;
+    public int getDiceNumber1() {
+        return diceNumber1;
     }
-    public int getDice2() {
-        return dice2;
+    public int getDiceNumber2() {
+        return diceNumber2;
     }
 
 
@@ -41,15 +41,32 @@ public class Player {
     public void setStone(int stone) {
         this.stone = stone;
     }
-    public void setDice1(int dice1) {
-        this.dice1 = dice1;
+    public void setDiceNumber1(int diceNumber1) {
+        this.diceNumber1 = diceNumber1;
     }
-    public void setDice2(int dice2) {
-        this.dice2 = dice2;
+    public void setDiceNumber2(int diceNumber2) {
+        this.diceNumber2 = diceNumber2;
     }
+
+
+    // Methode die es dem Spieler erlaubt zu würfeln.
+    // Input sind Würfel 1 und Würfel 2.
+    // Über den Setter werden die gewürfelten Augen auf die
+    public void rollDice(Dice d1, Dice d2) {
+        int numberOne = d1.getDice();
+        int numberTwo = d2.getDice();
+        setDiceNumber1(numberOne);
+        setDiceNumber2(numberTwo);
+    }
+
+    public void moveStone() {
+
+    }
+
 
     @Override
     public String toString() {
         return "Name: " + getName() + "\nAmount of Stones: " + getStones() + "\nColor is Black: " + isBlack();
     }
+
 }
