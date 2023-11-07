@@ -5,6 +5,12 @@ import basic_backend.PrintBoard;
 
 import java.util.Scanner;
 
+// ToDo's: - Stein ins Ziel bringen ermoeglichen
+//         - Stein schlaegt Gegnerstein raus
+//         - Steine ausserhalb des Spielesfeldes darstellen (Falls Stein gerade nicht im Spiel)
+//         - Stein wieder ins Spiel bringen
+//         (- Zwei Wuerfel Option)
+
 public class Main {
     public static void main(String[] args)
     {
