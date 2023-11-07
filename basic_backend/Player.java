@@ -65,12 +65,13 @@ public class Player {
     // Bewegt aktuell einen Stein
     public void moveStone(int field[][], int dice) {
         int stone;
+        boolean control = false;
 
         // Eingabe welcher Stein bewegt werden soll
         System.out.println("Welchen Stein moechtest du bewegen?");
         Scanner scanner = new Scanner(System.in);
         stone = scanner.nextInt();
-
+        System.out.println("Stone:" + stone);
         //Suche den Stein im Feld
         for(int i=0; i < 24;i++)
         {
@@ -79,15 +80,17 @@ public class Player {
                 //Pruefe ob Stein gefunden
                 if(field[i][j] == stone)
                 {
-                    // Loesche Stein aus altem Feld
-                    field[i][j] = 0;
+
 
                     // Stein in neues Feld schreiben.
                     for(int counterFreeField = 0; counterFreeField<5; counterFreeField++)
                     {
-                        if(field[i+dice][counterFreeField] == 0)
+                        if(field[i+dice][counterFreeField] == 0 && control == false)
                         {
-                            field[i+dice][counterFreeField] = stone;
+                            field[i+dice][counterFreeField] = (int)stone;
+                            // Loesche Stein aus altem Feld
+                            field[i][j] = 0;
+                            control = true;
                         }
                     }
                 }
