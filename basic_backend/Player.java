@@ -2,13 +2,16 @@ package basic_backend;
 
 import java.util.Scanner;
 
-public class Player {
+public class Player{
+
     private String name;
     private boolean isBlack;
     private int stone = 15;
 
     private int diceNumber1;
     private int diceNumber2;
+
+    private Rules  rules= new Rules();
 
     // Konstruktor
     public Player() {
@@ -62,39 +65,74 @@ public class Player {
     }
 
 
-    // Bewegt aktuell einen Stein
+
+    // Bewegt aktuell einen Stein (int field[][] ist die Adresse vom Board field[][]
     public void moveStone(int field[][], int dice) {
         int stone;
         boolean control = false;
-
+        boolean playerColor = false;
+        /* Fuer test: zwei Steine belegen ein Feld
+        dice = 11;
+        */
         // Eingabe welcher Stein bewegt werden soll
         System.out.println("Welchen Stein moechtest du bewegen?");
         Scanner scanner = new Scanner(System.in);
         stone = scanner.nextInt();
+        playerColor = rules.isStoneYours(isBlack, stone);
         System.out.println("Stone:" + stone);
-        //Suche den Stein im Feld
-        for(int i=0; i < 24;i++)
+        // Bewege richtigen Stein (Also Positive Steine oder negative Steine)
+        if(playerColor && !isBlack)
         {
-            for(int j=0; j < 5;j++)
-            {
-                //Pruefe ob Stein gefunden
-                if(field[i][j] == stone)
-                {
-
-
-                    // Stein in neues Feld schreiben.
-                    for(int counterFreeField = 0; counterFreeField<5; counterFreeField++)
-                    {
-                        if(field[i+dice][counterFreeField] == 0 && control == false)
-                        {
-                            field[i+dice][counterFreeField] = (int)stone;
-                            // Loesche Stein aus altem Feld
-                            field[i][j] = 0;
-                            control = true;
+            //Suche den Stein im Feld
+            for (int i = 0; i < 24; i++) {
+                for (int j = 0; j < 5; j++) {
+                    //Pruefe ob Stein gefunden
+                    if (field[i][j] == stone) {
+                        //Pruefe sind zwei Gegner Steine auf dem neuen Feld sind
+                        if(rules.isAccessibile(isBlack, field[i+dice][0])) {
+                            // Stein in neues Feld schreiben.
+                            for (int counterFreeField = 0; counterFreeField < 5; counterFreeField++) {
+                                if (field[i + dice][counterFreeField] == 0 && !control) {
+                                    // Bewege Negativen Stein
+                                    field[i + dice][counterFreeField] = (int) stone;
+                                    // Loesche Stein aus altem Feld
+                                    field[i][j] = 0;
+                                    control = true;
+                                }
+                            }
                         }
                     }
                 }
             }
+        }
+        else if(playerColor && isBlack)
+        {
+            for(int i=0; i < 24;i++)
+            {
+                for(int j=0; j < 5;j++)
+                {
+                    //Pruefe ob Stein gefunden
+                    if(field[i][j] == stone)
+                    {
+                        if(rules.isAccessibile(isBlack, field[i-dice][0])) {
+                            // Stein in neues Feld schreiben.
+                            for (int counterFreeField = 0; counterFreeField < 5; counterFreeField++) {
+                                if (field[i - dice][counterFreeField] == 0 && !control) {
+                                    // Bewege Postiven Stein
+                                    field[i - dice][counterFreeField] = (int) stone;
+                                    // Loesche Stein aus altem Feld
+                                    field[i][j] = 0;
+                                    control = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            System.out.println("Bitte waehle ein Stein der dir gehoert!");
         }
 
     }

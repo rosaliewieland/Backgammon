@@ -2,7 +2,7 @@ package basic_backend;
 
 public class Board {
 
-    private int field[][] = new int[24][5];
+    protected int field[][] = new int[24][5];
 
 
     public Board(){
@@ -10,6 +10,11 @@ public class Board {
         field[0][0] = -1;
         field[0][1] = -2;
 
+        /* Nur fuer Test zwei Steine belegen ein Feld
+
+        field[2][0] = -2;
+        field[2][1] = -2;
+        Ende Test*/
         field[5][0] = 11;
         field[5][1] = 12;
         field[5][2] = 13;

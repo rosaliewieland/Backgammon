@@ -63,6 +63,8 @@ public class Main {
 
 
         Board board = new Board();
+
+
         PrintBoard.printBoard(board.getField());
 
         playerOne.moveStone(board.getField(), playerOne.getDiceNumber1());
