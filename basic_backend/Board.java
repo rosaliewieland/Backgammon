@@ -2,7 +2,7 @@ package basic_backend;
 
 public class Board {
 
-    protected int field[][] = new int[24][5];
+    private int field[][] = new int[24][5];
 
 
     public Board(){
