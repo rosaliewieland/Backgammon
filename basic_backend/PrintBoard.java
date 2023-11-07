@@ -14,9 +14,9 @@ public class PrintBoard {
 */
 
         // Gibt das Spielfeld auf der Konsole aus
-        for(int i = 4; i >= 0; i--) {
+        for(int i = 0; i < 5; i++) {
             for (int j = 5; j >= 0; j--) {
-                System.out.print(field[5-j][i] + " ");
+                System.out.print(field[j+6][i] + " ");
             }
             System.out.print("* "); // Teilt die Spielseite in einen 6er Block
             for (int j2 = 5; j2 >= 0; j2--) {
@@ -25,7 +25,7 @@ public class PrintBoard {
             System.out.println();
         }
         System.out.println("-------------------------"); // Trennlinie die die beiden Spielhälften in zwei Teile teilt
-        for (int a = 0; a < 5; a++) {
+        for (int a = 4; a >= 0; a--) {
             for (int k = 0; k < 6; k++) {
                 System.out.print(field[k + 12][a] + " ");
             }
