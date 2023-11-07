@@ -3,6 +3,8 @@ import basic_backend.Dice;
 import basic_backend.Player;
 import basic_backend.PrintBoard;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args)
     {
@@ -51,17 +53,25 @@ public class Main {
         playerOne.rollDice(diceOne, diceTwo);
         playerTwo.rollDice(diceOne, diceTwo);
 
-        System.out.println(playerOne.toString() + " " + playerOne.getDiceNumber1() + " " + playerOne.getDiceNumber2());
-        System.out.println(playerTwo.toString() + " " + playerTwo.getDiceNumber1() + " " + playerTwo.getDiceNumber2());
+        // Spieler ausgaben
+        System.out.println(playerOne.getDiceNumber1());
+        //System.out.println(playerTwo.toString() + " " + playerTwo.getDiceNumber1() + " " + playerTwo.getDiceNumber2());
 
         int field[][] = new int[24][5];
 
         //PrintBoard.printBoard(field);
 
+
         Board board = new Board();
+        PrintBoard.printBoard(board.getField());
+
+        playerOne.moveStone(board.getField(), playerOne.getDiceNumber1());
 
         PrintBoard.printBoard(board.getField());
 
-    // Ende:  Spiel mit fuenf Steinen und der neuen Klasse Board.java
+
+
+
+        // Ende:  Spiel mit fuenf Steinen und der neuen Klasse Board.java
     }
 }

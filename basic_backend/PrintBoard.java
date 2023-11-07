@@ -18,7 +18,7 @@ public class PrintBoard {
             for (int j = 5; j >= 0; j--) {
                 System.out.print(field[j+6][i] + " ");
             }
-            System.out.print("* "); // Teilt die Spielseite in einen 6er Block
+            System.out.print(" "); // Teilt die Spielseite in einen 6er Block
             for (int j2 = 5; j2 >= 0; j2--) {
                 System.out.print(field[j2][i] + " ");
             }

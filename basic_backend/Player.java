@@ -1,5 +1,7 @@
 package basic_backend;
 
+import java.util.Scanner;
+
 public class Player {
     private String name;
     private boolean isBlack;
@@ -59,7 +61,38 @@ public class Player {
         setDiceNumber2(numberTwo);
     }
 
-    public void moveStone() {
+
+    // Bewegt aktuell einen Stein
+    public void moveStone(int field[][], int dice) {
+        int stone;
+
+        // Eingabe welcher Stein bewegt werden soll
+        System.out.println("Welchen Stein moechtest du bewegen?");
+        Scanner scanner = new Scanner(System.in);
+        stone = scanner.nextInt();
+
+        //Suche den Stein im Feld
+        for(int i=0; i < 24;i++)
+        {
+            for(int j=0; j < 5;j++)
+            {
+                //Pruefe ob Stein gefunden
+                if(field[i][j] == stone)
+                {
+                    // Loesche Stein aus altem Feld
+                    field[i][j] = 0;
+
+                    // Stein in neues Feld schreiben.
+                    for(int counterFreeField = 0; counterFreeField<5; counterFreeField++)
+                    {
+                        if(field[i+dice][counterFreeField] == 0)
+                        {
+                            field[i+dice][counterFreeField] = stone;
+                        }
+                    }
+                }
+            }
+        }
 
     }
 

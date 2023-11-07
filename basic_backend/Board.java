@@ -6,44 +6,49 @@ public class Board {
 
 
     public Board(){
-        field[0][0] = 1;
-        field[0][1] = 1;
 
-        field[5][0] = 1;
-        field[5][1] = 1;
-        field[5][2] = 1;
-        field[5][3] = 1;
-        field[5][4] = 1;
+        field[0][0] = -1;
+        field[0][1] = -2;
 
-        field[7][0] = 1;
-        field[7][1] = 1;
-        field[7][2] = 1;
+        field[5][0] = 11;
+        field[5][1] = 12;
+        field[5][2] = 13;
+        field[5][3] = 14;
+        field[5][4] = 15;
 
-        field[11][0] = 1;
-        field[11][1] = 1;
-        field[11][2] = 1;
-        field[11][3] = 1;
-        field[11][4] = 1;
+        field[7][0] = 8;
+        field[7][1] = 9;
+        field[7][2] = 10;
 
-        field[12][0] = 1;
-        field[12][1] = 1;
-        field[12][2] = 1;
-        field[12][3] = 1;
-        field[12][4] = 1;
+        field[11][0] = -3;
+        field[11][1] = -4;
+        field[11][2] = -5;
+        field[11][3] = -6;
+        field[11][4] = -7;
 
-        field[16][0] = 1;
-        field[16][1] = 1;
-        field[16][2] = 1;
+        field[12][0] = 3;
+        field[12][1] = 4;
+        field[12][2] = 5;
+        field[12][3] = 6;
+        field[12][4] = 7;
 
-        field[18][0] = 1;
-        field[18][1] = 1;
-        field[18][2] = 1;
-        field[18][3] = 1;
-        field[18][4] = 1;
+        field[16][0] = -8;
+        field[16][1] = -9;
+        field[16][2] = -10;
+
+        field[18][0] = -11;
+        field[18][1] = -12;
+        field[18][2] = -13;
+        field[18][3] = -14;
+        field[18][4] = -15;
 
         field[23][0] = 1;
-        field[23][1] = 1;
+        field[23][1] = 2;
     }
+
+
+
+
 
     public int[][] getField() {
         return field;
@@ -57,6 +62,7 @@ public class Board {
 
 
     /*
+
     private int stone;
     private int field[][] = new int[24][1];
     public Board(int stone){
