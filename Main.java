@@ -1,3 +1,4 @@
+import basic_backend.Board;
 import basic_backend.Dice;
 import basic_backend.Player;
 import basic_backend.PrintBoard;
@@ -55,7 +56,12 @@ public class Main {
 
         int field[][] = new int[24][5];
 
-        PrintBoard.printBoard(field);
+        //PrintBoard.printBoard(field);
+
+        Board board = new Board();
+
+        PrintBoard.printBoard(board.getField());
+
     // Ende:  Spiel mit fuenf Steinen und der neuen Klasse Board.java
     }
 }

@@ -4,22 +4,23 @@ public class PrintBoard {
 
     public static void printBoard(int field[][]) {
 
-        /* Kontrolle um das print feld aus richtig ist
+        //Kontrolle um das print feld aus richtig ist
+/*
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 24; j++) {
                 field[j][i] = j;
             }
         }
-        */
+*/
 
         // Gibt das Spielfeld auf der Konsole aus
-        for(int i = 0; i < 5; i++) {
-            for (int j = 0; j < 6; j++) {
-                System.out.print(field[j][i] + " ");
+        for(int i = 4; i >= 0; i--) {
+            for (int j = 5; j >= 0; j--) {
+                System.out.print(field[5-j][i] + " ");
             }
             System.out.print("* "); // Teilt die Spielseite in einen 6er Block
-            for (int j2 = 0; j2 < 6; j2++) {
-                System.out.print(field[j2 + 6][i] + " ");
+            for (int j2 = 5; j2 >= 0; j2--) {
+                System.out.print(field[j2][i] + " ");
             }
             System.out.println();
         }
