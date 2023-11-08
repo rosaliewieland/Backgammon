@@ -6,8 +6,11 @@ import basic_backend.PrintBoard;
 import java.util.Scanner;
 
 // ToDo's: - Stein ins Ziel bringen ermoeglichen
-//         - Stein schlaegt Gegnerstein raus
-//         - Steine ausserhalb des Spielesfeldes darstellen (Falls Stein gerade nicht im Spiel)
+//         - (Erledigt) Stein schlaegt Gegnerstein raus
+//              - Dokumetation schreiben
+//         - (Erledigt) Steine ausserhalb des Spielesfeldes darstellen (Falls Stein gerade nicht im Spiel)
+//              - Es Fehlt nocht die Steine wieder ins Spielfeld bringen
+//              - Dokumetation schreiben
 //         - Stein wieder ins Spiel bringen
 //         (- Zwei Wuerfel Option)
 
@@ -74,16 +77,20 @@ public class Main {
         {
             playerOne.rollDice(diceOne, diceTwo);
             System.out.println("Gewurfelt: " + playerOne.getDiceNumber1());
+            playerOne.printgameBoard();
 
-            playerOne.moveStone(board.getField(), playerOne.getDiceNumber1());
+            //            playerOne.moveStone(board.getField(), playerOne.getDiceNumber1());
+            playerOne.moveStone(board.getField(),playerOne.getDiceNumber1(), playerTwo);
+
+            PrintBoard.printBoard(board.getField());
+
+            System.out.println("Gewurfelt: " + playerTwo.getDiceNumber2());
+            playerTwo.printgameBoard();
+            playerTwo.moveStone(board.getField(), playerTwo.getDiceNumber2(), playerOne);
 
             PrintBoard.printBoard(board.getField());
 
         }
-
-
-
-
         // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
     }
 }

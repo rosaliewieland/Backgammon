@@ -12,6 +12,7 @@ public class Player{
     private int diceNumber2;
 
     private Rules  rules= new Rules();
+    private int[] gameBoardEdge = new int[10];
 
     // Konstruktor
     public Player() {
@@ -21,6 +22,10 @@ public class Player{
     public Player(String name, boolean isBlack) {
         this.name = name;
         this.isBlack = isBlack;
+        for(int i=0; i<gameBoardEdge.length; i++)
+        {
+            gameBoardEdge[i] = 0;
+        }
     }
 
 
@@ -40,7 +45,6 @@ public class Player{
     public int getDiceNumber2() {
         return diceNumber2;
     }
-
 
     // Setter
     public void setStone(int stone) {
@@ -67,15 +71,15 @@ public class Player{
 
 
     // Bewegt aktuell einen Stein (int field[][] ist die Adresse vom Board field[][]
-    public void moveStone(int field[][], int dice) {
+    public void moveStone(int field[][], int dice, Player opponentPlayer) {
         int stone;
         boolean control = false;
         boolean playerColor = false;
         // Fuer test: zwei Steine belegen ein Feld
-        //dice = 3;
+        dice = 2;
 
         // Eingabe welcher Stein bewegt werden soll
-        System.out.println("Welchen Stein moechtest du bewegen?:");
+        System.out.println("Welchen Stein moechte "+ name + " bewegen?:");
         Scanner scanner = new Scanner(System.in);
         stone = scanner.nextInt();
         playerColor = rules.isStoneYours(isBlack, stone);
@@ -88,10 +92,8 @@ public class Player{
                 for (int j = 0; j < 5 && !control ; j++) {
                     //Pruefe ob Stein gefunden
                     if (field[i][j] == stone) {
-                        System.out.println("Stone" + stone + " i: " + i + " dice: " + dice);
-
                         //Pruefe sind zwei Gegner Steine auf dem neuen Feld sind
-                        if( rules.isAccessibile(isBlack, field[i+dice][0])) {
+                        if( rules.isAccessibile(isBlack, i+dice, field, opponentPlayer.gameBoardEdge)) {
                             // Stein in neues Feld schreiben.
                             for (int counterFreeField = 0; counterFreeField < 5; counterFreeField++) {
                                 if (field[i + dice][counterFreeField] == 0 && !control) {
@@ -102,6 +104,9 @@ public class Player{
                                     control = true;
                                 }
                             }
+                        }
+                        else {
+                            moveStone(field, dice, opponentPlayer);
                         }
                     }
                 }
@@ -116,7 +121,7 @@ public class Player{
                     //Pruefe ob Stein gefunden
                     if(field[i][j] == stone)
                     {
-                        if(rules.isAccessibile(isBlack, field[i-dice][0])) {
+                        if(rules.isAccessibile(isBlack, i-dice, field, gameBoardEdge)) {
                             // Stein in neues Feld schreiben.
                             for (int counterFreeField = 0; counterFreeField < 5; counterFreeField++) {
                                 if (field[i - dice][counterFreeField] == 0 && !control) {
@@ -128,6 +133,9 @@ public class Player{
                                 }
                             }
                         }
+                        else {
+                            moveStone(field, dice, opponentPlayer);
+                        }
                     }
                 }
             }
@@ -135,9 +143,20 @@ public class Player{
         else
         {
             System.out.println("Bitte waehle ein Stein der dir gehoert!");
+            moveStone(field,dice, opponentPlayer);
         }
-
     }
+
+    public void printgameBoard()
+    {
+        System.out.println("Game Board von Spieler: " + name);
+        for (int i = 0; i < gameBoardEdge.length; i++) {
+            System.out.printf(gameBoardEdge[i] + ", ");
+        }
+        System.out.println();
+    }
+
+
 
 
     @Override

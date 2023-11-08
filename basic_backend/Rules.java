@@ -1,6 +1,5 @@
 package basic_backend;
 
-
 // Folgende Regelen sind implementiert:
 // - Es wird in isStoneYours(...) geprueft, ob der gewaehlte Stein dem Spieler gehoert!
 // - Es wird in isAccessibile(...) geprueft, ob sich
@@ -9,7 +8,8 @@ package basic_backend;
 //   ein Feld schon voll ist auf das man seinen Stein bewegen moechte.
 //   -> Dies ist schon in der moveStone(...) direkt implementiert.
 
-public class Rules {
+public class Rules{
+
 
     public boolean isStoneYours(boolean isBlack, int movingStone)
     {
@@ -23,26 +23,51 @@ public class Rules {
         }
         return false;
     }
-    public boolean isAccessibile(boolean isblack, int newPosition)
+    public boolean isAccessibile(boolean isblack, int newPosition, int[][] field, int[] gameBoardEdge)
     {
+        boolean control = false;
         for(int i=0; i<2; i++)
         {
-            if(newPosition < 0 && isblack)
+            if(field[newPosition][i] < 0 && isblack)
             {
-                System.out.println("Feld ist belegt");
-                return false;
+                if(control)
+                {
+                    System.out.println("Feld ist belegt");
+                    return false;
+                }
+                control = true;
             }
         }
         for(int i = 0; i<2; i++)
         {
-            if(newPosition > 0 && !isblack)
+            if(field[newPosition][i]  > 0 && !isblack)
             {
-                System.out.println("Feld ist belegt");
-                return false;
+                if(control)
+                {
+                    System.out.println("Feld ist belegt");
+                    return false;
+                }
+                control = true;
             }
+        }
+        if(control)
+        {
+            hitStone(field, field[newPosition][0], gameBoardEdge);
         }
         return true;
     }
+    public void hitStone(int[][] field, int killStone, int[] gameBoardEdge)
+    {
+            for(int i=0; i < gameBoardEdge.length; i++)
+            {
+                if(gameBoardEdge[i] == 0)
+                {
+                    gameBoardEdge[i] = killStone;
+                    //System.out.printf("GameBoardEdge: " + gameBoardEdge[i]);
+                    field[killStone][0] = 0;
+                    return;
+                }
+            }
 
-
+    }
 }
