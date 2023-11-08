@@ -56,30 +56,34 @@ public class Main {
         Player playerOne = new Player("Marco", false);
         Player playerTwo = new Player("Cey", true);
 
-        playerOne.rollDice(diceOne, diceTwo);
+        //playerOne.rollDice(diceOne, diceTwo);
         playerTwo.rollDice(diceOne, diceTwo);
 
         // Spieler ausgaben
-        System.out.println(playerOne.getDiceNumber1());
+        //System.out.println("Gewurfelt: " + playerOne.getDiceNumber1());
         //System.out.println(playerTwo.toString() + " " + playerTwo.getDiceNumber1() + " " + playerTwo.getDiceNumber2());
 
         int field[][] = new int[24][5];
 
         //PrintBoard.printBoard(field);
 
-
         Board board = new Board();
-
-
         PrintBoard.printBoard(board.getField());
 
-        playerOne.moveStone(board.getField(), playerOne.getDiceNumber1());
+        for(int i = 0; i<5; i++)
+        {
+            playerOne.rollDice(diceOne, diceTwo);
+            System.out.println("Gewurfelt: " + playerOne.getDiceNumber1());
 
-        PrintBoard.printBoard(board.getField());
+            playerOne.moveStone(board.getField(), playerOne.getDiceNumber1());
+
+            PrintBoard.printBoard(board.getField());
+
+        }
 
 
 
 
-        // Ende:  Spiel mit fuenf Steinen und der neuen Klasse Board.java
+        // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
     }
 }

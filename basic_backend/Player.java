@@ -71,11 +71,11 @@ public class Player{
         int stone;
         boolean control = false;
         boolean playerColor = false;
-        /* Fuer test: zwei Steine belegen ein Feld
-        dice = 11;
-        */
+        // Fuer test: zwei Steine belegen ein Feld
+        //dice = 3;
+
         // Eingabe welcher Stein bewegt werden soll
-        System.out.println("Welchen Stein moechtest du bewegen?");
+        System.out.println("Welchen Stein moechtest du bewegen?:");
         Scanner scanner = new Scanner(System.in);
         stone = scanner.nextInt();
         playerColor = rules.isStoneYours(isBlack, stone);
@@ -85,11 +85,13 @@ public class Player{
         {
             //Suche den Stein im Feld
             for (int i = 0; i < 24; i++) {
-                for (int j = 0; j < 5; j++) {
+                for (int j = 0; j < 5 && !control ; j++) {
                     //Pruefe ob Stein gefunden
                     if (field[i][j] == stone) {
+                        System.out.println("Stone" + stone + " i: " + i + " dice: " + dice);
+
                         //Pruefe sind zwei Gegner Steine auf dem neuen Feld sind
-                        if(rules.isAccessibile(isBlack, field[i+dice][0])) {
+                        if( rules.isAccessibile(isBlack, field[i+dice][0])) {
                             // Stein in neues Feld schreiben.
                             for (int counterFreeField = 0; counterFreeField < 5; counterFreeField++) {
                                 if (field[i + dice][counterFreeField] == 0 && !control) {
@@ -109,7 +111,7 @@ public class Player{
         {
             for(int i=0; i < 24;i++)
             {
-                for(int j=0; j < 5;j++)
+                for(int j=0; j < 5 && !control;j++)
                 {
                     //Pruefe ob Stein gefunden
                     if(field[i][j] == stone)

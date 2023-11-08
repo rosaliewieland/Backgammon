@@ -17,7 +17,7 @@ public class Rules {
         {
             return true;
         }
-        else if(movingStone<0 && !isBlack)
+        else if(movingStone < 0 && !isBlack)
         {
             return true;
         }
