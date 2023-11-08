@@ -76,7 +76,7 @@ public class Player{
         boolean control = false;
         boolean playerColor = false;
         // Fuer test: zwei Steine belegen ein Feld
-        dice = 2;
+        //dice = 2;
 
         // Eingabe welcher Stein bewegt werden soll
         System.out.println("Welchen Stein moechte "+ name + " bewegen?:");

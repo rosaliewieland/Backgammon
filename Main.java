@@ -27,8 +27,6 @@ public class Main {
         Board b1 = new Board(1);
         Dice dice = new Dice();
 
-
-
         while(isGameFinished == false){
             System.out.println("Würfel: ");
             scanner.nextInt();

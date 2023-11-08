@@ -9,8 +9,6 @@ package basic_backend;
 //   -> Dies ist schon in der moveStone(...) direkt implementiert.
 
 public class Rules{
-
-
     public boolean isStoneYours(boolean isBlack, int movingStone)
     {
         if(movingStone>0 && isBlack)
@@ -68,6 +66,5 @@ public class Rules{
                     return;
                 }
             }
-
     }
 }
