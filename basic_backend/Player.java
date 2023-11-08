@@ -72,18 +72,33 @@ public class Player{
 
     // Bewegt aktuell einen Stein (int field[][] ist die Adresse vom Board field[][]
     public void moveStone(int field[][], int dice, Player opponentPlayer) {
-        int stone;
+        int stone=-1;
         boolean control = false;
         boolean playerColor = false;
         // Fuer test: zwei Steine belegen ein Feld
-        //dice = 2;
+        //dice = 1;
 
         // Eingabe welcher Stein bewegt werden soll
-        System.out.println("Welchen Stein moechte "+ name + " bewegen?:");
-        Scanner scanner = new Scanner(System.in);
-        stone = scanner.nextInt();
+        if(rules.haveYouStonesOut(gameBoardEdge))
+        {
+            for(int i=0; i< gameBoardEdge.length; i++)
+            {
+                if (gameBoardEdge[i]!=0){
+                    stone=gameBoardEdge[i];
+                    System.out.println("Stone:" + stone);
+                }
+            }
+
+        }else
+        {
+            System.out.println("Welchen Stein moechte "+ name + " bewegen?:");
+            Scanner scanner = new Scanner(System.in);
+            stone = scanner.nextInt();
+
+        }
         playerColor = rules.isStoneYours(isBlack, stone);
         System.out.println("Stone:" + stone);
+
         // Bewege richtigen Stein (Also Positive Steine oder negative Steine)
         if(playerColor && !isBlack)
         {
@@ -109,10 +124,23 @@ public class Player{
                             moveStone(field, dice, opponentPlayer);
                         }
                     }
+                    else if(rules.haveYouStonesOut(gameBoardEdge))
+                    {
+                        for(int counterFreeField = 0; counterFreeField < 5; counterFreeField++) {
+                            if (field[-1 + dice][counterFreeField] == 0 && !control) {
+                                // Bewege Negativen Stein
+                                field[-1 + dice][counterFreeField] = (int) stone;
+                                // Loesche Stein aus altem Feld
+                                //field[i][j] = 0;
+                                control = true;
+                            }
+                        }
+                    }
+
                 }
             }
         }
-        else if(playerColor && isBlack)
+        else if(playerColor && isBlack )
         {
             for(int i=0; i < 24;i++)
             {
@@ -121,7 +149,7 @@ public class Player{
                     //Pruefe ob Stein gefunden
                     if(field[i][j] == stone)
                     {
-                        if(rules.isAccessibile(isBlack, i-dice, field, gameBoardEdge)) {
+                        if(rules.isAccessibile(isBlack, i-dice, field, opponentPlayer.gameBoardEdge)) {
                             // Stein in neues Feld schreiben.
                             for (int counterFreeField = 0; counterFreeField < 5; counterFreeField++) {
                                 if (field[i - dice][counterFreeField] == 0 && !control) {
@@ -137,6 +165,17 @@ public class Player{
                             moveStone(field, dice, opponentPlayer);
                         }
                     }
+
+                    else if(rules.haveYouStonesOut(gameBoardEdge))
+                    {
+                        for(int counterFreeField = 0; counterFreeField < 5; counterFreeField++) {
+                            if (field[24 - dice][counterFreeField] == 0 && !control) {
+                                // Bewege Negativen Stein
+                                field[24 - dice][counterFreeField] = (int) stone;
+                                control = true;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -145,6 +184,7 @@ public class Player{
             System.out.println("Bitte waehle ein Stein der dir gehoert!");
             moveStone(field,dice, opponentPlayer);
         }
+        System.out.println("Letzte Print");
     }
 
     public void printgameBoard()
@@ -155,9 +195,6 @@ public class Player{
         }
         System.out.println();
     }
-
-
-
 
     @Override
     public String toString() {

@@ -11,7 +11,7 @@ public class Board {
         field[0][1] = -2;
 
         // Nur fuer Test zwei Steine belegen ein Feld
-        //field[2][0] = 2;
+        //field[1][0] = 16;
         //field[2][1] = 2;
         //Ende Test
 
@@ -47,6 +47,7 @@ public class Board {
         field[18][3] = -14;
         field[18][4] = -15;
 
+        //field[22][0] = -1;
         field[23][0] = 1;
         field[23][1] = 2;
 

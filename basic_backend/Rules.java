@@ -23,6 +23,7 @@ public class Rules{
     }
     public boolean isAccessibile(boolean isblack, int newPosition, int[][] field, int[] gameBoardEdge)
     {
+        int index=0;
         boolean control = false;
         for(int i=0; i<2; i++)
         {
@@ -46,15 +47,16 @@ public class Rules{
                     return false;
                 }
                 control = true;
+
             }
         }
         if(control)
         {
-            hitStone(field, field[newPosition][0], gameBoardEdge);
+            hitStone(field, field[newPosition][0], gameBoardEdge, newPosition);
         }
         return true;
     }
-    public void hitStone(int[][] field, int killStone, int[] gameBoardEdge)
+    public void hitStone(int[][] field, int killStone, int[] gameBoardEdge, int newPosition)
     {
             for(int i=0; i < gameBoardEdge.length; i++)
             {
@@ -62,9 +64,21 @@ public class Rules{
                 {
                     gameBoardEdge[i] = killStone;
                     //System.out.printf("GameBoardEdge: " + gameBoardEdge[i]);
-                    field[killStone][0] = 0;
+                    field[newPosition][0] = 0;
                     return;
                 }
             }
+    }
+
+    public boolean haveYouStonesOut(int[] gameBoardEdge)
+    {
+        for(int i=0; i<gameBoardEdge.length; i++)
+        {
+            if(gameBoardEdge[i] != 0)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

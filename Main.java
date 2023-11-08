@@ -9,9 +9,9 @@ import java.util.Scanner;
 //         - (Erledigt) Stein schlaegt Gegnerstein raus
 //              - Dokumetation schreiben
 //         - (Erledigt) Steine ausserhalb des Spielesfeldes darstellen (Falls Stein gerade nicht im Spiel)
-//              - Es Fehlt nocht die Steine wieder ins Spielfeld bringen
+//             - (Erledigt) Es Fehlt nocht die Steine wieder ins Spielfeld bringen
 //              - Dokumetation schreiben
-//         - Stein wieder ins Spiel bringen
+//         - (Erledigt) Stein wieder ins Spiel bringen
 //         (- Zwei Wuerfel Option)
 
 public class Main {
