@@ -81,4 +81,10 @@ public class Rules{
         }
         return false;
     }
+
+    // Spieler mit der höheren Augenzahl beginnt das Spiel
+    // Nicht unbedingt hier nötig, kann in der Main direkt geprüft werden
+    public boolean startPlayer(int dicePlayerOne, int dicePlayerTwo) {
+        return dicePlayerOne > dicePlayerTwo;
+    }
 }

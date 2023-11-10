@@ -11,7 +11,7 @@ public class Player{
     private int diceNumber1;
     private int diceNumber2;
 
-    private Rules  rules= new Rules();
+    private Rules rules= new Rules();
     private int[] gameBoardEdge = new int[10];
 
     // Konstruktor

@@ -86,7 +86,7 @@ public class Board {
         }
         field[0][0] = 1;
     }
-    public boolean moveStone(int eingabe, int prev){
+    public boolean moveStone(int eingabe, int prev){ // A: Tut nur den Stein bewegen und zurückgeben, ob Spiel läuft
         if(eingabe > 23)
         {
             System.out.println("Ausserhalb des Spielfeldes");
@@ -96,7 +96,7 @@ public class Board {
             field[eingabe][0] = 1;
 
         }
-        if(field[23][0]==1)
+        if(field[23][0]==1) //A: Sagt nichts darüber aus, ob Spiel noch läuft?
         {
             return true;
         }

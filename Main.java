@@ -1,7 +1,4 @@
-import basic_backend.Board;
-import basic_backend.Dice;
-import basic_backend.Player;
-import basic_backend.PrintBoard;
+import basic_backend.*;
 
 import java.util.Scanner;
 
@@ -13,6 +10,9 @@ import java.util.Scanner;
 //              - Dokumetation schreiben
 //         - (Erledigt) Stein wieder ins Spiel bringen
 //         (- Zwei Wuerfel Option)
+//         - Anni: Spielbeginn: Bei Unentschieden wird noch mal gewürfelt + auslagern
+//         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
+//         - Alle: andere Variablen für currentPlayer / otherPlayer
 
 public class Main {
     public static void main(String[] args)
@@ -57,8 +57,9 @@ public class Main {
         Player playerOne = new Player("Marco", false);
         Player playerTwo = new Player("Cey", true);
 
+
         //playerOne.rollDice(diceOne, diceTwo);
-        playerTwo.rollDice(diceOne, diceTwo);
+        //playerTwo.rollDice(diceOne, diceTwo);
 
         // Spieler ausgaben
         //System.out.println("Gewurfelt: " + playerOne.getDiceNumber1());
@@ -71,23 +72,54 @@ public class Main {
         Board board = new Board();
         PrintBoard.printBoard(board.getField());
 
+        // Spieler mit höherem Würfelergebnis startet
+        Rules rule = new Rules();
+        Player currentPlayer; // Spieler der startet
+        Player otherPlayer;
+        //int playerOneDice = playerOne.getDiceNumber1();
+        //int playerTwoDice = playerTwo.getDiceNumber2();
+
+        playerOne.rollDice(diceOne, diceTwo);
+        System.out.println("Spieler 1 " +playerOne.getName() + " Gewürfelt: " + playerOne.getDiceNumber1());
+        playerTwo.rollDice(diceOne,diceTwo);
+        System.out.println("Spieler 2 " +playerTwo.getName()+ " Gewürfelt: " + playerTwo.getDiceNumber2());
+
+
+        // Aktuell wird unentschieden nicht berücksichtigt!
+
+        if (rule.startPlayer(playerOne.getDiceNumber1(), playerTwo.getDiceNumber2())){
+            System.out.println("Spieler 1 startet");
+            currentPlayer = playerOne;
+            otherPlayer = playerTwo;
+
+        } else //if (!rule.startPlayer(playerOne.getDiceNumber1(), playerTwo.getDiceNumber2()))
+        {
+            System.out.println("Spieler 2 startet");
+            playerTwo.rollDice(diceOne, diceTwo);
+            currentPlayer = playerTwo;
+            otherPlayer = playerOne;
+            }
+            // else{} --> Hier rekursiv aufrufen
+
+
+
+
+        System.out.println("--Schleifenbeginn--");
+
+        // Test-Schleife Spieldurchlauf
         for(int i = 0; i<5; i++)
         {
-            playerOne.rollDice(diceOne, diceTwo);
-            System.out.println("Gewurfelt: " + playerOne.getDiceNumber1());
-            playerOne.printgameBoard();
-
-            //            playerOne.moveStone(board.getField(), playerOne.getDiceNumber1());
-            playerOne.moveStone(board.getField(),playerOne.getDiceNumber1(), playerTwo);
-
+            currentPlayer.rollDice(diceOne, diceTwo);
+            System.out.println("Gewürfelt: " + currentPlayer.getDiceNumber1());
+            currentPlayer.printgameBoard();
+            currentPlayer.moveStone(board.getField(),currentPlayer.getDiceNumber1(), otherPlayer);
             PrintBoard.printBoard(board.getField());
 
-            System.out.println("Gewurfelt: " + playerTwo.getDiceNumber2());
-            playerTwo.printgameBoard();
-            playerTwo.moveStone(board.getField(), playerTwo.getDiceNumber2(), playerOne);
-
+            otherPlayer.rollDice(diceOne,diceTwo);
+            System.out.println("Gewürfelt: " + otherPlayer.getDiceNumber2());
+            otherPlayer.printgameBoard();
+            otherPlayer.moveStone(board.getField(), otherPlayer.getDiceNumber2(), currentPlayer);
             PrintBoard.printBoard(board.getField());
-
         }
         // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
     }
