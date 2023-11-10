@@ -13,6 +13,7 @@ import java.util.Scanner;
 //         - Anni: Spielbeginn: Bei Unentschieden wird noch mal gewürfelt + auslagern
 //         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
 //         - Alle: andere Variablen für currentPlayer / otherPlayer
+//         - Alle: Eingabe überprüfen (isValidInput) implementieren
 
 public class Main {
     public static void main(String[] args)
