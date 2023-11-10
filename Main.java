@@ -9,11 +9,18 @@ import java.util.Scanner;
 //             - (Erledigt) Es Fehlt nocht die Steine wieder ins Spielfeld bringen
 //              - Dokumetation schreiben
 //         - (Erledigt) Stein wieder ins Spiel bringen
-//         (- Zwei Wuerfel Option)
+//         (- Zwei Wuerfel Option)(Rosi)
 //         - Anni: Spielbeginn: Bei Unentschieden wird noch mal gewürfelt + auslagern
 //         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
 //         - Alle: andere Variablen für currentPlayer / otherPlayer
 //         - Alle: Eingabe überprüfen (isValidInput) implementieren
+//         - Eingabe von Spielername
+//         - Eingabe -> prüfen
+//         - Unentschieden start
+//         - moveStone -> Schoener
+//         - Ziel des Spiels
+//              -ist im Feld (Cey)
+//              -Abbauen (Marco)
 
 public class Main {
     public static void main(String[] args)
