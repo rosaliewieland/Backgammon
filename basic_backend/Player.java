@@ -201,4 +201,29 @@ public class Player{
         return "Name: " + getName() + "\nAmount of Stones: " + getStones() + "\nColor is Black: " + isBlack();
     }
 
+    // Spieler mit der höheren Augenzahl beginnt das Spiel
+    public Player startPlayer(Player playerOne, Player playerTwo, Dice diceOne, Dice diceTwo) {
+
+        int dicePlayerOne;
+        int dicePlayerTwo;
+
+        playerOne.rollDice(diceOne, diceTwo);
+        dicePlayerOne = playerOne.diceNumber1;
+        System.out.println("Spieler 1 " +playerOne.getName() + " Gewürfelt: " + dicePlayerOne);
+
+        playerTwo.rollDice(diceOne,diceTwo);
+        dicePlayerTwo = playerTwo.diceNumber1;
+        System.out.println("Spieler 2 " +playerTwo.getName()+ " Gewürfelt: " + dicePlayerTwo);
+
+        if (dicePlayerOne > dicePlayerTwo) {
+            return playerOne;
+        }
+        else if (dicePlayerOne < dicePlayerTwo) {
+            return playerTwo;
+        }
+        else // Wenn unentschieden, es wird noch mal gewürfelt
+            System.out.println("Unentschieden. Es wird nochmal gewürfelt");
+            return startPlayer(playerOne, playerTwo, diceOne, diceTwo);
+    }
+
 }
