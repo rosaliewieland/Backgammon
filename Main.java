@@ -11,9 +11,9 @@ import java.util.Scanner;
 //         - (Erledigt) Stein wieder ins Spiel bringen
 //         (- Zwei Wuerfel Option)(Rosi)
 //         - (erledigt) Anni: Unentschieden + auslagern
+//         - (erledigt) Anni: andere Variablen für currentPlayer, otherPlayer --> firstPlayer, secondPlayer
 //         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
 //         - Anni: Eingabe überprüfen (isValidInput) --> try, except
-//         - Anni: andere Variablen für currentPlayer / otherPlayer
 //         - Eingabe Spielername, Farbenzuordnung
 //         - moveStone -> Schoener
 //         - Ziel des Spiels
@@ -36,36 +36,36 @@ public class Main {
         int field[][] = new int[24][5];
 
         Player startPlayer = new Player();
-        Player currentPlayer; // Spieler der startet
-        Player otherPlayer;
+        Player firstPlayer; // Spieler der startet
+        Player secondPlayer;
 
-        //PrintBoard.printBoard(field);
-
+        // Ausgabe des Boards
         Board board = new Board();
         PrintBoard.printBoard(board.getField());
 
         // Spieler mit höherem Würfelergebnis startet
-        currentPlayer = startPlayer.startPlayer(playerOne, playerTwo, diceOne, diceTwo); //übergibt den starteten Spieler
-        if (currentPlayer == playerOne)
-            otherPlayer = playerTwo;
+        firstPlayer = startPlayer.startPlayer(playerOne, playerTwo, diceOne, diceTwo); //übergibt den starteten Spieler
+        if (firstPlayer == playerOne)
+            secondPlayer = playerTwo;
         else
-            otherPlayer = playerOne;
+            secondPlayer = playerOne;
 
-        System.out.println("--Schleifenbeginn--"); // Ab hier beginnt der Spielverlauf
+        // Ab hier beginnt der Spielverlauf
+        System.out.println("--Schleifenbeginn--");
 
         // Test-Schleife Spieldurchlauf
         for(int i = 0; i<5; i++)
         {
-            currentPlayer.rollDice(diceOne, diceTwo);
-            System.out.println("Gewürfelt: " + currentPlayer.getDiceNumber1());
-            currentPlayer.printgameBoard();
-            currentPlayer.moveStone(board.getField(),currentPlayer.getDiceNumber1(), otherPlayer);
+            firstPlayer.rollDice(diceOne, diceTwo);
+            System.out.println("Gewürfelt: " + firstPlayer.getDiceNumber1());
+            firstPlayer.printgameBoard();
+            firstPlayer.moveStone(board.getField(),firstPlayer.getDiceNumber1(), secondPlayer);
             PrintBoard.printBoard(board.getField());
 
-            otherPlayer.rollDice(diceOne,diceTwo);
-            System.out.println("Gewürfelt: " + otherPlayer.getDiceNumber2());
-            otherPlayer.printgameBoard();
-            otherPlayer.moveStone(board.getField(), otherPlayer.getDiceNumber2(), currentPlayer);
+            secondPlayer.rollDice(diceOne,diceTwo);
+            System.out.println("Gewürfelt: " + secondPlayer.getDiceNumber2());
+            secondPlayer.printgameBoard();
+            secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber2(), firstPlayer);
             PrintBoard.printBoard(board.getField());
         }
         // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
