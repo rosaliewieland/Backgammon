@@ -89,8 +89,8 @@ public class Rules{
         while (true) {
             try {
                 Scanner scanner = new Scanner(System.in);
-                int stone = scanner.nextInt();
-                return stone;
+                int input = scanner.nextInt();
+                return input;
 
             } catch (InputMismatchException e) {
                 System.out.println("Bitte nur Zahlen eingeben:");
