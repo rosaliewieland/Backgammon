@@ -85,7 +85,8 @@ public class Rules{
         return false;
     }
 
-    public int isValidInput() {
+
+    public int validIntegerInput() {
         while (true) {
             try {
                 Scanner scanner = new Scanner(System.in);
@@ -93,7 +94,37 @@ public class Rules{
                 return input;
 
             } catch (InputMismatchException e) {
-                System.out.println("Bitte nur Zahlen eingeben:");
+                System.out.println("Bitte nur Zahlen eingeben: ");
+            }
+        }
+
+    }
+
+    public String validStringInput() {
+        while (true) {
+            try {
+                Scanner scanner = new Scanner(System.in);
+                String input = scanner.next();
+                return input;
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Bitte nur Buchstaben eingeben: ");
+            }
+        }
+    }
+
+    public boolean validColorInput() {
+        while (true) {
+            try {
+                Scanner scanner = new Scanner(System.in);
+                String color = scanner.next();
+                if (color.equalsIgnoreCase("Schwarz"))
+                    return true;
+                else if (color.equalsIgnoreCase("Weiß"))
+                    return false;
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Bitte nur Buchstaben eingeben: ");
             }
         }
 

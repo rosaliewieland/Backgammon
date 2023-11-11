@@ -14,7 +14,7 @@ import java.util.Scanner;
 //         - (erledigt) Anni: andere Variablen für currentPlayer, otherPlayer --> firstPlayer, secondPlayer
 //         - (erledigt) Anni: Eingabe überprüfen (isValidInput) --> try, except
 //         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
-//         - Anni: Eingabe Spielername, Farbenzuordnung
+//         - (erledigt) Anni: Eingabe Spielername, Farbenzuordnung
 //         - moveStone -> Schoener
 //         - Ziel des Spiels
 //              -ist im Feld (Cey)
@@ -28,10 +28,16 @@ public class Main {
         // Initialisierung von zwei Würfeln die beiden Spieler zum Würfeln zur Verfügung stehen
         Dice diceOne = new Dice();
         Dice diceTwo = new Dice();
+        Rules rules = new Rules();
+
 
         // Initialisierung von zwei Spielern.
-        Player playerOne = new Player("Marco", false);
-        Player playerTwo = new Player("Cey", true);
+        Player playerColor = new Player();
+        boolean color = playerColor.enterPlayerColor(); // Spieler kann Farbe auswählen
+
+        Player playerOne = new Player(color);
+        Player playerTwo = new Player(!color); // der zweite Spieler bekommt automatisch die andere Farbe
+
 
         int field[][] = new int[24][5];
 

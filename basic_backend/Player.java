@@ -20,8 +20,8 @@ public class Player{
 
     }
 
-    public Player(String name, boolean isBlack) {
-        this.name = name;
+    public Player(boolean isBlack) {
+        enterPlayerName();
         this.isBlack = isBlack;
         for(int i=0; i<gameBoardEdge.length; i++)
         {
@@ -69,8 +69,6 @@ public class Player{
         setDiceNumber2(numberTwo);
     }
 
-
-
     // Bewegt aktuell einen Stein (int field[][] ist die Adresse vom Board field[][]
     public void moveStone(int field[][], int dice, Player opponentPlayer) {
         int stone=-1;
@@ -94,8 +92,8 @@ public class Player{
         {
             System.out.println("Welchen Stein moechte " + name + " bewegen?:");
 
-            //Prüft, ob Eingabe Integer ist
-            stone = rules.isValidInput();
+            // Ermöglicht und überprüft (Integer) Eingabe
+            stone = rules.validIntegerInput();
         }
         playerColor = rules.isStoneYours(isBlack, stone);
         System.out.println("Stone:" + stone);
@@ -222,9 +220,20 @@ public class Player{
         else if (dicePlayerOne < dicePlayerTwo) {
             return playerTwo;
         }
-        else // Wenn unentschieden, es wird noch mal gewürfelt
+        else // Wenn unentschieden
             System.out.println("Unentschieden. Es wird nochmal gewürfelt");
             return startPlayer(playerOne, playerTwo, diceOne, diceTwo);
+    }
+
+    public void enterPlayerName() {
+        System.out.println("Gebe einen Namen an: ");
+        name = rules.validStringInput();
+        System.out.println("Name Spieler: " + name);
+    }
+
+    public boolean enterPlayerColor() {
+        System.out.println("Wähle zwischen Schwarz oder Weiß: ");
+        return rules.validColorInput();
     }
 
 }
