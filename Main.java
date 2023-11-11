@@ -12,9 +12,9 @@ import java.util.Scanner;
 //         (- Zwei Wuerfel Option)(Rosi)
 //         - (erledigt) Anni: Unentschieden + auslagern
 //         - (erledigt) Anni: andere Variablen für currentPlayer, otherPlayer --> firstPlayer, secondPlayer
+//         - (erledigt) Anni: Eingabe überprüfen (isValidInput) --> try, except
 //         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
-//         - Anni: Eingabe überprüfen (isValidInput) --> try, except
-//         - Eingabe Spielername, Farbenzuordnung
+//         - Anni: Eingabe Spielername, Farbenzuordnung
 //         - moveStone -> Schoener
 //         - Ziel des Spiels
 //              -ist im Feld (Cey)

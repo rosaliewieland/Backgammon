@@ -1,5 +1,6 @@
 package basic_backend;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player{
@@ -91,10 +92,10 @@ public class Player{
 
         }else
         {
-            System.out.println("Welchen Stein moechte "+ name + " bewegen?:");
-            Scanner scanner = new Scanner(System.in);
-            stone = scanner.nextInt();
+            System.out.println("Welchen Stein moechte " + name + " bewegen?:");
 
+            //Prüft, ob Eingabe Integer ist
+            stone = rules.isValidInput();
         }
         playerColor = rules.isStoneYours(isBlack, stone);
         System.out.println("Stone:" + stone);

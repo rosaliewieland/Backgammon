@@ -8,6 +8,9 @@ package basic_backend;
 //   ein Feld schon voll ist auf das man seinen Stein bewegen moechte.
 //   -> Dies ist schon in der moveStone(...) direkt implementiert.
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class Rules{
     public boolean isStoneYours(boolean isBlack, int movingStone)
     {
@@ -80,6 +83,20 @@ public class Rules{
             }
         }
         return false;
+    }
+
+    public int isValidInput() {
+        while (true) {
+            try {
+                Scanner scanner = new Scanner(System.in);
+                int stone = scanner.nextInt();
+                return stone;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Bitte nur Zahlen eingeben:");
+            }
+        }
+
     }
 
 
