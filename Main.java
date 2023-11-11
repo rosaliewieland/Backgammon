@@ -15,9 +15,6 @@ import java.util.Scanner;
 //         - Anni: Eingabe überprüfen (isValidInput) --> try, except
 //         - Anni: andere Variablen für currentPlayer / otherPlayer
 //         - Eingabe Spielername, Farbenzuordnung
-//         - Eingabe von Spielername
-//         - Eingabe -> prüfen
-//         - Unentschieden start
 //         - moveStone -> Schoener
 //         - Ziel des Spiels
 //              -ist im Feld (Cey)
@@ -38,51 +35,23 @@ public class Main {
 
         int field[][] = new int[24][5];
 
+        Player startPlayer = new Player();
+        Player currentPlayer; // Spieler der startet
+        Player otherPlayer;
+
         //PrintBoard.printBoard(field);
 
         Board board = new Board();
         PrintBoard.printBoard(board.getField());
 
         // Spieler mit höherem Würfelergebnis startet
-        Player startPlayer = new Player();
-
-        Player currentPlayer; // Spieler der startet
-        Player otherPlayer;
-        int playerOneDice = playerOne.getDiceNumber1();
-        int playerTwoDice = playerTwo.getDiceNumber2();
-
-        currentPlayer = startPlayer.startPlayer(playerOne, playerTwo, diceOne, diceTwo);
+        currentPlayer = startPlayer.startPlayer(playerOne, playerTwo, diceOne, diceTwo); //übergibt den starteten Spieler
         if (currentPlayer == playerOne)
             otherPlayer = playerTwo;
         else
             otherPlayer = playerOne;
 
-
-        // Aktuell wird unentschieden nicht berücksichtigt!
-
-        /*private static void startPlayer1() {
-
-        playerOne.rollDice(diceOne, diceTwo);
-        System.out.println("Spieler 1 " +playerOne.getName() + " Gewürfelt: " + playerOne.getDiceNumber1());
-        playerTwo.rollDice(diceOne,diceTwo);
-        System.out.println("Spieler 2 " +playerTwo.getName()+ " Gewürfelt: " + playerTwo.getDiceNumber2());
-
-        if (rule.startPlayer(playerOne.getDiceNumber1(), playerTwo.getDiceNumber2())) {
-            System.out.println("Spieler 1 startet");
-            currentPlayer = playerOne;
-            otherPlayer = playerTwo;
-
-        } else if (!rule.startPlayer(playerOne.getDiceNumber1(), playerTwo.getDiceNumber2())) {
-            System.out.println("Spieler 2 startet");
-            playerTwo.rollDice(diceOne, diceTwo);
-            currentPlayer = playerTwo;
-            otherPlayer = playerOne;
-        } else
-            startPlayer1();
-    }*/
-
-
-        System.out.println("--Schleifenbeginn--");
+        System.out.println("--Schleifenbeginn--"); // Ab hier beginnt der Spielverlauf
 
         // Test-Schleife Spieldurchlauf
         for(int i = 0; i<5; i++)
