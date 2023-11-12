@@ -1,5 +1,7 @@
 import basic_backend.*;
 
+import java.util.Scanner;
+
 // ToDo's: - Stein ins Ziel bringen ermoeglichen
 //         - (Erledigt) Stein schlaegt Gegnerstein raus
 //              - Dokumetation schreiben
@@ -12,9 +14,6 @@ import basic_backend.*;
 //         - (erledigt) Anni: andere Variablen für currentPlayer, otherPlayer --> firstPlayer, secondPlayer
 //         - (erledigt) Anni: Eingabe überprüfen (isValidInput) --> try, except
 //         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
-//         - Alle: andere Variablen für currentPlayer / otherPlayer
-//         - Alle: Eingabe überprüfen (isValidInput) implementieren
-//         - Marco: ich mache die Abbauen Methode boolean als Auslösewert
 //         - Anni: Eingabe Spielername, Farbenzuordnung
 //         - moveStone -> Schoener
 //         - Ziel des Spiels
@@ -29,10 +28,16 @@ public class Main {
         // Initialisierung von zwei Würfeln die beiden Spieler zum Würfeln zur Verfügung stehen
         Dice diceOne = new Dice();
         Dice diceTwo = new Dice();
+        Rules rules = new Rules();
+
 
         // Initialisierung von zwei Spielern.
-        Player playerOne = new Player("Marco", false);
-        Player playerTwo = new Player("Cey", true);
+        Player playerColor = new Player();
+        boolean color = playerColor.enterPlayerColor(); // Spieler kann Farbe auswählen
+
+        Player playerOne = new Player(color);
+        Player playerTwo = new Player(!color); // der zweite Spieler bekommt automatisch die andere Farbe
+
 
         int field[][] = new int[24][5];
 
@@ -78,7 +83,7 @@ public class Main {
             secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber2(), firstPlayer);
             PrintBoard.printBoard(board.getField());
         }
-       // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
+        // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
     }
 
 
