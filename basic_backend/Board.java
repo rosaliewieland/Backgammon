@@ -74,6 +74,7 @@ public class Board {
 
 
         // Testarry befüllt durch den Konstruktor
+        /*
         testfield[0][0]=1;
         testfield[0][1]=2;
         testfield[0][2]=3;
@@ -107,8 +108,24 @@ public class Board {
         testfield[21][0]=-11;
         testfield[21][1]=-12;
         testfield[21][2]=-13;
-        testfield[21][3]=0;
+        testfield[21][3]=-14;
         testfield[21][4]=-15;
+         */
+        testfield[5][0] = 11;
+        testfield[5][1] = 12;
+        testfield[5][2] = 13;
+        testfield[5][3] = 14;
+        testfield[5][4] = 15;
+        testfield[3][0] = 10;
+        testfield[3][1] = 9;
+        testfield[3][2] = 8;
+        testfield[3][3] = 7;
+        testfield[3][4] = 6;
+        testfield[2][0] = 5;
+        testfield[2][1] = 4;
+        testfield[2][2] = 3;
+        testfield[2][3] = 2;
+        testfield[2][4] = 1;
     }
 
 
