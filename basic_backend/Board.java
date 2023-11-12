@@ -1,12 +1,33 @@
 package basic_backend;
 
+import java.util.Set;
+import java.util.HashSet;
+
 public class Board {
 
-    private int field[][] = new int[24][5];
+    private int[][] field = new int[24][5];
+
+    // Test Feld um schneller meine Methoden zu prüfen.
+    private int[][] testfield = new int[24][5];
+
+    // boolean ob der Spieler anfangen darf die Steine abzubauen
+    // true = darf abbauen
+    // false = darf NICHT abbauen
+    private boolean blackPermittedRemoveStones = false;
+    private boolean whitePermittedRemoveStones = false;
+
+
+    // Erzeugt ein hashset von der Homebasis des schwarzen Feldes. Set gewählt, da Steine eine eindeutige Nummerierung haben
+    // und die 0 nur eineinziges mal gespeichert wird (Mengen).
+    private Set<Integer> homeFieldBlack = new HashSet<Integer>();
+    private Set<Integer> homeFieldWhite = new HashSet<Integer>();
+
+    // Erzeugt ein Hashset von den Mengen die jeder Spieler braucht, um seine Steine abzubauen.
+    private Set<Integer> neededNumbersToFinishGameBlack = new HashSet<Integer>();
+    private Set<Integer> neededNumbersToFinishGameWhite = new HashSet<Integer>();
 
 
     public Board(){
-
         field[0][0] = -1;
         field[0][1] = -2;
 
@@ -52,9 +73,43 @@ public class Board {
         field[23][1] = 2;
 
 
+        // Testarry befüllt durch den Konstruktor
+        testfield[0][0]=1;
+        testfield[0][1]=2;
+        testfield[0][2]=3;
+        testfield[0][3]=4;
+        testfield[0][4]=5;
+
+        testfield[1][0]=6;
+        testfield[1][1]=7;
+        testfield[1][2]=8;
+        testfield[1][3]=9;
+        testfield[1][4]=10;
+
+        testfield[2][0]=11;
+        testfield[2][1]=12;
+        testfield[2][2]=13;
+        testfield[2][3]=14;
+        testfield[2][4]=15;
+
+        testfield[23][0]=-1;
+        testfield[23][1]=-2;
+        testfield[23][2]=-3;
+        testfield[23][3]=-4;
+        testfield[23][4]=-5;
+
+        testfield[22][0]=-6;
+        testfield[22][1]=-7;
+        testfield[22][2]=-8;
+        testfield[22][3]=-9;
+        testfield[22][4]=-10;
+
+        testfield[21][0]=-11;
+        testfield[21][1]=-12;
+        testfield[21][2]=-13;
+        testfield[21][3]=0;
+        testfield[21][4]=-15;
     }
-
-
 
 
 
@@ -63,63 +118,62 @@ public class Board {
     }
 
 
-    public void setField() {
 
-
-    }
-
-
-
-    /*
-
-    private int stone;
-    private int field[][] = new int[24][1];
-    public Board(int stone){
-
-        this.stone = stone;
-        for(int i = 0; i < 24; i++)
-        {
-            for(int j=0; j<1; j++)
-            {
-                field[i][j] = 0;
+    // Methode läuft durch die beiden Homes der Spieler und erstellt das Hashset homeFieldBlack and homeFieldWhite
+    //
+    public void runHomeFieldsCreateSets() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                homeFieldBlack.add(testfield[i][j]);
             }
         }
-        field[0][0] = 1;
-    }
-    public boolean moveStone(int eingabe, int prev){ // A: Tut nur den Stein bewegen und zurückgeben, ob Spiel läuft
-        if(eingabe > 23)
-        {
-            System.out.println("Ausserhalb des Spielfeldes");
-        }
-        else {
-            field[prev][0] = 0;
-            field[eingabe][0] = 1;
-
-        }
-        if(field[23][0]==1) //A: Sagt nichts darüber aus, ob Spiel noch läuft?
-        {
-            return true;
-        }
-        return false;
-
-
-    }
-    public boolean finishGame()
-    {
-        return true;
-    }
-    public void printBoard()
-    {
-
-        for(int i = 0; i < 24; i++)
-        {
-            for(int j=0; j < 1; j++)
-            {
-                System.out.println("i: " + i + " Field: " + field[i][j]);
+        for (int i = 18; i < 24; i++) {
+            for (int j = 0; j < 5; j++) {
+                homeFieldWhite.add(testfield[i][j]);
             }
         }
-
+        // Testausgabe
+        // System.out.println(homeFieldBlack);
+        // System.out.println(homeFieldWhite);
     }
-    */
+
+
+    // Erstellt Set mit denen die Homebasis der Spieler verglichen wird.
+    public void createReverenceSet(){
+        for (int i = 0; i < 16; i++) {
+            neededNumbersToFinishGameBlack.add(i);
+        }
+        for (int i = 0; i > -16; i--) {
+            neededNumbersToFinishGameWhite.add(i);
+        }
+        // Testausgabe
+        // System.out.println(neededNumbersToFinishGameBlack);
+        // System.out.println(neededNumbersToFinishGameWhite);
+    }
+
+
+    // Vergleicht die Reverenz-Sets mit den erstellten Sets von der Homebasis des Spielers. Sollten die Sets gleich sein
+    // -> alle Steine des Spielers sind in der Basis wird, erlaubt die Steine abbauen zu können.
+    public void compareSetsEnableRemoveStones(){
+        if (homeFieldBlack.equals(neededNumbersToFinishGameBlack)){
+            this.blackPermittedRemoveStones = true;
+            // Tesausgabe
+            // System.out.println("Black");
+        }
+        if (homeFieldWhite.equals(neededNumbersToFinishGameWhite)) {
+            this.whitePermittedRemoveStones = true;
+            // Testausgabe
+            // System.out.println("White");
+        }
+    }
+
+    // Getter-Methode
+    public boolean isBlackPermittedRemoveStones() {
+        return blackPermittedRemoveStones;
+    }
+
+    public boolean isWhitePermittedRemoveStones() {
+        return whitePermittedRemoveStones;
+    }
 
 }

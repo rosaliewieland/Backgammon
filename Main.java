@@ -1,7 +1,5 @@
 import basic_backend.*;
 
-import java.util.Scanner;
-
 // ToDo's: - Stein ins Ziel bringen ermoeglichen
 //         - (Erledigt) Stein schlaegt Gegnerstein raus
 //              - Dokumetation schreiben
@@ -14,6 +12,9 @@ import java.util.Scanner;
 //         - (erledigt) Anni: andere Variablen für currentPlayer, otherPlayer --> firstPlayer, secondPlayer
 //         - (erledigt) Anni: Eingabe überprüfen (isValidInput) --> try, except
 //         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
+//         - Alle: andere Variablen für currentPlayer / otherPlayer
+//         - Alle: Eingabe überprüfen (isValidInput) implementieren
+//         - Marco: ich mache die Abbauen Methode boolean als Auslösewert
 //         - Anni: Eingabe Spielername, Farbenzuordnung
 //         - moveStone -> Schoener
 //         - Ziel des Spiels
@@ -41,6 +42,15 @@ public class Main {
 
         // Ausgabe des Boards
         Board board = new Board();
+        // Methoden erstellt zur Überprüfung der Abbauarbeiten am Ende des Spieles
+        board.runHomeFieldsCreateSets();
+        board.createReverenceSet();
+        board.compareSetsEnableRemoveStones();
+
+        // Testbereich für meine Methoden holzaepf
+        // System.out.println(board.isBlackPermittedRemoveStones());
+        // System.out.println(board.isWhitePermittedRemoveStones());
+
         PrintBoard.printBoard(board.getField());
 
         // Spieler mit höherem Würfelergebnis startet
@@ -68,7 +78,7 @@ public class Main {
             secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber2(), firstPlayer);
             PrintBoard.printBoard(board.getField());
         }
-        // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
+       // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
     }
 
 

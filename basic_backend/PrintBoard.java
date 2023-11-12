@@ -4,7 +4,7 @@ public class PrintBoard {
 
     private static final int PRINTLINE = 57;
 
-    public static void printBoard(int field[][]) {
+    public static void printBoard(int[][] field) {
 
         //Kontrolle um das print feld aus richtig ist
 /*
