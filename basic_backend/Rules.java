@@ -130,6 +130,9 @@ public class Rules{
     }
     public boolean CheckConditionWhite(int[][] field){
         int counter = 0;
+        int Amount;
+        Player WhitePlayer = new Player();
+        Amount = WhitePlayer.getStones() ;
         for(int i = 0; i < 5; i++){
             for (int j = 0; j < 5; j++){
                 if (field[i][j] > 0){
@@ -137,10 +140,10 @@ public class Rules{
                 }
             }
         }
-        if (counter == 15){
+        if (counter == Amount){
             return true;
         }
-        else if (counter > 15) {
+        else if (counter > Amount) {
             System.out.println("Error to read Checker");
             return false;
         }
@@ -148,6 +151,9 @@ public class Rules{
     }
     public boolean CheckConditionBlack(int[][] field){
         int counter = 0;
+        int Amount;
+        Player WhitePlayer = new Player();
+        Amount = WhitePlayer.getStones() ;
         for(int i = 18; i < 24; i++){
             for (int j = 0; j < 5; j++){
                 if (field[i][j] < 0){
@@ -155,10 +161,10 @@ public class Rules{
                 }
             }
         }
-        if (counter == 15){
+        if (counter == Amount){
             return true;
         }
-        else if (counter > 15) {
+        else if (counter > Amount) {
             System.out.println("Error to read Checker");
             return false;
         }
