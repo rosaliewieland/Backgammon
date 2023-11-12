@@ -127,8 +127,41 @@ public class Rules{
                 System.out.println("Bitte nur Buchstaben eingeben: ");
             }
         }
-
     }
-
-
+    public boolean CheckConditionWhite(int[][] field){
+        int counter = 0;
+        for(int i = 0; i < 5; i++){
+            for (int j = 0; j < 5; j++){
+                if (field[i][j] > 0){
+                    counter++;
+                }
+            }
+        }
+        if (counter == 15){
+            return true;
+        }
+        else if (counter > 15) {
+            System.out.println("Error to read Checker");
+            return false;
+        }
+        else return false;
+    }
+    public boolean CheckConditionBlack(int[][] field){
+        int counter = 0;
+        for(int i = 18; i < 24; i++){
+            for (int j = 0; j < 5; j++){
+                if (field[i][j] < 0){
+                    counter++;
+                }
+            }
+        }
+        if (counter == 15){
+            return true;
+        }
+        else if (counter > 15) {
+            System.out.println("Error to read Checker");
+            return false;
+        }
+        else return false;
+    }
 }
