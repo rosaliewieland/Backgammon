@@ -72,15 +72,15 @@ public class Main {
         for(int i = 0; i<5; i++)
         {
             firstPlayer.rollDice(diceOne, diceTwo);
-            System.out.println("Gewürfelt: " + firstPlayer.getDiceNumber1());
+            System.out.println("Würfel1: " + firstPlayer.getDiceNumber1()+ " Würfel 2: " + firstPlayer.getDiceNumber2());
             firstPlayer.printgameBoard();
-            firstPlayer.moveStone(board.getField(),firstPlayer.getDiceNumber1(), secondPlayer);
+            firstPlayer.moveStone(board.getField(), firstPlayer.getDiceNumber1(), firstPlayer.getDiceNumber2(),secondPlayer);
             PrintBoard.printBoard(board.getField());
 
             secondPlayer.rollDice(diceOne,diceTwo);
-            System.out.println("Gewürfelt: " + secondPlayer.getDiceNumber2());
+            System.out.println("Gewürfelt: " + secondPlayer.getDiceNumber1()+ " Würfel 2:"+ secondPlayer.getDiceNumber2());
             secondPlayer.printgameBoard();
-            secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber2(), firstPlayer);
+            secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber2(), secondPlayer.getDiceNumber1(), firstPlayer);
             PrintBoard.printBoard(board.getField());
         }
         // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
