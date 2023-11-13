@@ -128,6 +128,7 @@ public class Rules{
             }
         }
     }
+
     public boolean CheckConditionWhite(int[][] field){
         int counter = 0;
         int Amount;

@@ -5,10 +5,10 @@ import java.util.HashSet;
 
 public class Board {
 
-    private int[][] field = new int[24][5];
+    private final int[][] field = new int[24][5];
 
     // Test Feld um schneller meine Methoden zu prüfen.
-    private int[][] testfield = new int[24][5];
+    private final int[][] testfield = new int[24][5];
 
     // boolean ob der Spieler anfangen darf die Steine abzubauen
     // true = darf abbauen
@@ -19,12 +19,12 @@ public class Board {
 
     // Erzeugt ein hashset von der Homebasis des schwarzen Feldes. Set gewählt, da Steine eine eindeutige Nummerierung haben
     // und die 0 nur eineinziges mal gespeichert wird (Mengen).
-    private Set<Integer> homeFieldBlack = new HashSet<Integer>();
-    private Set<Integer> homeFieldWhite = new HashSet<Integer>();
+    private Set<Integer> homeFieldBlack = new HashSet<>();
+    private Set<Integer> homeFieldWhite = new HashSet<>();
 
     // Erzeugt ein Hashset von den Mengen die jeder Spieler braucht, um seine Steine abzubauen.
-    private Set<Integer> neededNumbersToFinishGameBlack = new HashSet<Integer>();
-    private Set<Integer> neededNumbersToFinishGameWhite = new HashSet<Integer>();
+    private Set<Integer> reverenceSetBlack = new HashSet<>();
+    private Set<Integer> reverenceSetWhite = new HashSet<>();
 
 
     public Board(){
@@ -107,10 +107,9 @@ public class Board {
         testfield[21][0]=-11;
         testfield[21][1]=-12;
         testfield[21][2]=-13;
-        testfield[21][3]=0;
+        testfield[21][3]=-14;
         testfield[21][4]=-15;
     }
-
 
 
     public int[][] getField() {
@@ -118,53 +117,60 @@ public class Board {
     }
 
 
-
     // Methode läuft durch die beiden Homes der Spieler und erstellt das Hashset homeFieldBlack and homeFieldWhite
     //
-    public void runHomeFieldsCreateSets() {
+    public void createsSetOfHomeField() {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
-                homeFieldBlack.add(testfield[i][j]);
+                if (testfield[i][j] > 0) {
+                    homeFieldBlack.add(testfield[i][j]);
+                }
             }
         }
         for (int i = 18; i < 24; i++) {
             for (int j = 0; j < 5; j++) {
-                homeFieldWhite.add(testfield[i][j]);
+                if (testfield[i][j] < 0 ) {
+                    homeFieldWhite.add(testfield[i][j]);
+                }
             }
         }
         // Testausgabe
-        // System.out.println(homeFieldBlack);
-        // System.out.println(homeFieldWhite);
+        System.out.println(homeFieldBlack);
+        System.out.println(homeFieldWhite);
     }
 
 
-    // Erstellt Set mit denen die Homebasis der Spieler verglichen wird.
+    // Erstellt Set mit denen die Homebasis der Spieler verglichen wird. Set von 1, ..., 15 beziehungsweise auch mit Minus
     public void createReverenceSet(){
-        for (int i = 0; i < 16; i++) {
-            neededNumbersToFinishGameBlack.add(i);
+        for (int i = 1; i < 16; i++) {
+            reverenceSetBlack.add(i);
         }
-        for (int i = 0; i > -16; i--) {
-            neededNumbersToFinishGameWhite.add(i);
+        for (int i = -1; i > -16; i--) {
+            reverenceSetWhite.add(i);
         }
         // Testausgabe
-        // System.out.println(neededNumbersToFinishGameBlack);
-        // System.out.println(neededNumbersToFinishGameWhite);
+        System.out.println(reverenceSetBlack);
+        System.out.println(reverenceSetWhite);
+    }
+
+
+    public void adjustReverenceSet(int numberToRemove){
+        if (numberToRemove > 0) {
+            this.reverenceSetBlack.remove(numberToRemove);
+        }
+        else if (numberToRemove < 0) {
+            this.reverenceSetWhite.remove(numberToRemove);
+        } else {
+            System.out.println("Error adjustReverenceSet Number out of bound");
+        }
     }
 
 
     // Vergleicht die Reverenz-Sets mit den erstellten Sets von der Homebasis des Spielers. Sollten die Sets gleich sein
-    // -> alle Steine des Spielers sind in der Basis wird, erlaubt die Steine abbauen zu können.
-    public void compareSetsEnableRemoveStones(){
-        if (homeFieldBlack.equals(neededNumbersToFinishGameBlack)){
-            this.blackPermittedRemoveStones = true;
-            // Tesausgabe
-            // System.out.println("Black");
-        }
-        if (homeFieldWhite.equals(neededNumbersToFinishGameWhite)) {
-            this.whitePermittedRemoveStones = true;
-            // Testausgabe
-            // System.out.println("White");
-        }
+    // → alle Steine des Spielers sind in der Basis wird, erlaubt die Steine abbauen zu können.
+    public void compareSetsEnableRemoveStones() {
+        this.blackPermittedRemoveStones = homeFieldBlack.equals(reverenceSetBlack);
+        this.whitePermittedRemoveStones = homeFieldWhite.equals(reverenceSetWhite);
     }
 
     // Getter-Methode

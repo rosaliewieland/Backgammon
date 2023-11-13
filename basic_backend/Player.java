@@ -1,7 +1,9 @@
 package basic_backend;
 
+import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Player{
 
@@ -15,6 +17,9 @@ public class Player{
     private Rules rules= new Rules();
     private int[] gameBoardEdge = new int[10];
 
+    private Set<Integer> outOfBoard = new HashSet<>();
+
+
     // Konstruktor
     public Player() {
 
@@ -23,7 +28,7 @@ public class Player{
     public Player(boolean isBlack) {
         enterPlayerName();
         this.isBlack = isBlack;
-        for(int i=0; i<gameBoardEdge.length; i++)
+        for(int i = 0; i < gameBoardEdge.length; i++)
         {
             gameBoardEdge[i] = 0;
         }
@@ -70,7 +75,7 @@ public class Player{
     }
 
     //Methode Wahl, ob du mit Summe oder einzeln ziehen möchtest
-    public void moveStone(int field[][], int dice1,int dice2,  Player opponentPlayer){
+    public void moveStone(int field[][], int dice1, int dice2,  Player opponentPlayer){
         System.out.println("Spieler " + name + ", möchtest du einen Stein mit der Summe der Würfelaugen bewegen oder zwei Steine mit jeder Würfelaugenanzahl?");
         System.out.println("1. Einen Stein mit der Summe bewegen");
         System.out.println("2. Zwei Steine mit jeder Augenzahl bewegen");
@@ -91,11 +96,6 @@ public class Player{
             System.out.println("Ungültige Eingabe. Bitte wähle 1 oder 2.");
             moveStone(field, dice1, dice2, opponentPlayer); // Recursive call to handle invalid input
         }
-
-
-
-
-
     }
 
 
@@ -119,7 +119,6 @@ public class Player{
                     System.out.println("Stone:" + stone);
                 }
             }
-
         }else
         {
             System.out.println("Welchen Stein moechte " + name + " bewegen?:");
@@ -167,7 +166,6 @@ public class Player{
                             }
                         }
                     }
-
                 }
             }
         }
@@ -196,7 +194,6 @@ public class Player{
                             moveOneStone(field, sum, opponentPlayer,stone);
                         }
                     }
-
                     else if(rules.haveYouStonesOut(gameBoardEdge))
                     {
                         for(int counterFreeField = 0; counterFreeField < 5; counterFreeField++) {
@@ -231,10 +228,6 @@ public class Player{
 
         System.out.println("Letzte Print");
     }
-
-
-
-
 
     public void printgameBoard()
     {
@@ -284,6 +277,21 @@ public class Player{
     public boolean enterPlayerColor() {
         System.out.println("Wähle zwischen Schwarz oder Weiß: ");
         return rules.validColorInput();
+    }
+
+    public void moveStoneOutOfBoard(boolean permittedRemoveStone, int stoneNumber, Board board) {
+        try {
+
+
+        } catch (ArrayIndexOutOfBoundsException b) {
+            if (permittedRemoveStone = true) {
+                outOfBoard.add(stoneNumber);
+                board.adjustReverenceSet(stoneNumber);
+            } else {
+                System.out.println("Stein darf nicht abgebaut werden. Wähle einen anderen Stein.");
+                moveStone();
+            }
+        }
     }
 
 }

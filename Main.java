@@ -1,7 +1,5 @@
 import basic_backend.*;
 
-import java.util.Scanner;
-
 // ToDo's: - Stein ins Ziel bringen ermoeglichen
 //         - (Erledigt) Stein schlaegt Gegnerstein raus
 //              - Dokumetation schreiben
@@ -32,11 +30,11 @@ public class Main {
 
 
         // Initialisierung von zwei Spielern.
-        Player playerColor = new Player();
-        boolean color = playerColor.enterPlayerColor(); // Spieler kann Farbe auswählen
+        // Player playerColor = new Player();
+        // boolean color = playerColor.enterPlayerColor(); // Spieler kann Farbe auswählen
 
-        Player playerOne = new Player(color);
-        Player playerTwo = new Player(!color); // der zweite Spieler bekommt automatisch die andere Farbe
+        Player playerOne = new Player();
+        Player playerTwo = new Player(); // der zweite Spieler bekommt automatisch die andere Farbe
 
 
         int field[][] = new int[24][5];
@@ -48,16 +46,22 @@ public class Main {
         // Ausgabe des Boards
         Board board = new Board();
         // Methoden erstellt zur Überprüfung der Abbauarbeiten am Ende des Spieles
-        board.runHomeFieldsCreateSets();
+        board.createsSetOfHomeField();
         board.createReverenceSet();
         board.compareSetsEnableRemoveStones();
 
         // Testbereich für meine Methoden holzaepf
-        // System.out.println(board.isBlackPermittedRemoveStones());
-        // System.out.println(board.isWhitePermittedRemoveStones());
+        System.out.println(board.isBlackPermittedRemoveStones());
+        System.out.println(board.isWhitePermittedRemoveStones());
+
+        board.adjustReverenceSet(-15);
+        board.compareSetsEnableRemoveStones();
+
+        System.out.println(board.isBlackPermittedRemoveStones());
+        System.out.println(board.isWhitePermittedRemoveStones());
 
         PrintBoard.printBoard(board.getField());
-
+/*
         // Spieler mit höherem Würfelergebnis startet
         firstPlayer = startPlayer.startPlayer(playerOne, playerTwo, diceOne, diceTwo); //übergibt den starteten Spieler
         if (firstPlayer == playerOne)
@@ -83,8 +87,7 @@ public class Main {
             secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber2(), secondPlayer.getDiceNumber1(), firstPlayer);
             PrintBoard.printBoard(board.getField());
         }
-        // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
+     */   // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
     }
-
 
 }
