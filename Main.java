@@ -18,6 +18,7 @@ import basic_backend.*;
 //              -ist im Feld (Cey)
 //              -Abbauen (Marco)
 
+
 public class Main {
     public static void main(String[] args)
     {
@@ -30,14 +31,13 @@ public class Main {
 
 
         // Initialisierung von zwei Spielern.
-        // Player playerColor = new Player();
-        // boolean color = playerColor.enterPlayerColor(); // Spieler kann Farbe auswählen
+        Player playerColor = new Player();
+        boolean color = playerColor.enterPlayerColor(); // Spieler kann Farbe auswählen
 
-        Player playerOne = new Player();
-        Player playerTwo = new Player(); // der zweite Spieler bekommt automatisch die andere Farbe
+        Player playerOne = new Player(color);
+        Player playerTwo = new Player(!color); // der zweite Spieler bekommt automatisch die andere Farbe
 
 
-        int field[][] = new int[24][5];
 
         Player startPlayer = new Player();
         Player firstPlayer; // Spieler der startet
@@ -49,7 +49,7 @@ public class Main {
         board.createsSetOfHomeField();
         board.createReverenceSet();
         board.compareSetsEnableRemoveStones();
-
+/*
         // Testbereich für meine Methoden holzaepf
         System.out.println(board.isBlackPermittedRemoveStones());
         System.out.println(board.isWhitePermittedRemoveStones());
@@ -59,9 +59,8 @@ public class Main {
 
         System.out.println(board.isBlackPermittedRemoveStones());
         System.out.println(board.isWhitePermittedRemoveStones());
-
+*/
         PrintBoard.printBoard(board.getField());
-/*
         // Spieler mit höherem Würfelergebnis startet
         firstPlayer = startPlayer.startPlayer(playerOne, playerTwo, diceOne, diceTwo); //übergibt den starteten Spieler
         if (firstPlayer == playerOne)
@@ -77,17 +76,17 @@ public class Main {
         {
             firstPlayer.rollDice(diceOne, diceTwo);
             System.out.println("Würfel1: " + firstPlayer.getDiceNumber1()+ " Würfel 2: " + firstPlayer.getDiceNumber2());
-            firstPlayer.printgameBoard();
+            firstPlayer.printGameBar();
             firstPlayer.moveStone(board.getField(), firstPlayer.getDiceNumber1(), firstPlayer.getDiceNumber2(),secondPlayer);
             PrintBoard.printBoard(board.getField());
 
             secondPlayer.rollDice(diceOne,diceTwo);
-            System.out.println("Gewürfelt: " + secondPlayer.getDiceNumber1()+ " Würfel 2:"+ secondPlayer.getDiceNumber2());
-            secondPlayer.printgameBoard();
+            System.out.println("Würfel1: " + secondPlayer.getDiceNumber1()+ " Würfel 2:"+ secondPlayer.getDiceNumber2());
+            secondPlayer.printGameBar();
             secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber2(), secondPlayer.getDiceNumber1(), firstPlayer);
             PrintBoard.printBoard(board.getField());
         }
-     */   // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
+       // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
     }
 
 }

@@ -24,7 +24,7 @@ public class Rules{
         }
         return false;
     }
-    public boolean isAccessibile(boolean isblack, int newPosition, int[][] field, int[] gameBoardEdge)
+    public boolean isAccessibile(boolean isblack, int newPosition, int[][] field, int[] gameBar)
     {
         int index=0;
         boolean control = false;
@@ -55,29 +55,29 @@ public class Rules{
         }
         if(control)
         {
-            hitStone(field, field[newPosition][0], gameBoardEdge, newPosition);
+            hitStone(field, field[newPosition][0], gameBar, newPosition);
         }
         return true;
     }
-    public void hitStone(int[][] field, int killStone, int[] gameBoardEdge, int newPosition)
+    public void hitStone(int[][] field, int killStone, int[] gameBar, int newPosition)
     {
-            for(int i=0; i < gameBoardEdge.length; i++)
+            for(int i=0; i < gameBar.length; i++)
             {
-                if(gameBoardEdge[i] == 0)
+                if(gameBar[i] == 0)
                 {
-                    gameBoardEdge[i] = killStone;
-                    //System.out.printf("GameBoardEdge: " + gameBoardEdge[i]);
+                    gameBar[i] = killStone;
+                    //System.out.printf("gameBar: " + gameBar[i]);
                     field[newPosition][0] = 0;
                     return;
                 }
             }
     }
 
-    public boolean haveYouStonesOut(int[] gameBoardEdge)
+    public boolean haveYouStonesOut(int[] gameBar)
     {
-        for(int i=0; i<gameBoardEdge.length; i++)
+        for(int i=0; i<gameBar.length; i++)
         {
-            if(gameBoardEdge[i] != 0)
+            if(gameBar[i] != 0)
             {
                 return true;
             }
