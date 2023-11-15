@@ -12,6 +12,25 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Rules{
+
+    // Checkt die Möglichkeit ob der Spieler den Stein außerhalb des Feldes bewegen möchte.
+    public boolean checkForOutOfBound(int diceNumber, int positionOfStone) {
+        boolean inBound = true;
+        if (positionOfStone + diceNumber > 24){
+            inBound = false;
+            return inBound;
+        }
+        else if (positionOfStone - diceNumber < 0){
+            inBound = false;
+            return inBound;
+        } else {
+            return inBound;
+        }
+    }
+
+
+
+
     public boolean isStoneYours(boolean isBlack, int movingStone)
     {
         if(movingStone>0 && isBlack)
@@ -24,11 +43,13 @@ public class Rules{
         }
         return false;
     }
+
+
     public boolean isAccessibile(boolean isblack, int newPosition, int[][] field, int[] gameBar)
     {
         int index=0;
         boolean control = false;
-        for(int i=0; i<2; i++)
+        for(int i = 0; i < 5; i++)
         {
             if(field[newPosition][i] < 0 && isblack)
             {
@@ -40,7 +61,7 @@ public class Rules{
                 control = true;
             }
         }
-        for(int i = 0; i<2; i++)
+        for(int i = 0; i < 5; i++)
         {
             if(field[newPosition][i]  > 0 && !isblack)
             {

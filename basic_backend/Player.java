@@ -16,6 +16,8 @@ public class Player{
     private int[] gameBar = new int[10];
 
     private Set<Integer> outOfBoard = new HashSet<>();
+    private boolean permissionConcede = false;
+
 
 
     // Konstruktor
@@ -108,21 +110,35 @@ public class Player{
         return rules.validColorInput();
     }
 
-    /*
-    public void moveStoneOutOfBoard(boolean permittedRemoveStone, int stoneNumber, Board board) {
-        try {
 
+    public void permissionToMoveStoneOutOfBoard(Board board, int diceNumber, int positionOfStone) {
+        boolean colorOfStone = this.isBlack;
+        boolean checkForOutOfBound = rules.checkForOutOfBound(diceNumber, positionOfStone);
 
-        } catch (ArrayIndexOutOfBoundsException b) {
-            if (permittedRemoveStone = true) {
-                outOfBoard.add(stoneNumber);
-                board.adjustReverenceSet(stoneNumber);
+        if (colorOfStone) {
+            if (board.isBlackPermittedRemoveStones() && checkForOutOfBound) {
+                this.permissionConcede = true;
+
             } else {
-                System.out.println("Stein darf nicht abgebaut werden. Wähle einen anderen Stein.");
-                moveStone();
+                this.permissionConcede = false;
+            }
+        } else {
+            if (board.isWhitePermittedRemoveStones() && checkForOutOfBound) {
+                this.permissionConcede = true;
+            } else {
+                 this.permissionConcede = false;
             }
         }
-    }*/
+    }
+
+    /* Hier brauche ich noch mal Hilfe
+    public void moveStoneOutOfBound (int[][] field, int dice1, int dice2,  Player opponentPlayer, Board board) {
+        if (this.permissionConcede) {
+            moveStone(field, dice1, dice2,  opponentPlayer);
+        }
+    }
+*/
+
 
     public void moveStone(int field[][], int dice1, int dice2,  Player opponentPlayer){
         System.out.println("Spieler " + name + ", möchtest du einen Stein mit der Summe der Würfelaugen bewegen oder zwei Steine mit jeder Würfelaugenanzahl?");
