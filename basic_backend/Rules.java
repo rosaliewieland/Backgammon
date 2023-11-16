@@ -12,25 +12,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Rules{
-
-    // Checkt die Möglichkeit ob der Spieler den Stein außerhalb des Feldes bewegen möchte.
-    public boolean checkForOutOfBound(int diceNumber, int positionOfStone) {
-        boolean inBound = true;
-        if (positionOfStone + diceNumber > 24){
-            inBound = false;
-            return inBound;
-        }
-        else if (positionOfStone - diceNumber < 0){
-            inBound = false;
-            return inBound;
-        } else {
-            return inBound;
-        }
-    }
-
-
-
-
     public boolean isStoneYours(boolean isBlack, int movingStone)
     {
         if(movingStone>0 && isBlack)
@@ -43,13 +24,11 @@ public class Rules{
         }
         return false;
     }
-
-
-    public boolean isAccessibile(boolean isblack, int newPosition, int[][] field, int[] gameBar)
+    public boolean isAccessibile(boolean isblack, int newPosition, int[][] field, int[] gameBoardEdge)
     {
         int index=0;
         boolean control = false;
-        for(int i = 0; i < 5; i++)
+        for(int i=0; i<2; i++)
         {
             if(field[newPosition][i] < 0 && isblack)
             {
@@ -61,7 +40,7 @@ public class Rules{
                 control = true;
             }
         }
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i<2; i++)
         {
             if(field[newPosition][i]  > 0 && !isblack)
             {
@@ -76,29 +55,29 @@ public class Rules{
         }
         if(control)
         {
-            hitStone(field, field[newPosition][0], gameBar, newPosition);
+            hitStone(field, field[newPosition][0], gameBoardEdge, newPosition);
         }
         return true;
     }
-    public void hitStone(int[][] field, int killStone, int[] gameBar, int newPosition)
+    public void hitStone(int[][] field, int killStone, int[] gameBoardEdge, int newPosition)
     {
-            for(int i=0; i < gameBar.length; i++)
+            for(int i=0; i < gameBoardEdge.length; i++)
             {
-                if(gameBar[i] == 0)
+                if(gameBoardEdge[i] == 0)
                 {
-                    gameBar[i] = killStone;
-                    //System.out.printf("gameBar: " + gameBar[i]);
+                    gameBoardEdge[i] = killStone;
+                    //System.out.printf("GameBoardEdge: " + gameBoardEdge[i]);
                     field[newPosition][0] = 0;
                     return;
                 }
             }
     }
 
-    public boolean haveYouStonesOut(int[] gameBar)
+    public boolean haveYouStonesOut(int[] gameBoardEdge)
     {
-        for(int i=0; i<gameBar.length; i++)
+        for(int i=0; i<gameBoardEdge.length; i++)
         {
-            if(gameBar[i] != 0)
+            if(gameBoardEdge[i] != 0)
             {
                 return true;
             }
