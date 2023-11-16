@@ -102,7 +102,7 @@ public class Player{
     // Bewegt aktuell einen Stein (int field[][] ist die Adresse vom Board field[][]
     // bewegt Stein mit addierter Würfelzahl(sum)
     public void moveOneStone(int field[][], int sum, Player opponentPlayer,int stone) {
-        stone=-1;
+        stone=-1; //warum wird Stone übergeben, wenn es hier eh verändert wird? (Anni)
         boolean control = false;
         boolean playerColor = false;
         // Fuer test: zwei Steine belegen ein Feld
@@ -271,7 +271,7 @@ public class Player{
     public void enterPlayerName() {
         System.out.println("Gebe einen Namen an: ");
         name = rules.validStringInput();
-        System.out.println("Name Spieler: " + name);
+        //System.out.println("Name Spieler: " + name);
     }
 
     public boolean enterPlayerColor() {
@@ -279,7 +279,7 @@ public class Player{
         return rules.validColorInput();
     }
 
-    public void moveStoneOutOfBoard(boolean permittedRemoveStone, int stoneNumber, Board board) {
+    /*public void moveStoneOutOfBoard(boolean permittedRemoveStone, int stoneNumber, Board board) {
         try {
 
 
@@ -292,6 +292,6 @@ public class Player{
                 moveStone();
             }
         }
-    }
+    }*/
 
 }

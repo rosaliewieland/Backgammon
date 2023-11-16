@@ -12,6 +12,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Rules{
+
+    Scanner scanner = new Scanner(System.in);
     public boolean isStoneYours(boolean isBlack, int movingStone)
     {
         if(movingStone>0 && isBlack)
@@ -73,11 +75,11 @@ public class Rules{
             }
     }
 
-    public boolean haveYouStonesOut(int[] gameBoardEdge)
+    public boolean haveYouStonesOut(int[] gameBar)
     {
-        for(int i=0; i<gameBoardEdge.length; i++)
+        for(int i=0; i<gameBar.length; i++)
         {
-            if(gameBoardEdge[i] != 0)
+            if(gameBar[i] != 0)
             {
                 return true;
             }
@@ -89,9 +91,7 @@ public class Rules{
     public int validIntegerInput() {
         while (true) {
             try {
-                Scanner scanner = new Scanner(System.in);
-                int input = scanner.nextInt();
-                return input;
+                return scanner.nextInt();
 
             } catch (InputMismatchException e) {
                 System.out.println("Bitte nur Zahlen eingeben: ");
@@ -103,9 +103,7 @@ public class Rules{
     public String validStringInput() {
         while (true) {
             try {
-                Scanner scanner = new Scanner(System.in);
-                String input = scanner.next();
-                return input;
+                return scanner.next();
             }
             catch (InputMismatchException e) {
                 System.out.println("Bitte nur Buchstaben eingeben: ");
