@@ -78,21 +78,21 @@ public class Player{
     // Spieler mit der höheren Augenzahl beginnt das Spiel
     public Player startPlayer(Player playerOne, Player playerTwo, Dice diceOne, Dice diceTwo) {
 
-        int dicePlayerOne;
-        int dicePlayerTwo;
+        int sumDicePlayerOne;
+        int sumDicePlayerTwo;
 
         playerOne.rollDice(diceOne, diceTwo);
-        dicePlayerOne = playerOne.diceNumber1;
-        System.out.println("Spieler 1 " +playerOne.getName() + " Gewürfelt: " + dicePlayerOne);
+        sumDicePlayerOne= playerOne.diceNumber1 + playerOne.diceNumber2;
+        System.out.println("Spieler 1 " +playerOne.getName() + " Gewürfelt: " + sumDicePlayerOne);
 
         playerTwo.rollDice(diceOne,diceTwo);
-        dicePlayerTwo = playerTwo.diceNumber1;
-        System.out.println("Spieler 2 " +playerTwo.getName()+ " Gewürfelt " + dicePlayerTwo);
+        sumDicePlayerTwo = playerTwo.diceNumber1 + playerTwo.diceNumber2;
+        System.out.println("Spieler 2 " + playerTwo.getName()+ " Gewürfelt " + sumDicePlayerTwo);
 
-        if (dicePlayerOne > dicePlayerTwo) {
+        if (sumDicePlayerOne > sumDicePlayerTwo) {
             return playerOne;
         }
-        else if (dicePlayerOne < dicePlayerTwo) {
+        else if (sumDicePlayerOne < sumDicePlayerTwo) {
             return playerTwo;
         }
         else // Wenn unentschieden
@@ -110,8 +110,6 @@ public class Player{
         System.out.println("Wähle zwischen Schwarz oder Weiß: ");
         return rules.validColorInput();
     }
-
-
 
 
     public void moveStone(int[][] field, int dice1, int dice2,  Player opponentPlayer){
