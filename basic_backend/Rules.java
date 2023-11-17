@@ -26,13 +26,13 @@ public class Rules{
         }
         return false;
     }
-    public boolean isAccessibile(boolean isblack, int newPosition, int[][] field, int[] gameBoardEdge)
+    public boolean isAccessibile(boolean isBlack, int newPosition, int[][] field, int[] gameBoardEdge)
     {
         int index=0;
         boolean control = false;
         for(int i = 0; i < 5; i++)
         {
-            if(field[newPosition][i] < 0 && isblack)
+            if(field[newPosition][i] < 0 && isBlack)
             {
                 if(control)
                 {
@@ -44,7 +44,7 @@ public class Rules{
         }
         for(int i = 0; i<5 ; i++)
         {
-            if(field[newPosition][i]  > 0 && !isblack)
+            if(field[newPosition][i]  > 0 && !isBlack)
             {
                 if(control)
                 {
@@ -127,7 +127,7 @@ public class Rules{
         }
     }
 
-    public boolean CheckConditionWhite(int[][] field){
+    /*public boolean CheckConditionWhite(int[][] field){
         int counter = 0;
         int Amount;
         Player WhitePlayer = new Player();
@@ -150,9 +150,9 @@ public class Rules{
     }
     public boolean CheckConditionBlack(int[][] field){
         int counter = 0;
-        int Amount;
-        Player WhitePlayer = new Player();
-        Amount = WhitePlayer.getStones() ;
+        int amount;
+        Player whitePlayer = new Player();
+        amount = whitePlayer.getStones() ;
         for(int i = 18; i < 24; i++){
             for (int j = 0; j < 5; j++){
                 if (field[i][j] < 0){
@@ -160,18 +160,19 @@ public class Rules{
                 }
             }
         }
-        if (counter == Amount){
+        if (counter == amount){
             return true;
         }
-        else if (counter > Amount) {
+        else if (counter > amount) {
             System.out.println("Error to read Checker");
             return false;
         }
         else return false;
     }
+     */
 
     // Checkt die Möglichkeit ob der Spieler den Stein außerhalb des Feldes bewegen möchte.
-    public boolean checkForOutOfBound(int diceNumber, int positionOfStone) {
+    public boolean isOutOfBound(int diceNumber, int positionOfStone) {
         boolean inBound = true;
         if (positionOfStone + diceNumber > 24){
             inBound = false;

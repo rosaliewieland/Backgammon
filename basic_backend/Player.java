@@ -127,7 +127,7 @@ public class Player{
         }
     }*/
 
-    public void moveStone(int field[][], int dice1, int dice2,  Player opponentPlayer){
+    public void moveStone(int[][] field, int dice1, int dice2,  Player opponentPlayer){
         System.out.println("Spieler " + name + ", möchtest du einen Stein mit der Summe der Würfelaugen bewegen oder zwei Steine mit jeder Würfelaugenanzahl?");
         System.out.println("1. Einen Stein mit der Summe bewegen");
         System.out.println("2. Zwei Steine mit jeder Augenzahl bewegen");
@@ -151,9 +151,7 @@ public class Player{
     }
 
 
-
-
-    public void moveOneStone(int field[][], int sum, Player opponentPlayer) {
+    public void moveOneStone(int[][] field, int sum, Player opponentPlayer) {
         boolean playerColor = false;
         boolean accessMove = false;
         // Fuer test: zwei Steine belegen ein Feld
@@ -170,10 +168,10 @@ public class Player{
             {
                 System.out.println("Welchen Stein moechte " + name + " bewegen?:");
                 // Ermöglicht und überprüft (Integer) Eingabe
-                this.stone = rules.validIntegerInput();
+                stone = rules.validIntegerInput();
             }
             // Eingabe welcher Stein bewegt werden soll
-            playerColor = rules.isStoneYours(isBlack, this.stone);
+            playerColor = rules.isStoneYours(isBlack, stone);
             // Bewege richtigen Stein (Also Positive Steine oder negative Steine)
             if(playerColor && !isBlack)
             {
@@ -191,7 +189,7 @@ public class Player{
         }
     }
     //Methode mit zwei einzelnen Steinen laufen
-    public void moveTwoStones(int field[][],int dice1,int dice2,Player opponentPlayer) {
+    public void moveTwoStones(int[][] field,int dice1,int dice2,Player opponentPlayer) {
         // Move the first stone with dice1
         moveOneStone(field, dice1, opponentPlayer);
 
@@ -323,8 +321,8 @@ public class Player{
     }
 
     public void permissionToMoveStoneOutOfBoard(Board board, int diceNumber, int positionOfStone) {
-        boolean colorOfStone = this.isBlack;
-        boolean checkForOutOfBound = rules.checkForOutOfBound(diceNumber, positionOfStone);
+        boolean colorOfStone = isBlack;
+        boolean checkForOutOfBound = rules.isOutOfBound(diceNumber, positionOfStone);
 
         if (colorOfStone) {
             if (board.isBlackPermittedRemoveStones() && checkForOutOfBound) {

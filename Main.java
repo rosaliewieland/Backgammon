@@ -1,24 +1,12 @@
 import basic_backend.*;
 
 // ToDo's: - Stein ins Ziel bringen ermoeglichen
-//         - (Erledigt) Stein schlaegt Gegnerstein raus
-//              - Dokumetation schreiben
-//         - (Erledigt) Steine ausserhalb des Spielesfeldes darstellen (Falls Stein gerade nicht im Spiel)
-//             - (Erledigt) Es Fehlt nocht die Steine wieder ins Spielfeld bringen
-//              - Dokumetation schreiben
-//         - (Erledigt) Stein wieder ins Spiel bringen
-//         (- Zwei Wuerfel Option)(Rosi)
-//         - (erledigt) Anni: Unentschieden + auslagern
-//         - (erledigt) Anni: andere Variablen für currentPlayer, otherPlayer --> firstPlayer, secondPlayer
-//         - (erledigt) Anni: Eingabe überprüfen (isValidInput) --> try, except
 //         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
-//         - Anni: Eingabe Spielername, Farbenzuordnung
-//         - moveStone -> Schoener
 //         - Ziel des Spiels
 //              -ist im Feld (Cey)
 //              -Abbauen (Marco)
-//          - Problem: die steine sind nicht an Spielerfarbe gekoppelt
-
+//         - Rosie: 4 Steine bewegen
+//         - Anni: isAccessible überarbeiten
 
 public class Main {
     public static void main(String[] args)
@@ -37,7 +25,6 @@ public class Main {
 
         Player playerOne = new Player(color);
         Player playerTwo = new Player(!color); // der zweite Spieler bekommt automatisch die andere Farbe
-
 
 
         Player startPlayer = new Player();
@@ -78,13 +65,13 @@ public class Main {
             firstPlayer.rollDice(diceOne, diceTwo);
             System.out.println("Würfel1: " + firstPlayer.getDiceNumber1()+ " Würfel 2: " + firstPlayer.getDiceNumber2());
             //firstPlayer.printGameBar();
-            firstPlayer.moveStone(board.getField(), firstPlayer.getDiceNumber1(), firstPlayer.getDiceNumber2(),secondPlayer);
+            firstPlayer.moveStone(board.getField(), 2/*firstPlayer.getDiceNumber1()*/, 1/*firstPlayer.getDiceNumber2()*/,secondPlayer);
             PrintBoard.printBoard(board.getField());
 
             secondPlayer.rollDice(diceOne,diceTwo);
             System.out.println("Würfel1: " + secondPlayer.getDiceNumber1()+ " Würfel 2:"+ secondPlayer.getDiceNumber2());
             //secondPlayer.printGameBar();
-            secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber2(), secondPlayer.getDiceNumber1(), firstPlayer);
+            secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber1(), secondPlayer.getDiceNumber2(), firstPlayer);
             PrintBoard.printBoard(board.getField());
         }
        // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
