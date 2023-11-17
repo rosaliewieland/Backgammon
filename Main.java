@@ -6,7 +6,7 @@ import basic_backend.*;
 //              -ist im Feld (Cey)
 //              -Abbauen (Marco)
 //         - Rosie: 4 Steine bewegen
-//         - Anni: isAccessible überarbeiten, Problemlösen eigene Steine
+//         - (erledigt) Anni: isAccessible überarbeiten, Problemlösen eigene Steine
 
 public class Main {
     public static void main(String[] args)
@@ -65,13 +65,13 @@ public class Main {
             firstPlayer.rollDice(diceOne, diceTwo);
             System.out.println("Würfel1: " + firstPlayer.getDiceNumber1()+ " Würfel 2: " + firstPlayer.getDiceNumber2());
             //firstPlayer.printGameBar();
-            firstPlayer.moveStone(board.getField(), 2/*firstPlayer.getDiceNumber1()*/, 1/*firstPlayer.getDiceNumber2()*/,secondPlayer);
+            firstPlayer.moveStone(board.getField(), firstPlayer.getDiceNumber1(), firstPlayer.getDiceNumber2(),secondPlayer);
             PrintBoard.printBoard(board.getField());
 
             secondPlayer.rollDice(diceOne,diceTwo);
             System.out.println("Würfel1: " + secondPlayer.getDiceNumber1()+ " Würfel 2:"+ secondPlayer.getDiceNumber2());
             //secondPlayer.printGameBar();
-            secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber1(), secondPlayer.getDiceNumber2(), firstPlayer);
+            secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber1(),secondPlayer.getDiceNumber2(), firstPlayer);
             PrintBoard.printBoard(board.getField());
         }
        // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
