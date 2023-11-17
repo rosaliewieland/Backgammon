@@ -103,7 +103,7 @@ public class Player{
     public void enterPlayerName() {
         System.out.println("Gebe einen Namen an: ");
         name = rules.validStringInput();
-        System.out.println("Name Spieler: " + name);
+        //System.out.println("Name Spieler: " + name);
     }
 
     public boolean enterPlayerColor() {
@@ -111,21 +111,8 @@ public class Player{
         return rules.validColorInput();
     }
 
-    /*
-    public void moveStoneOutOfBoard(boolean permittedRemoveStone, int stoneNumber, Board board) {
-        try {
 
 
-        } catch (ArrayIndexOutOfBoundsException b) {
-            if (permittedRemoveStone = true) {
-                outOfBoard.add(stoneNumber);
-                board.adjustReverenceSet(stoneNumber);
-            } else {
-                System.out.println("Stein darf nicht abgebaut werden. Wähle einen anderen Stein.");
-                moveStone();
-            }
-        }
-    }*/
 
     public void moveStone(int[][] field, int dice1, int dice2,  Player opponentPlayer){
         System.out.println("Spieler " + name + ", möchtest du einen Stein mit der Summe der Würfelaugen bewegen oder zwei Steine mit jeder Würfelaugenanzahl?");
@@ -155,7 +142,6 @@ public class Player{
         boolean playerColor = false;
         boolean accessMove = false;
         // Fuer test: zwei Steine belegen ein Feld
-        //dice = 1;
         //sum = 1;
         while(!accessMove)
         {
@@ -176,11 +162,11 @@ public class Player{
             if(playerColor && !isBlack)
             {
                 //Suche den Stein im Feld
-                accessMove = findStone(field, false, 0, 0, opponentPlayer, sum);
+                accessMove = findStone(field, opponentPlayer, sum);
             }
-            else if(playerColor && isBlack )
+            else if(playerColor && isBlack)
             {
-                accessMove = findStone(field,  false, 0 , 0, opponentPlayer, sum);
+                accessMove = findStone(field,  opponentPlayer, sum);
             }
             else
             {
@@ -199,15 +185,9 @@ public class Player{
     }
 
 
-    public boolean findStone(int[][] field, boolean isStoneAlreadyFound, int indexI, int indexJ, Player opponentPlayer ,int sum ) {
+    public boolean findStone(int[][] field, Player opponentPlayer ,int sum ) {
         boolean control = false;
-        // HIER AM FREITAG DARUEBER SPRECHEN MACHT KEINEN SINN.....
-        if(isStoneAlreadyFound) {
-            if (rules.isAccessibile(isBlack, 0, field, opponentPlayer.gameBar)) {
-                searchFreeField(field, indexI);
-            }
-        }
-        //
+
         if(!isBlack) {
             if (rules.haveYouStonesOut(gameBar)) {
                 System.out.println("Bringe Stein " + stone + " wieder ins Spiel " + "Wuefel: "+ sum);
@@ -260,7 +240,7 @@ public class Player{
         {
             if (gameBar[i]!=0){
                 stone= gameBar[i];
-                System.out.println("Stone:" + stone);
+                System.out.println("Stein von Game Bar:" + stone);
             }
         }
     }
@@ -294,6 +274,7 @@ public class Player{
     }
     public void searchFreeField(int[][] field, int indexI)
     {
+        // Anni
         boolean control = false;
         for (int counterFreeField = 0; counterFreeField < 5; counterFreeField++) {
             if (field[indexI][counterFreeField] == 0 && !control) {

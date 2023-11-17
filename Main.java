@@ -6,7 +6,7 @@ import basic_backend.*;
 //              -ist im Feld (Cey)
 //              -Abbauen (Marco)
 //         - Rosie: 4 Steine bewegen
-//         - Anni: isAccessible überarbeiten
+//         - Anni: isAccessible überarbeiten, Problemlösen eigene Steine
 
 public class Main {
     public static void main(String[] args)
