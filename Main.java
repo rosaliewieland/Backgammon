@@ -1,37 +1,93 @@
-import basic_backend.Board;
-import basic_backend.Dice;
-import java.util.Scanner;
+import basic_backend.*;
+
+// ToDo's: - Stein ins Ziel bringen ermoeglichen
+//         - (Erledigt) Stein schlaegt Gegnerstein raus
+//              - Dokumetation schreiben
+//         - (Erledigt) Steine ausserhalb des Spielesfeldes darstellen (Falls Stein gerade nicht im Spiel)
+//             - (Erledigt) Es Fehlt nocht die Steine wieder ins Spielfeld bringen
+//              - Dokumetation schreiben
+//         - (Erledigt) Stein wieder ins Spiel bringen
+//         (- Zwei Wuerfel Option)(Rosi)
+//         - (erledigt) Anni: Unentschieden + auslagern
+//         - (erledigt) Anni: andere Variablen für currentPlayer, otherPlayer --> firstPlayer, secondPlayer
+//         - (erledigt) Anni: Eingabe überprüfen (isValidInput) --> try, except
+//         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
+//         - Anni: Eingabe Spielername, Farbenzuordnung
+//         - moveStone -> Schoener
+//         - Ziel des Spiels
+//              -ist im Feld (Cey)
+//              -Abbauen (Marco)
+//          - Problem: die steine sind nicht an Spielerfarbe gekoppelt
+
 
 public class Main {
     public static void main(String[] args)
     {
-        Scanner scanner = new Scanner(System.in);
-        int prev = 0;
-        int randomNumber = 0;
-        boolean isGameFinished = false;
-        Board b1 = new Board(1);
-        Dice dice = new Dice();
+
+    // Anfang: Spiel mit fuenf Steinen und der neuen Klasse Board.java
+        // Initialisierung von zwei Würfeln die beiden Spieler zum Würfeln zur Verfügung stehen
+        Dice diceOne = new Dice();
+        Dice diceTwo = new Dice();
+        Rules rules = new Rules();
+
+
+        // Initialisierung von zwei Spielern.
+        Player playerColor = new Player();
+        boolean color = playerColor.enterPlayerColor(); // Spieler kann Farbe auswählen
+
+        Player playerOne = new Player(color);
+        Player playerTwo = new Player(!color); // der zweite Spieler bekommt automatisch die andere Farbe
 
 
 
-        while(isGameFinished == false){
-            System.out.println("Würfel: ");
-            scanner.nextInt();
-            randomNumber = dice.getDice();
-            System.out.println("Ausgabe von Eignabe: " + randomNumber);
+        Player startPlayer = new Player();
+        Player firstPlayer; // Spieler der startet
+        Player secondPlayer;
 
-            isGameFinished = b1.moveStone(randomNumber+prev, prev);
-            prev = randomNumber+prev;
-            b1.printBoard();
-            System.out.println("isGameFinished: " + isGameFinished);
+        // Ausgabe des Boards
+        Board board = new Board();
+        // Methoden erstellt zur Überprüfung der Abbauarbeiten am Ende des Spieles
+        board.createsSetOfHomeField();
+        board.createReverenceSet();
+        board.compareSetsEnableRemoveStones();
+/*
+        // Testbereich für meine Methoden holzaepf
+        System.out.println(board.isBlackPermittedRemoveStones());
+        System.out.println(board.isWhitePermittedRemoveStones());
+
+        board.adjustReverenceSet(-15);
+        board.compareSetsEnableRemoveStones();
+
+        System.out.println(board.isBlackPermittedRemoveStones());
+        System.out.println(board.isWhitePermittedRemoveStones());
+*/
+        PrintBoard.printBoard(board.getField());
+        // Spieler mit höherem Würfelergebnis startet
+        firstPlayer = startPlayer.startPlayer(playerOne, playerTwo, diceOne, diceTwo); //übergibt den starteten Spieler
+        if (firstPlayer == playerOne)
+            secondPlayer = playerTwo;
+        else
+            secondPlayer = playerOne;
+
+        // Ab hier beginnt der Spielverlauf
+        System.out.println("--Schleifenbeginn--");
+
+        // Test-Schleife Spieldurchlauf
+        for(int i = 0; i<5; i++)
+        {
+            firstPlayer.rollDice(diceOne, diceTwo);
+            System.out.println("Würfel1: " + firstPlayer.getDiceNumber1()+ " Würfel 2: " + firstPlayer.getDiceNumber2());
+            //firstPlayer.printGameBar();
+            firstPlayer.moveStone(board.getField(), firstPlayer.getDiceNumber1(), firstPlayer.getDiceNumber2(),secondPlayer);
+            PrintBoard.printBoard(board.getField());
+
+            secondPlayer.rollDice(diceOne,diceTwo);
+            System.out.println("Würfel1: " + secondPlayer.getDiceNumber1()+ " Würfel 2:"+ secondPlayer.getDiceNumber2());
+            //secondPlayer.printGameBar();
+            secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber2(), secondPlayer.getDiceNumber1(), firstPlayer);
+            PrintBoard.printBoard(board.getField());
         }
-
-        /*
-        System.out.println("Wie weit willst du Laufen?: ");
-        eingabe = scanner.nextInt();
-        System.out.println("Ausgabe von Eignabe: " + eingabe);
-        b1.moveStone(eingabe+prev, prev);
-        b1.printBoard();*/
-
+       // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
     }
+
 }
