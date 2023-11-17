@@ -16,6 +16,9 @@ public class Player{
     private int[] gameBar = new int[10];
 
     private Set<Integer> outOfBoard = new HashSet<>();
+    private boolean permissionConcede = false;
+
+
 
 
     // Konstruktor
@@ -318,6 +321,26 @@ public class Player{
     public String toString() {
         return "Name: " + getName() + "\nAmount of Stones: " + getStones() + "\nColor is Black: " + isBlack();
     }
+
+    public void permissionToMoveStoneOutOfBoard(Board board, int diceNumber, int positionOfStone) {
+        boolean colorOfStone = this.isBlack;
+        boolean checkForOutOfBound = rules.checkForOutOfBound(diceNumber, positionOfStone);
+
+        if (colorOfStone) {
+            if (board.isBlackPermittedRemoveStones() && checkForOutOfBound) {
+                this.permissionConcede = true;
+            } else {
+                this.permissionConcede = false;
+            }
+        } else {
+            if (board.isWhitePermittedRemoveStones() && checkForOutOfBound) {
+                this.permissionConcede = true;
+            } else {
+                this.permissionConcede = false;
+            }
+        }
+    }
+
     /*
     // Bewegt aktuell einen Stein (int field[][] ist die Adresse vom Board field[][]
     // bewegt Stein mit addierter Würfelzahl(sum)

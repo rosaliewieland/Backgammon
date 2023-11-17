@@ -30,7 +30,7 @@ public class Rules{
     {
         int index=0;
         boolean control = false;
-        for(int i=0; i<2; i++)
+        for(int i = 0; i < 5; i++)
         {
             if(field[newPosition][i] < 0 && isblack)
             {
@@ -42,7 +42,7 @@ public class Rules{
                 control = true;
             }
         }
-        for(int i = 0; i<2; i++)
+        for(int i = 0; i<5 ; i++)
         {
             if(field[newPosition][i]  > 0 && !isblack)
             {
@@ -169,4 +169,21 @@ public class Rules{
         }
         else return false;
     }
+
+    // Checkt die Möglichkeit ob der Spieler den Stein außerhalb des Feldes bewegen möchte.
+    public boolean checkForOutOfBound(int diceNumber, int positionOfStone) {
+        boolean inBound = true;
+        if (positionOfStone + diceNumber > 24){
+            inBound = false;
+            return inBound;
+        }
+        else if (positionOfStone - diceNumber < 0){
+            inBound = false;
+            return inBound;
+        } else {
+            return inBound;
+        }
+    }
+
+
 }
