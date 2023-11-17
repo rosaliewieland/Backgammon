@@ -28,19 +28,53 @@ public class Rules{
     }
     public boolean isAccessibile(boolean isBlack, int newPosition, int[][] field, int[] gameBoardEdge)
     {
-        int index=0;
-        boolean control = false;
-        for(int i = 0; i < 5; i++)
+        /*int index=0;
+        boolean control = false;*/
+        int counterStone = 0;
+        int foundedStone = 0;
+
+        for(int i=0; i<5; i++) {
+            if(field[newPosition][i] != 0) { // wenn ein im Feld gefunden wurde
+                foundedStone = field[newPosition][i]; //speichert den Stein in foundedStone
+                counterStone += 1;
+            }
+        }
+
+        if (counterStone == 0) { // der counterStone ist null, wenn kein Stein im Feld gefunden wurde
+            return true;
+        }
+        else if (counterStone > 0) { // counterStone ist größer als null, wenn mindestens ein Stein gefunden wurde
+            if (foundedStone <0 && isBlack ||foundedStone >0 && !isBlack ) { // wenn foundedStone ein Gegnerstein ist
+                if (counterStone == 1) { // wenn nur ein Gegnerstein im Feld ist //wenn nur ein Gegnerstein im Feld liegt, wird dieser geschlagen
+                    hitStone(field, field[newPosition][0], gameBoardEdge, newPosition);
+                }
+                else { //wenn mehr als ein Gegnerstein im Feld ist
+                    System.out.println("Feld ist von Gegnersteinen belegt");
+                    return false;
+                }
+            }
+            else { //wenn im Feld ein eigener Stein liegt
+                if(counterStone == 5) { //wenn fünf eigene Steine da liegen
+                    System.out.println("Feld ist den eigenen Steinen belegt");
+                    return false;
+                }
+            }
+
+        }
+        return true;
+        /*for(int i = 0; i < 5; i++)
         {
             if(field[newPosition][i] < 0 && isBlack)
             {
-                if(control)
+                if(control) //(Anni) überspringt den ersten Stein
                 {
                     System.out.println("Feld ist belegt");
                     return false;
                 }
                 control = true;
             }
+
+
         }
         for(int i = 0; i<5 ; i++)
         {
@@ -60,6 +94,9 @@ public class Rules{
             hitStone(field, field[newPosition][0], gameBoardEdge, newPosition);
         }
         return true;
+
+         */
+
     }
     public void hitStone(int[][] field, int killStone, int[] gameBoardEdge, int newPosition)
     {
