@@ -164,6 +164,20 @@ public class Rules{
         }
     }
 
+    public boolean isOutOfBound(int diceNumber, int positionOfStone) {
+        boolean inBound = true;
+        if (positionOfStone + diceNumber > 24){
+            inBound = false;
+            return inBound;
+        }
+        else if (positionOfStone - diceNumber < 0){
+            inBound = false;
+            return inBound;
+        } else {
+            return inBound;
+        }
+    }
+
     /*public boolean CheckConditionWhite(int[][] field){
         int counter = 0;
         int Amount;
@@ -209,19 +223,7 @@ public class Rules{
      */
 
     // Checkt die Möglichkeit ob der Spieler den Stein außerhalb des Feldes bewegen möchte.
-    public boolean isOutOfBound(int diceNumber, int positionOfStone) {
-        boolean inBound = true;
-        if (positionOfStone + diceNumber > 24){
-            inBound = false;
-            return inBound;
-        }
-        else if (positionOfStone - diceNumber < 0){
-            inBound = false;
-            return inBound;
-        } else {
-            return inBound;
-        }
-    }
+
 
 
 }

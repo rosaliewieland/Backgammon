@@ -16,9 +16,6 @@ public class Player{
     private int[] gameBar = new int[10];
 
     private Set<Integer> outOfBoard = new HashSet<>();
-    private boolean permissionConcede = false;
-
-
 
 
     // Konstruktor
@@ -112,7 +109,7 @@ public class Player{
     }
 
 
-    public void moveStone(int[][] field, int dice1, int dice2,  Player opponentPlayer){
+    public void moveStone(int[][] field, int dice1, int dice2,  Player opponentPlayer, Board board){
         System.out.println("Spieler " + name + ", möchtest du einen Stein mit der Summe der Würfelaugen bewegen oder zwei Steine mit jeder Würfelaugenanzahl?");
         System.out.println("1. Einen Stein mit der Summe bewegen");
         System.out.println("2. Zwei Steine mit jeder Augenzahl bewegen");
@@ -126,23 +123,26 @@ public class Player{
             dice2 = dice2 * 2;
         }
         if (choice == 1) {
-            moveOneStone(field, dice1 + dice2, opponentPlayer);
+            moveOneStone(field, dice1 + dice2, opponentPlayer, board);
         } else if (choice == 2) {
-            moveTwoStones(field, dice1, dice2, opponentPlayer);
+            moveTwoStones(field, dice1, dice2, opponentPlayer, board);
         } else {
             System.out.println("Ungültige Eingabe. Bitte wähle 1 oder 2.");
-            moveStone(field, dice1, dice2, opponentPlayer); // Recursive call to handle invalid input
+            moveStone(field, dice1, dice2, opponentPlayer, board); // Recursive call to handle invalid input
         }
     }
 
 
-    public void moveOneStone(int[][] field, int sum, Player opponentPlayer) {
+    public void moveOneStone(int[][] field, int sum, Player opponentPlayer, Board board) {
         boolean rightStone = false;
         boolean accessMove = false;
+
         // Fuer test: zwei Steine belegen ein Feld
         //sum = 1;
         while(!accessMove)
         {
+            board.createsSetOfHomeField();
+
             if(rules.haveYouStonesOut(gameBar))
             {
                 // Setze den Stein aus der Game Bar
@@ -159,7 +159,7 @@ public class Player{
             // Bewege richtigen Stein (Also Positive Steine oder negative Steine)
 
             if(rightStone) {
-                accessMove = findStone(field, opponentPlayer, sum);
+                accessMove = findStone(field, opponentPlayer, sum, board);
             }
             else
             {
@@ -168,17 +168,17 @@ public class Player{
         }
     }
     //Methode mit zwei einzelnen Steinen laufen
-    public void moveTwoStones(int[][] field,int dice1,int dice2,Player opponentPlayer) {
+    public void moveTwoStones(int[][] field,int dice1,int dice2,Player opponentPlayer, Board board) {
         // Move the first stone with dice1
-        moveOneStone(field, dice1, opponentPlayer);
+        moveOneStone(field, dice1, opponentPlayer, board);
 
         // Move the second stone with dice2
-        moveOneStone(field, dice2, opponentPlayer);
+        moveOneStone(field, dice2, opponentPlayer, board);
 
     }
 
 
-    public boolean findStone(int[][] field, Player opponentPlayer ,int sum ) {
+    public boolean findStone(int[][] field, Player opponentPlayer ,int sum, Board board) {
         boolean control = false;
 
         if(!isBlack) {
@@ -192,10 +192,17 @@ public class Player{
                     //Pruefe ob Stein gefunden
                     if (field[i][j] == stone) {
                         if (rules.isAccessibile(isBlack, i + sum, field, opponentPlayer.gameBar)) {
-                            // Stein in neues Feld schreiben.
-                            searchFreeField(field, i + sum);
-                            field[i][j] = 0;
-                            control = true;
+                            if (permissionToMoveStoneOutOfBoard(board, sum, i)) {
+                                // Stein in neues Feld schreiben.
+                                field[i][j] = 0;
+                                board.adjustReverenceSet(field[i][j]);
+                                outOfBoard.add(field[i][j]);
+                                control = true;
+                            } else {
+                                searchFreeField(field, i + sum);
+                                field[i][j] = 0;
+                                control = true;
+                            }
                         } else {
                             return false;
                         }
@@ -213,11 +220,20 @@ public class Player{
                 for (int j = 0; j < 5 && !control; j++) {
                     //Pruefe ob Stein gefunden
                     if (field[i][j] == stone) {
-                        if (rules.isAccessibile(isBlack, i - sum, field, opponentPlayer.gameBar)) {
-                            // Stein in neues Feld schreiben.
-                            searchFreeField(field, i - sum);
-                            field[i][j] = 0;
-                            control = true;
+                        if (rules.isAccessibile(isBlack, i - sum, field, opponentPlayer.gameBar)){
+                            if (rules.isOutOfBound(sum, field[i][j])) {
+                                if (permissionToMoveStoneOutOfBoard(board, sum, i)) {
+                                    // Stein in neues Feld schreiben.
+                                    field[i][j] = 0;
+                                    board.adjustReverenceSet(field[i][j]);
+                                    outOfBoard.add(field[i][j]);
+                                    control = true;
+                                } else {
+                                    searchFreeField(field, i + sum);
+                                    field[i][j] = 0;
+                                    control = true;
+                                }
+                            }
                         } else {
                             return false;
                         }
@@ -227,6 +243,7 @@ public class Player{
         }
         return true;
     }
+
     public void gameBarIsNotEmpty()
     {
         for(int i = 0; i< gameBar.length; i++)
@@ -279,7 +296,6 @@ public class Player{
         }
     }
 
-
     public void printGameBar()
     {
         System.out.println("Game Board von Spieler: " + name);
@@ -294,22 +310,31 @@ public class Player{
         return "Name: " + getName() + "\nAmount of Stones: " + getStones() + "\nColor is Black: " + isBlack();
     }
 
-    public void permissionToMoveStoneOutOfBoard(Board board, int diceNumber, int positionOfStone) {
+    public boolean permissionToMoveStoneOutOfBoard(Board board, int diceNumber, int positionOfStone) {
         boolean colorOfStone = isBlack;
         boolean checkForOutOfBound = rules.isOutOfBound(diceNumber, positionOfStone);
+        board.compareSetsEnableRemoveStones();
 
         if (colorOfStone) {
             if (board.isBlackPermittedRemoveStones() && checkForOutOfBound) {
-                this.permissionConcede = true;
+                return true;
             } else {
-                this.permissionConcede = false;
+                return false;
             }
         } else {
             if (board.isWhitePermittedRemoveStones() && checkForOutOfBound) {
-                this.permissionConcede = true;
+                return true;
             } else {
-                this.permissionConcede = false;
+                return false;
             }
+        }
+    }
+
+    public boolean theWinnerIs() {
+        if (outOfBoard.size() == 15) {
+            return true;
+        } else {
+            return false;
         }
     }
 

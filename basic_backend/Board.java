@@ -8,7 +8,7 @@ public class Board {
     private final int[][] field = new int[24][5];
 
     // Test Feld um schneller meine Methoden zu prüfen.
-    private final int[][] testfield = new int[24][5];
+    // private final int[][] testfield = new int[24][5];
 
     // boolean ob der Spieler anfangen darf die Steine abzubauen
     // true = darf abbauen
@@ -73,7 +73,7 @@ public class Board {
         field[23][0] = 1;
         field[23][1] = 2;
 
-
+/*
         // Testarry befüllt durch den Konstruktor
         testfield[0][0]=1;
         testfield[0][1]=2;
@@ -110,6 +110,7 @@ public class Board {
         testfield[21][2]=-13;
         testfield[21][3]=-14;
         testfield[21][4]=-15;
+        */
     }
 
 
@@ -119,25 +120,24 @@ public class Board {
 
 
     // Methode läuft durch die beiden Homes der Spieler und erstellt das Hashset homeFieldBlack and homeFieldWhite
-    //
     public void createsSetOfHomeField() {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
-                if (testfield[i][j] > 0) {
-                    homeFieldBlack.add(testfield[i][j]);
+                if (field[i][j] > 0) {
+                    homeFieldBlack.add(field[i][j]);
                 }
             }
         }
         for (int i = 18; i < 24; i++) {
             for (int j = 0; j < 5; j++) {
-                if (testfield[i][j] < 0 ) {
-                    homeFieldWhite.add(testfield[i][j]);
+                if (field[i][j] < 0 ) {
+                    homeFieldWhite.add(field[i][j]);
                 }
             }
         }
         // Testausgabe
-        System.out.println(homeFieldBlack);
-        System.out.println(homeFieldWhite);
+        // System.out.println(homeFieldBlack);
+        // System.out.println(homeFieldWhite);
     }
 
 
@@ -150,8 +150,8 @@ public class Board {
             reverenceSetWhite.add(i);
         }
         // Testausgabe
-        System.out.println(reverenceSetBlack);
-        System.out.println(reverenceSetWhite);
+        // System.out.println(reverenceSetBlack);
+        // System.out.println(reverenceSetWhite);
     }
 
 
@@ -159,10 +159,8 @@ public class Board {
         if (numberToRemove > 0) {
             this.reverenceSetBlack.remove(numberToRemove);
         }
-        else if (numberToRemove < 0) {
+        else {
             this.reverenceSetWhite.remove(numberToRemove);
-        } else {
-            System.out.println("Error adjustReverenceSet Number out of bound");
         }
     }
 
