@@ -103,7 +103,7 @@ public class Player{
     public void enterPlayerName() {
         System.out.println("Gebe einen Namen an: ");
         name = rules.validStringInput();
-        //System.out.println("Name Spieler: " + name);
+        //System.out.println("Name Spieler: " + name); Die Ausgabe kann raus
     }
 
     public boolean enterPlayerColor() {
@@ -137,7 +137,7 @@ public class Player{
 
 
     public void moveOneStone(int[][] field, int sum, Player opponentPlayer) {
-        boolean playerColor = false;
+        boolean rightStone = false;
         boolean accessMove = false;
         // Fuer test: zwei Steine belegen ein Feld
         //sum = 1;
@@ -155,16 +155,11 @@ public class Player{
                 stone = rules.validIntegerInput();
             }
             // Eingabe welcher Stein bewegt werden soll
-            playerColor = rules.isStoneYours(isBlack, stone);
+            rightStone = rules.isStoneYours(isBlack, stone);
             // Bewege richtigen Stein (Also Positive Steine oder negative Steine)
-            if(playerColor && !isBlack)
-            {
-                //Suche den Stein im Feld
+
+            if(rightStone) {
                 accessMove = findStone(field, opponentPlayer, sum);
-            }
-            else if(playerColor && isBlack)
-            {
-                accessMove = findStone(field,  opponentPlayer, sum);
             }
             else
             {
