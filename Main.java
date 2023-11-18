@@ -6,7 +6,7 @@ import basic_backend.*;
 //              -ist im Feld (Cey)
 //              -Abbauen (Marco)
 //         - Problem: die steine sind nicht an Spielerfarbe gekoppelt
-//         - Rosie: 4 Steine bewegen
+//         - (erledigt)Rosie: 4 Steine bewegen
 //         - (erledigt) Anni: isAccessible überarbeiten, Problemlösen eigene Steine
 
 public class Main {

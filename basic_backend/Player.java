@@ -119,17 +119,35 @@ public class Player{
 
         if (dice1==dice2) {
             System.out.println("Pasch gewürfelt. Augenzahl wird verdoppelt");
+
             dice1 = dice1 * 2;
             dice2 = dice2 * 2;
+            System.out.println("1. Einen Stein mit der Summe verdoppelt bewegen");
+            System.out.println("2. Zwei Steine mit je doppelter Augenzahl bewegen");
+            System.out.println("3. Vier Steine mit der Augenzahl einzeln gehen");
+
+            int third_choice = rules.validIntegerInput();
+
+            if (third_choice== 1){
+                moveOneStone(field,dice1+dice2,opponentPlayer,board);
+            } else if (third_choice == 2) {
+                moveTwoStones(field, dice1, dice2, opponentPlayer,board);
+            } else if (third_choice == 3){
+                moveTwoStones(field, dice1 / 2, dice2 / 2, opponentPlayer,board);
+                moveTwoStones(field, dice1 / 2, dice2 / 2, opponentPlayer,board);
+            }
+
+        }else{
+            if (choice == 1) {
+                moveOneStone(field, dice1 + dice2, opponentPlayer,board);
+            } else if (choice == 2) {
+                moveTwoStones(field, dice1, dice2, opponentPlayer,board);
+            } else {
+                System.out.println("Ungültige Eingabe. Bitte wähle 1 oder 2.");
+                moveStone(field, dice1, dice2, opponentPlayer,board); // Recursive call to handle invalid input
+            }
         }
-        if (choice == 1) {
-            moveOneStone(field, dice1 + dice2, opponentPlayer, board);
-        } else if (choice == 2) {
-            moveTwoStones(field, dice1, dice2, opponentPlayer, board);
-        } else {
-            System.out.println("Ungültige Eingabe. Bitte wähle 1 oder 2.");
-            moveStone(field, dice1, dice2, opponentPlayer, board); // Recursive call to handle invalid input
-        }
+
     }
 
 
