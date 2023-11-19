@@ -8,6 +8,7 @@ import basic_backend.*;
 //         - Problem: die steine sind nicht an Spielerfarbe gekoppelt
 //         - (erledigt)Rosie: 4 Steine bewegen
 //         - (erledigt) Anni: isAccessible überarbeiten, Problemlösen eigene Steine
+//         - Anni: Vorschlag umsetzen
 
 public class Main {
     public static void main(String[] args)
@@ -38,6 +39,7 @@ public class Main {
         board.createReverenceSet();
 
         PrintBoard.printBoard(board.getField());
+
         // Spieler mit höherem Würfelergebnis startet
         firstPlayer = startPlayer.startPlayer(playerOne, playerTwo, diceOne, diceTwo); //übergibt den starteten Spieler
         if (firstPlayer == playerOne)
