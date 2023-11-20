@@ -107,10 +107,16 @@ public class Rules{
     public String validStringInput() {
         while (true) {
             try {
-                return scanner.next();
+                String stringInput = scanner.nextLine();
+                if (stringInput.matches("[a-zA-Z]+")) {
+                    return stringInput;
+                } else {
+                    System.out.println("Bitte nur Buchstaben eingeben: ");
+                    validStringInput();
+                }
             }
             catch (InputMismatchException e) {
-                System.out.println("Bitte nur Buchstaben eingeben: ");
+                System.out.println("Fehler beim Einlesen. Bitte noch mal versuchen: ");
             }
         }
     }
@@ -118,15 +124,18 @@ public class Rules{
     public boolean validColorInput() {
         while (true) {
             try {
-                Scanner scanner = new Scanner(System.in);
-                String color = scanner.next();
-                if (color.equalsIgnoreCase("Schwarz"))
+                String color = scanner.nextLine();
+
+                if (color.equalsIgnoreCase("Schwarz")) {
                     return true;
-                else if (color.equalsIgnoreCase("Weiß"))
+                } else if (color.equalsIgnoreCase("Weiß")) {
                     return false;
+                } else {
+                    System.out.println("Bitte nur Schwarz oder Weiß eingeben: ");
+                }
             }
             catch (InputMismatchException e) {
-                System.out.println("Bitte nur Buchstaben eingeben: ");
+                System.out.println("Fehler beim Einlesen. Bitte noch mal versuchen: ");
             }
         }
     }
