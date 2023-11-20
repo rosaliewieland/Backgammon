@@ -212,9 +212,9 @@ public class Player{
                         if (rules.isAccessibile(isBlack, i + sum, field, opponentPlayer.gameBar)) {
                             if (permissionToMoveStoneOutOfBoard(board, sum, i)) {
                                 // Stein in neues Feld schreiben.
-                                field[i][j] = 0;
                                 board.adjustReverenceSet(field[i][j]);
                                 outOfBoard.add(field[i][j]);
+                                field[i][j] = 0;
                                 control = true;
                             } else {
                                 searchFreeField(field, i + sum);
@@ -242,9 +242,9 @@ public class Player{
                             if (rules.isOutOfBound(sum, field[i][j])) {
                                 if (permissionToMoveStoneOutOfBoard(board, sum, i)) {
                                     // Stein in neues Feld schreiben.
-                                    field[i][j] = 0;
                                     board.adjustReverenceSet(field[i][j]);
                                     outOfBoard.add(field[i][j]);
+                                    field[i][j] = 0;
                                     control = true;
                                 } else {
                                     searchFreeField(field, i + sum);
