@@ -155,7 +155,7 @@ public class Board {
     }
 
 
-    public void adjustReverenceSet(int numberToRemove){
+    public void adjustReverenceSet(int numberToRemove){ // (Anni) anpassen vom Referenzset
         if (numberToRemove > 0) {
             this.reverenceSetBlack.remove(numberToRemove);
         }

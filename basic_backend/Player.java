@@ -154,6 +154,7 @@ public class Player{
     public void moveOneStone(int[][] field, int sum, Player opponentPlayer, Board board) {
         boolean rightStone = false;
         boolean accessMove = false;
+        boolean stoneIsOut = false;
 
         // Fuer test: zwei Steine belegen ein Feld
         //sum = 1;
@@ -164,6 +165,7 @@ public class Player{
             if(rules.haveYouStonesOut(gameBar))
             {
                 // Setze den Stein aus der Game Bar
+                stoneIsOut = true;
                 gameBarIsNotEmpty();
             }
             else
@@ -177,7 +179,7 @@ public class Player{
             // Bewege richtigen Stein (Also Positive Steine oder negative Steine)
 
             if(rightStone) {
-                accessMove = findStone(field, opponentPlayer, sum, board);
+                accessMove = findStone(field, opponentPlayer, sum, board, stoneIsOut);
             }
             else
             {
@@ -196,11 +198,11 @@ public class Player{
     }
 
 
-    public boolean findStone(int[][] field, Player opponentPlayer ,int sum, Board board) {
+    public boolean findStone(int[][] field, Player opponentPlayer ,int sum, Board board, boolean stoneIsOut) {
         boolean control = false;
 
         if(!isBlack) {
-            if (rules.haveYouStonesOut(gameBar)) {
+            if (stoneIsOut) {
                 System.out.println("Bringe Stein " + stone + " wieder ins Spiel " + "Wuefel: "+ sum);
                 setGameBarStone(field, sum);
                 return true;
@@ -229,7 +231,7 @@ public class Player{
             }
         }else if(isBlack)
         {
-            if (rules.haveYouStonesOut(gameBar)) {
+            if (stoneIsOut) {
                 setGameBarStone(field, sum);
                 System.out.println("Bringe Stein " + stone + " wieder ins Spiel");
                 return true;
