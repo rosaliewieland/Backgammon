@@ -249,7 +249,7 @@ public class Player{
                                     field[i][j] = 0;
                                     control = true;
                                 } else {
-                                    searchFreeField(field, i + sum);
+                                    searchFreeField(field, i - sum);
                                     field[i][j] = 0;
                                     control = true;
                                 }
