@@ -241,7 +241,6 @@ public class Player{
                     //Pruefe ob Stein gefunden
                     if (field[i][j] == stone) {
                         if (rules.isAccessibile(isBlack, i - sum, field, opponentPlayer.gameBar)){
-                            if (rules.isOutOfBound(sum, field[i][j])) {
                                 if (permissionToMoveStoneOutOfBoard(board, sum, i)) {
                                     // Stein in neues Feld schreiben.
                                     board.adjustReverenceSet(field[i][j]);
@@ -253,7 +252,7 @@ public class Player{
                                     field[i][j] = 0;
                                     control = true;
                                 }
-                            }
+
                         } else {
                             return false;
                         }
