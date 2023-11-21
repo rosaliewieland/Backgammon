@@ -1,10 +1,8 @@
 import basic_backend.*;
 
-// ToDo's: - Stein ins Ziel bringen ermoeglichen
+// ToDo's: - (erledigt) Stein ins Ziel bringen ermoeglichen
 //         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
 //         - Ziel des Spiels
-//              -ist im Feld (Cey)
-//              -Abbauen (Marco)
 //         - Problem: die steine sind nicht an Spielerfarbe gekoppelt
 //         - (erledigt)Rosie: 4 Steine bewegen
 //         - (erledigt) Anni: isAccessible überarbeiten, Problemlösen eigene Steine

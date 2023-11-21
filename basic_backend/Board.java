@@ -155,12 +155,12 @@ public class Board {
     }
 
 
-    public void adjustReverenceSet(int numberToRemove){ // (Anni) anpassen vom Referenzset
-        if (numberToRemove > 0) {
-            this.reverenceSetBlack.remove(numberToRemove);
+    public void adjustReverenceSet(int stoneToRemove){ // (Anni) anpassen vom Referenzset
+        if (stoneToRemove > 0) {
+            this.reverenceSetBlack.remove(stoneToRemove);
         }
         else {
-            this.reverenceSetWhite.remove(numberToRemove);
+            this.reverenceSetWhite.remove(stoneToRemove);
         }
     }
 

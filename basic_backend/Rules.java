@@ -26,13 +26,16 @@ public class Rules{
         }
         return false;
     }
-    public boolean isAccessibile(boolean isBlack, int newPosition, int[][] field, int[] gameBoardEdge)
+    public boolean isAccessible(boolean isBlack, int newPosition, int[][] field, int[] gameBoardEdge, int diceNumber)
     {
         /*int index=0;
         boolean control = false;*/
         int counterStone = 0;
         int foundedStone = 0;
 
+        if (!isOutOfBound(diceNumber, newPosition-diceNumber)) {
+            return false;
+        }
         for(int i=0; i<5; i++) {
             if(field[newPosition][i] != 0) { // wenn ein Stein im Feld gefunden wurde
                 foundedStone = field[newPosition][i]; //speichert den Stein in foundedStone
@@ -53,17 +56,13 @@ public class Rules{
                     return false;
                 }
             }
-            else { //wenn im Feld ein eigener Stein liegt
+            } else { //wenn im Feld ein eigener Stein liegt
                 if(counterStone == 5) { //wenn fünf eigene Steine da liegen
                     System.out.println("Feld ist mit den eigenen Steinen belegt");
                     return false;
                 }
             }
-
-        }
         return true;
-
-
     }
     public void hitStone(int[][] field, int killStone, int[] gameBoardEdge, int newPosition)
     {

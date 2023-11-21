@@ -198,28 +198,28 @@ public class Player{
     }
 
 
-    public boolean findStone(int[][] field, Player opponentPlayer ,int sum, Board board, boolean stoneIsOut) {
+    public boolean findStone(int[][] field, Player opponentPlayer ,int diceNumber, Board board, boolean stoneIsOut) {
         boolean control = false;
 
         if(!isBlack) {
             if (stoneIsOut) {
-                System.out.println("Bringe Stein " + stone + " wieder ins Spiel " + "Wuefel: "+ sum);
-                setGameBarStone(field, sum);
+                System.out.println("Bringe Stein " + stone + " wieder ins Spiel " + "Wuefel: "+ diceNumber);
+                setGameBarStone(field, diceNumber);
                 return true;
             }
             for (int i = 0; i < 24; i++) {
                 for (int j = 0; j < 5 && !control; j++) {
                     //Pruefe ob Stein gefunden
                     if (field[i][j] == stone) {
-                        if (rules.isAccessibile(isBlack, i + sum, field, opponentPlayer.gameBar)) {
-                            if (permissionToMoveStoneOutOfBoard(board, sum, i)) {
+                        if (rules.isAccessible(isBlack, i + diceNumber, field, opponentPlayer.gameBar, diceNumber)) {
+                            if (permissionToMoveStoneOutOfBoard(board, diceNumber, i)) {
                                 // Stein in neues Feld schreiben.
                                 board.adjustReverenceSet(field[i][j]);
                                 outOfBoard.add(field[i][j]);
                                 field[i][j] = 0;
                                 control = true;
                             } else {
-                                searchFreeField(field, i + sum);
+                                searchFreeField(field, i + diceNumber);
                                 field[i][j] = 0;
                                 control = true;
                             }
@@ -232,7 +232,7 @@ public class Player{
         }else if(isBlack)
         {
             if (stoneIsOut) {
-                setGameBarStone(field, sum);
+                setGameBarStone(field, diceNumber);
                 System.out.println("Bringe Stein " + stone + " wieder ins Spiel");
                 return true;
             }
@@ -240,15 +240,15 @@ public class Player{
                 for (int j = 0; j < 5 && !control; j++) {
                     //Pruefe ob Stein gefunden
                     if (field[i][j] == stone) {
-                        if (rules.isAccessibile(isBlack, i - sum, field, opponentPlayer.gameBar)){
-                                if (permissionToMoveStoneOutOfBoard(board, sum, i)) {
+                        if (rules.isAccessible(isBlack, i - diceNumber, field, opponentPlayer.gameBar, diceNumber)){
+                                if (permissionToMoveStoneOutOfBoard(board, diceNumber, i)) {
                                     // Stein in neues Feld schreiben.
                                     board.adjustReverenceSet(field[i][j]);
                                     outOfBoard.add(field[i][j]);
                                     field[i][j] = 0;
                                     control = true;
                                 } else {
-                                    searchFreeField(field, i - sum);
+                                    searchFreeField(field, i - diceNumber);
                                     field[i][j] = 0;
                                     control = true;
                                 }
@@ -335,13 +335,13 @@ public class Player{
         board.compareSetsEnableRemoveStones();
 
         if (colorOfStone) {
-            if (board.isBlackPermittedRemoveStones() && checkForOutOfBound) {
+            if (board.isBlackPermittedRemoveStones() && !checkForOutOfBound) {
                 return true;
             } else {
                 return false;
             }
         } else {
-            if (board.isWhitePermittedRemoveStones() && checkForOutOfBound) {
+            if (board.isWhitePermittedRemoveStones() && !checkForOutOfBound) {
                 return true;
             } else {
                 return false;
