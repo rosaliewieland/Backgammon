@@ -349,7 +349,7 @@ public class Player{
         }
     }
 
-    public boolean theWinnerIs() {
+    public boolean isTheWinner() {
         if (outOfBoard.size() == 15) {
             return true;
         } else {

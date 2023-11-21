@@ -11,13 +11,9 @@ import basic_backend.*;
 public class Main {
     public static void main(String[] args)
     {
-
-    // Anfang: Spiel mit fuenf Steinen und der neuen Klasse Board.java
         // Initialisierung von zwei Würfeln die beiden Spieler zum Würfeln zur Verfügung stehen
         Dice diceOne = new Dice();
         Dice diceTwo = new Dice();
-        Rules rules = new Rules();
-
 
         // Initialisierung von zwei Spielern.
         Player playerColor = new Player();
@@ -25,7 +21,6 @@ public class Main {
 
         Player playerOne = new Player(color);
         Player playerTwo = new Player(!color); // der zweite Spieler bekommt automatisch die andere Farbe
-
 
         Player startPlayer = new Player();
         Player firstPlayer; // Spieler der startet
@@ -49,8 +44,7 @@ public class Main {
         System.out.println("--Schleifenbeginn--");
 
         // Test-Schleife Spieldurchlauf
-        for(int i = 0; i<5; i++)
-        {
+        while(!firstPlayer.isTheWinner() || !secondPlayer.isTheWinner()) {
             firstPlayer.rollDice(diceOne, diceTwo);
             System.out.println("Würfel1: " + firstPlayer.getDiceNumber1()+ " Würfel 2: " + firstPlayer.getDiceNumber2());
             //firstPlayer.printGameBar();
@@ -63,7 +57,5 @@ public class Main {
             secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber1(),secondPlayer.getDiceNumber2(), firstPlayer, board);
             PrintBoard.printBoard(board.getField());
         }
-       // Ende: Spiel mit fuenf Steinen und der neuen Klasse Board.java
     }
-
 }
