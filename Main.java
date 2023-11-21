@@ -1,12 +1,8 @@
 import basic_backend.*;
 
-// ToDo's: - (erledigt) Stein ins Ziel bringen ermoeglichen
+// ToDo's:
 //         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
-//         - Ziel des Spiels
-//         - Problem: die steine sind nicht an Spielerfarbe gekoppelt
-//         - (erledigt)Rosie: 4 Steine bewegen
-//         - (erledigt) Anni: isAccessible überarbeiten, Problemlösen eigene Steine
-//         - Anni: Vorschlag umsetzen
+//         - Anni PlayerColor Main
 
 public class Main {
     public static void main(String[] args)
@@ -40,20 +36,20 @@ public class Main {
         else
             secondPlayer = playerOne;
 
-        // Ab hier beginnt der Spielverlauf
-        System.out.println("--Schleifenbeginn--");
+        // Ab hier beginnt das Spiel
+        System.out.println("--Spiel beginnt--");
 
-        // Test-Schleife Spieldurchlauf
+        // Spiele Spiel bis ein Gewinner gefunden wurde
         while(!firstPlayer.isTheWinner() || !secondPlayer.isTheWinner()) {
+            firstPlayer.printGameBar();
             firstPlayer.rollDice(diceOne, diceTwo);
             System.out.println("Würfel1: " + firstPlayer.getDiceNumber1()+ " Würfel 2: " + firstPlayer.getDiceNumber2());
-            //firstPlayer.printGameBar();
             firstPlayer.moveStone(board.getField(), firstPlayer.getDiceNumber1(), firstPlayer.getDiceNumber2(),secondPlayer, board);
             PrintBoard.printBoard(board.getField());
 
+            firstPlayer.printGameBar();
             secondPlayer.rollDice(diceOne,diceTwo);
             System.out.println("Würfel1: " + secondPlayer.getDiceNumber1()+ " Würfel 2:"+ secondPlayer.getDiceNumber2());
-            //secondPlayer.printGameBar();
             secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber1(),secondPlayer.getDiceNumber2(), firstPlayer, board);
             PrintBoard.printBoard(board.getField());
         }
