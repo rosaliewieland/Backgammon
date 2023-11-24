@@ -3,6 +3,7 @@ import basic_backend.*;
 // ToDo's:
 //         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
 //         - Anni PlayerColor Main
+//         - Anni: Wenn Pasch gewürfelt, die Ausgabe dass Pasch gewürfelt wurde vorher ausgeben?
 
 public class Main {
     public static void main(String[] args)
@@ -44,13 +45,13 @@ public class Main {
             firstPlayer.printGameBar();
             firstPlayer.rollDice(diceOne, diceTwo);
             System.out.println("Würfel1: " + firstPlayer.getDiceNumber1()+ " Würfel 2: " + firstPlayer.getDiceNumber2());
-            firstPlayer.moveStone(board.getField(), firstPlayer.getDiceNumber1(), firstPlayer.getDiceNumber2(),secondPlayer, board);
+            firstPlayer.moveStone(board.getField(), firstPlayer.getDiceNumber1(), firstPlayer.getDiceNumber2(), secondPlayer, board);
             PrintBoard.printBoard(board.getField());
 
             firstPlayer.printGameBar();
             secondPlayer.rollDice(diceOne,diceTwo);
-            System.out.println("Würfel1: " + secondPlayer.getDiceNumber1()+ " Würfel 2:"+ secondPlayer.getDiceNumber2());
-            secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber1(),secondPlayer.getDiceNumber2(), firstPlayer, board);
+            System.out.println("Würfel1: " + secondPlayer.getDiceNumber1()+ " Würfel 2: "+ secondPlayer.getDiceNumber2());
+            secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber1(), secondPlayer.getDiceNumber2(), firstPlayer, board);
             PrintBoard.printBoard(board.getField());
         }
     }
