@@ -107,11 +107,6 @@ public class Player{
 
     public void moveStone(int[][] field, int dice1, int dice2,  Player opponentPlayer, Board board){
         int choice = 0;
-        int third_choice = 0;
-        System.out.println("Spieler " + name + ", möchtest du einen Stein mit der Summe der Würfelaugen bewegen oder zwei Steine mit jeder Würfelaugenanzahl?");
-        System.out.println("1. Einen Stein mit der Summe bewegen");
-        System.out.println("2. Zwei Steine mit jeder Augenzahl bewegen");
-        choice =  rules.validIntegerInput();
 
         if (dice1==dice2) {
             System.out.println("Pasch gewürfelt. Augenzahl wird verdoppelt");
@@ -119,21 +114,29 @@ public class Player{
             dice1 = dice1 * 2;
             dice2 = dice2 * 2;
 
+            System.out.println("Spieler " + name + ", welchen Zug möchtest du machen?");
             System.out.println("1. Einen Stein mit der Summe verdoppelt bewegen");
             System.out.println("2. Zwei Steine mit je doppelter Augenzahl bewegen");
             System.out.println("3. Vier Steine mit der Augenzahl einzeln gehen");
 
-            third_choice = rules.validIntegerInput();
+            choice =  rules.validIntegerInput();
 
-            if (third_choice == 1){
+            if (choice == 1){
                 moveOneStone(field,dice1+dice2,opponentPlayer,board);
-            } else if (third_choice == 2) {
+            } else if (choice == 2) {
                 moveTwoStones(field, dice1, dice2, opponentPlayer,board);
-            } else if (third_choice == 3){
+            } else if (choice == 3){
                 moveTwoStones(field, dice1 / 2, dice2 / 2, opponentPlayer,board);
                 moveTwoStones(field, dice1 / 2, dice2 / 2, opponentPlayer,board);
             }
         }else {
+
+            System.out.println("Spieler " + name + ", welchen Zug möchtest du machen?");
+            System.out.println("1. Einen Stein mit der Summe bewegen");
+            System.out.println("2. Zwei Steine mit jeder Augenzahl bewegen");
+
+            choice =  rules.validIntegerInput();
+
             if (choice == 1) {
                 moveOneStone(field, dice1 + dice2, opponentPlayer,board);
             } else if (choice == 2) {
