@@ -18,6 +18,9 @@ public class Player{
 
 
     // Konstruktor
+    public Player(){
+
+    }
     public Player(boolean isBlack) {
         enterPlayerName();
         this.isBlack = isBlack;
@@ -103,11 +106,12 @@ public class Player{
     }
 
     public void moveStone(int[][] field, int dice1, int dice2,  Player opponentPlayer, Board board){
-        int choice = rules.validIntegerInput();
+        int choice = 0;
         int third_choice = 0;
         System.out.println("Spieler " + name + ", möchtest du einen Stein mit der Summe der Würfelaugen bewegen oder zwei Steine mit jeder Würfelaugenanzahl?");
         System.out.println("1. Einen Stein mit der Summe bewegen");
         System.out.println("2. Zwei Steine mit jeder Augenzahl bewegen");
+        choice =  rules.validIntegerInput();
 
         if (dice1==dice2) {
             System.out.println("Pasch gewürfelt. Augenzahl wird verdoppelt");
@@ -121,7 +125,7 @@ public class Player{
 
             third_choice = rules.validIntegerInput();
 
-            if (third_choice== 1){
+            if (third_choice == 1){
                 moveOneStone(field,dice1+dice2,opponentPlayer,board);
             } else if (third_choice == 2) {
                 moveTwoStones(field, dice1, dice2, opponentPlayer,board);

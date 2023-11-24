@@ -23,7 +23,10 @@ public class Rules{
         int counterStone = 0;
         int foundedStone = 0;
 
-        if (!isOutOfBound(diceNumber, newPosition-diceNumber)) {
+        if (!isOutOfBound(diceNumber, newPosition-diceNumber)&& isBlack) {
+            return false;
+        }
+        else if (!isOutOfBound(diceNumber, newPosition+diceNumber )&& !isBlack) {
             return false;
         }
         for(int i=0; i<5; i++) {
@@ -36,22 +39,28 @@ public class Rules{
         if (counterStone == 0) {    // der counterStone ist null, wenn kein Stein im Feld gefunden wurde
             return true;
         }
-        else if (counterStone > 0) {    // counterStone ist größer als null, wenn mindestens ein Stein gefunden wurde
-            if (foundedStone <0 && isBlack || foundedStone >0 && !isBlack ) {   // wenn foundedStone ein Gegnerstein ist
-                if (counterStone == 1) {    //wenn nur ein Gegnerstein im Feld liegt, wird dieser geschlagen
+        else if (counterStone > 0)
+        {    // counterStone ist größer als null, wenn mindestens ein Stein gefunden wurde
+            if (foundedStone <0 && isBlack || foundedStone >0 && !isBlack )
+            {   // wenn foundedStone ein Gegnerstein ist
+                if (counterStone == 1)
+                {    //wenn nur ein Gegnerstein im Feld liegt, wird dieser geschlagen
                     hitStone(field, field[newPosition][0], gameBoardEdge, newPosition);
                 }
-                else {  //wenn mehr als ein Gegnerstein im Feld ist
+                else
+                {  //wenn mehr als ein Gegnerstein im Feld ist
                     System.out.println("Feld ist von Gegnersteinen belegt");
                     return false;
                 }
             }
-            } else {    //wenn im Feld ein eigener Stein liegt
-                if(counterStone == 5) {     //wenn fünf eigene Steine da liegen
-                    System.out.println("Feld ist mit den eigenen Steinen belegt");
-                    return false;
-                }
-            }
+        }
+        //wenn im Feld ein eigener Stein liegt
+        if(counterStone == 5)
+        {     //wenn fünf eigene Steine da liegen
+            System.out.println("Feld ist mit den eigenen Steinen belegt");
+            return false;
+        }
+
         return true;
     }
     public void hitStone(int[][] field, int killStone, int[] gameBoardEdge, int newPosition)
