@@ -1,13 +1,12 @@
 package basic_backend;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class Dice {
-    private int randomNumber;
     public int getDice()
     {
-        Random random = new Random();
-        randomNumber = random.nextInt(5) + 1;
+        SecureRandom rand = new SecureRandom();
+        int randomNumber = rand.nextInt(5) + 1;
         return randomNumber;
     }
 }

@@ -82,7 +82,7 @@ public class Player{
 
         playerTwo.rollDice(diceOne,diceTwo);
         sumDicePlayerTwo = playerTwo.diceNumber1 + playerTwo.diceNumber2;
-        System.out.println("Spieler 2 " + playerTwo.name + " Gewürfelt " + sumDicePlayerTwo);
+        System.out.println("Spieler 2 " + playerTwo.name + " Gewürfelt: " + sumDicePlayerTwo);
 
         if (sumDicePlayerOne > sumDicePlayerTwo) {
             return playerOne;
