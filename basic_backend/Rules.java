@@ -23,10 +23,12 @@ public class Rules{
         int counterStone = 0;
         int foundedStone = 0;
 
-        if (!isOutOfBound(diceNumber, newPosition-diceNumber)&& isBlack) {
+        if(newPosition > 24)
+        {
             return false;
         }
-        else if (!isOutOfBound(diceNumber, newPosition+diceNumber )&& !isBlack) {
+        else if(newPosition < 0)
+        {
             return false;
         }
         for(int i=0; i<5; i++) {

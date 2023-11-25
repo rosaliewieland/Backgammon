@@ -44,14 +44,14 @@ public class Main {
         while(!firstPlayer.isTheWinner() || !secondPlayer.isTheWinner()) {
             firstPlayer.printGameBar();
             firstPlayer.rollDice(diceOne, diceTwo);
-            System.out.println("Würfel1: " + firstPlayer.getDiceNumber1()+ " Würfel 2: " + firstPlayer.getDiceNumber2());
-            firstPlayer.moveStone(board.getField(), firstPlayer.getDiceNumber1(), firstPlayer.getDiceNumber2(), secondPlayer, board);
+            System.out.println("Würfel1: " + firstPlayer.getDiceNumber1() + " Würfel 2: " + firstPlayer.getDiceNumber2());
+            firstPlayer.moveStone(board.getField(), firstPlayer.getDiceNumber1(),  firstPlayer.getDiceNumber2(), secondPlayer, board);
             PrintBoard.printBoard(board.getField());
 
-            firstPlayer.printGameBar();
+            secondPlayer.printGameBar();
             secondPlayer.rollDice(diceOne,diceTwo);
-            System.out.println("Würfel1: " + secondPlayer.getDiceNumber1()+ " Würfel 2: "+ secondPlayer.getDiceNumber2());
-            secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber1(), secondPlayer.getDiceNumber2(), firstPlayer, board);
+            System.out.println("Würfel1: " + secondPlayer.getDiceNumber1() + " Würfel 2: "+ secondPlayer.getDiceNumber2());
+            secondPlayer.moveStone(board.getField(), secondPlayer.getDiceNumber1(),  secondPlayer.getDiceNumber2(), firstPlayer, board);
             PrintBoard.printBoard(board.getField());
         }
     }

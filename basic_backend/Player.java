@@ -107,7 +107,53 @@ public class Player{
 
     public void moveStone(int[][] field, int dice1, int dice2,  Player opponentPlayer, Board board){
         int choice = 0;
+        int third_choice = 0;
+        System.out.println("Spieler " + name + ", möchtest du einen Stein mit der Summe der Würfelaugen bewegen oder zwei Steine mit jeder Würfelaugenanzahl?");
 
+
+        if (dice1==dice2) {
+            System.out.println("Pasch gewürfelt. Augenzahl wird verdoppelt");
+            dice1 = dice1 * 2;
+            dice2 = dice2 * 2;
+            System.out.println("Spieler " + name + ", welchen Zug möchtest du machen?");
+            System.out.println("1. Einen Stein mit der Summe verdoppelt bewegen");
+            System.out.println("2. Zwei Steine mit je doppelter Augenzahl bewegen");
+            System.out.println("3. Vier Steine mit der Augenzahl einzeln gehen");
+
+            third_choice =  rules.validIntegerInput();
+
+            if (third_choice == 1){
+                moveOneStone(field,dice1+dice2,opponentPlayer,board);
+            } else if (third_choice == 2) {
+                moveTwoStones(field, dice1, dice2, opponentPlayer,board);
+            } else if (third_choice == 3){
+                moveOneStone(field, dice1 / 2, opponentPlayer,board);
+                moveOneStone(field, dice1 / 2, opponentPlayer,board);
+                moveOneStone(field, dice1 / 2, opponentPlayer,board);
+                moveOneStone(field, dice1 / 2, opponentPlayer,board);
+            }
+        }
+        else {
+            System.out.println("1. Einen Stein mit der Summe bewegen");
+            System.out.println("2. Zwei Steine mit jeder Augenzahl bewegen");
+
+            choice = rules.validIntegerInput();
+
+            if (choice == 1) {
+                moveOneStone(field, dice1 + dice2, opponentPlayer, board);
+            } else if (choice == 2) {
+                //moveTwoStones(field, dice1, dice2, opponentPlayer, board);
+                moveOneStone(field, dice1, opponentPlayer,board);
+                moveOneStone(field, dice2, opponentPlayer,board);
+
+            } else {
+                System.out.println("Ungültige Eingabe. Bitte wähle 1 oder 2.");
+                moveStone(field, dice1, dice2, opponentPlayer, board);
+            }
+        }
+
+
+/*
         if (dice1==dice2) {
             System.out.println("Pasch gewürfelt. Augenzahl wird verdoppelt");
 
@@ -146,7 +192,7 @@ public class Player{
                 moveStone(field, dice1, dice2, opponentPlayer,board); // Recursive call to handle invalid input
             }
         }
-
+        */
     }
 
 
