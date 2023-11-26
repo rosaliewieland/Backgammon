@@ -23,7 +23,7 @@ public class Rules{
         int counterStone = 0;
         int foundedStone = 0;
 
-        if(newPosition > 24)
+        if(newPosition > 23)
         {
             return false;
         }

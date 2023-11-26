@@ -1,10 +1,5 @@
 import basic_backend.*;
 
-// ToDo's:
-//         - Anni: 3 Arten von Siege (Sieg, Gammon-Sieg, BackGammon-Sieg)
-//         - Anni PlayerColor Main
-//         - Anni: Wenn Pasch gewürfelt, die Ausgabe dass Pasch gewürfelt wurde vorher ausgeben?
-
 public class Main {
     public static void main(String[] args)
     {
