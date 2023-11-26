@@ -5,19 +5,12 @@ public class PrintBoard {
     private static final int PRINTLINE = 57;
 
     public static void printBoard(int[][] field) {
-
-        //Kontrolle um das print feld aus richtig ist
-/*
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 24; j++) {
-                field[j][i] = j;
-            }
-        }
-*/
         for(int i=0; i<PRINTLINE; i++)
             System.out.printf("-");
+
         System.out.println();
         // Gibt das Spielfeld auf der Konsole aus
+
         for(int i = 0; i < 5; i++) {
             System.out.print("|\t");
             for (int j = 5; j >= 0; j--) {
@@ -34,6 +27,7 @@ public class PrintBoard {
             System.out.printf("-"); // Trennlinie die beiden Spielhälften in zwei Teile teilt
 
         System.out.println();
+
         for (int a = 4; a >= 0; a--) {
             System.out.print("|\t");
             for (int k = 0; k < 6; k++) {
@@ -48,6 +42,7 @@ public class PrintBoard {
         }
         for(int i=0; i<PRINTLINE; i++)
             System.out.printf("-");
+
         System.out.println();
     }
 }
