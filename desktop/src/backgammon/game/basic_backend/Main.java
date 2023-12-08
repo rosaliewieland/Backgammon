@@ -1,4 +1,4 @@
-package backgammon.game.basic_backend;
+import basic_backend.*;
 
 public class Main {
     public static void main(String[] args)

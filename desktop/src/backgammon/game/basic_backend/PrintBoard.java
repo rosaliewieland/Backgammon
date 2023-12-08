@@ -3,7 +3,7 @@ package backgammon.game.basic_backend;
 public class PrintBoard {
 
     private static final int PRINTLINE = 57;
- 
+
     public static void printBoard(int[][] field) {
         for(int i=0; i<PRINTLINE; i++)
             System.out.printf("-");
