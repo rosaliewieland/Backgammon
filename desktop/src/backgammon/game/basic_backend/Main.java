@@ -1,7 +1,9 @@
-import basic_backend.*;
+package backgammon.game.basic_backend;
+
+
 
 public class Main {
-    public static void main(String[] args)
+    public void main(String[] args)
     {
         // Initialisierung von zwei Würfeln die beiden Spieler zum Würfeln zur Verfügung stehen
         Dice diceOne = new Dice();
