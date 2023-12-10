@@ -17,7 +17,7 @@ public class DesktopLauncher {
 
 
 		// Set Window size
-		config.setWindowedMode(1200, 950);
+		config.setWindowedMode(1400, 950);
 		new Lwjgl3Application(new Backgammon(), config);
 
 	}
