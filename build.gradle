@@ -57,7 +57,7 @@ project(":desktop") {
     }
 }
 
-project(":html") {
+/*project(":html") {
     apply plugin: "java-library"
     apply plugin: "gwt"
     apply plugin: "war"
@@ -80,7 +80,7 @@ project(":html") {
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion:sources"
         
     }
-}
+}*/
 
 project(":core") {
     apply plugin: "java-library"
