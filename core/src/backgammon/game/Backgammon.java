@@ -1,28 +1,17 @@
 package backgammon.game;
 
+import backgammon.game.screens.*;
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.ai.btree.Task;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.*;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.DestructionListener;
-import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class Backgammon extends Game implements InputProcessor {
 
@@ -30,7 +19,7 @@ public class Backgammon extends Game implements InputProcessor {
 	private TiledMap gameBoardMap;
 	private TiledMapRenderer gameBoardRenderer;
 	private Texture stone;
-	private SpriteBatch batch;
+	public SpriteBatch batch;
 	TiledMapRenderer objectGroupRenderer;
 
 	private ShapeRenderer shape;
@@ -40,11 +29,9 @@ public class Backgammon extends Game implements InputProcessor {
 	private final int STONE_WIDTH=64;
 	private final int STONE_HEIGHT=64;
 
-
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-
 		shape = new ShapeRenderer();
 
 		stone = new Texture("tiled/tilesets/whiteStone64_64.png");
@@ -54,16 +41,15 @@ public class Backgammon extends Game implements InputProcessor {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
-
-
 		gameBoardRenderer = new OrthogonalTiledMapRenderer(gameBoardMap);
 
 
 		Gdx.input.setInputProcessor(this);
+		//setScreen(new MainMenu(this));
 	}
-
 	@Override
 	public void render() {
+		//super.render();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -176,10 +162,10 @@ public class Backgammon extends Game implements InputProcessor {
 		return false;
 	}
 	@Override
-	public void resize(int width, int height) {
+	public void resize(int width, int height) {/*
 		camera.viewportWidth = width;
 		camera.viewportHeight = height;
-		camera.update();
+		camera.update();*/
 	}
 
 	@Override
