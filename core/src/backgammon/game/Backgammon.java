@@ -163,7 +163,37 @@ public class Backgammon extends Game implements InputProcessor {
 		gameBoardRenderer.setView(camera);
 		gameBoardRenderer.render();
 
+		batch.begin();
+		for(int i=0;i<13;i++)
+		{
+			for(int j=0;j<5;j++) {
+				if (i == 6) {
+					alb.get(i).get(j).setPosition(895 - (64 * (i + 1)), 830 - (64 * j));
+					alb.get(i).get(j).draw(batch, 1);
 
+				} else {
+					alb.get(i).get(j).setPosition(895 - (64 * i), 830 - (64 * j));
+					alb.get(i).get(j).draw(batch, 1);
+				}
+			}
+			//System.out.println(i);
+		}
+
+		for(int i=13;i<26;i++)
+		{
+			for(int j=0;j<5;j++) {
+
+				if(i==19)
+				{
+					alb.get(i).get(j).setPosition(895 - (64 * (counter + 1)),65+(64*j));
+				}else {
+					alb.get(i).get(j).setPosition(895 - (64 * counter) ,65+(64*j));
+				}
+				alb.get(i).get(j).draw(batch,1);
+			}
+			counter++;
+		}
+		batch.end();
 
 		for(MapObject object: gameBoardMap.getLayers().get("Stone").getObjects())
 		{
