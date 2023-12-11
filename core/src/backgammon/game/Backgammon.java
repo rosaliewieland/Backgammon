@@ -64,9 +64,6 @@ public class Backgammon extends Game implements InputProcessor {
 
 		}
 
-
-		stone = new Texture("tiled/tilesets/whiteStone64_64.png");
-
 		gameBoardMap = new TmxMapLoader().load("tiled/export/BackgammonBoard.tmx");
 
 		camera = new OrthographicCamera();
