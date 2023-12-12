@@ -5,15 +5,23 @@
     },
     "activeFile": "BackgammonBoard.tmx",
     "expandedProjectPaths": [
+        "export",
         "."
     ],
+    "file.lastUsedOpenFilter": "Alle Dateien (*)",
     "fileStates": {
+        ":/automap-tiles.tsx": {
+            "scaleInDock": 1
+        },
         "BackgammonBoard.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
             "scale": 0.5,
-            "selectedLayer": 1,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 562,
-                "y": 766
+                "x": 553,
+                "y": 594
             }
         },
         "Group 1.tsx": {
@@ -66,6 +74,7 @@
         }
     },
     "last.exportedFilePath": "C:/MaHo/ProGra/Backgammon/tiled/export",
+    "last.externalTilesetPath": "C:/MaHo/ProGra/Backgammon/tiled",
     "last.imagePath": "C:/MaHo/ProGra/Backgammon/tiled",
     "map.height": 15,
     "map.lastUsedExportFilter": "Tiled-Kartendateien (*.tmx *.xml)",
@@ -74,14 +83,13 @@
     "map.tileWidth": 64,
     "map.width": 17,
     "openFiles": [
-        "BackgammonBoard.tmx",
-        "Group 11.tsx"
+        "BackgammonBoard.tmx"
     ],
     "project": "backgammonfeld.tiled-project",
     "recentFiles": [
+        "BackgammonBoard.tmx",
         "Group 11.tsx",
         "export/BackgammonBoard.tmx",
-        "BackgammonBoard.tmx",
         "Group 1.tsx",
         "boardBacko.tmx",
         "backgammonmap.tmx",
@@ -90,6 +98,7 @@
         "Group 2.tsx",
         "whiteStone.tsx"
     ],
+    "tileset.lastUsedFilter": "Tiled-Kachelsatzdateien (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 64,
