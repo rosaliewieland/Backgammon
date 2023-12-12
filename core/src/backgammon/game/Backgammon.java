@@ -1,30 +1,33 @@
 package backgammon.game;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.ai.btree.Task;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.*;
-import com.badlogic.gdx.maps.tiled.*;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.DestructionListener;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Backgammon extends Game implements InputProcessor {
 
-
-	OrthographicCamera camera, font_camera;
+	OrthographicCamera camera;
 	private TiledMap gameBoardMap;
 	private TiledMapRenderer gameBoardRenderer;
 	private Texture stone;
@@ -42,6 +45,24 @@ public class Backgammon extends Game implements InputProcessor {
 	private final int STONE_HEIGHT=64;
 
 	ArrayList<ArrayList<Label>> alb;
+
+	Texture dicebutton;
+	Texture dicesheet;
+
+	private final int FRAME_COLS = 6;
+	private final int FRAME_ROWS = 1;
+	Animation diceanimation;
+	Animation diceanimation2;
+
+	float stateTime;
+	float stateTime2;
+
+	private final int  DICE_BUTTON_WIDTH = 60;
+
+	private final int  DICE_BUTTON_HEIGHT = 70;
+
+
+
 
 	@Override
 	public void create() {
@@ -64,8 +85,57 @@ public class Backgammon extends Game implements InputProcessor {
 
 		}
 
+		dicebutton = new Texture("assets/diceButton.png");
 
-		stone = new Texture("tiled/tilesets/whiteStone64_64.png");
+		dicesheet = new Texture("assets/sprites.png");
+
+
+		//split to make equal split frames of dicesheet
+		//devide through number of height and with to get the single frames
+		TextureRegion[][] tmp = TextureRegion.split(dicesheet,
+				dicesheet.getWidth()/FRAME_COLS, dicesheet.getHeight()/FRAME_ROWS);
+
+		// put in correct order in 1d array to be able to work with animation constructor
+		TextureRegion[] diceFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+		int index = 0;
+		for (int i = 0; i < FRAME_ROWS; i++) {
+			for (int j = 0; j < FRAME_COLS; j++) {
+				diceFrames[index++] = tmp[i][j];
+			}
+		}
+
+		//initialize animations + refresh rate
+		diceanimation = new Animation<>(0.25f, diceFrames);
+		diceanimation2 = new Animation<>(0.25f, diceFrames);
+
+		//set startpoint time
+		stateTime = 0f;
+		stateTime2 = 1f;
+
+
+
+
+
+
+
+
+
+		//dice1 = dicesides.createSprite("dice1");
+		//hasmap for dice value,textures
+
+		//Dice dice1 = new Dice();
+		//System.out.println(dice.getDice());
+
+		//HashMap<Integer,Texture> dice_textures = new HashMap<>();
+		//for(int i = 1; i<7;i++){
+			//Texture dice_texture = new Texture(String.format("assets/dice%s.png", i));
+			//dice_textures.put(i,dice_texture);
+			//System.out.println(dice_texture.getTextureData());
+		//}
+
+
+
+
 
 		gameBoardMap = new TmxMapLoader().load("tiled/export/BackgammonBoard.tmx");
 
@@ -84,6 +154,10 @@ public class Backgammon extends Game implements InputProcessor {
 		int counter=0;
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		//accumulates animation time
+		stateTime += Gdx.graphics.getDeltaTime();
+		stateTime2 += Gdx.graphics.getDeltaTime();
 
 
 		gameBoardRenderer.setView(camera);
@@ -109,20 +183,17 @@ public class Backgammon extends Game implements InputProcessor {
 		{
 			for(int j=0;j<5;j++) {
 
-                if(i==19)
+				if(i==19)
 				{
-                    alb.get(i).get(j).setPosition(895 - (64 * (counter + 1)),65+(64*j));
-                }else {
-                    alb.get(i).get(j).setPosition(895 - (64 * counter) ,65+(64*j));
-                }
-                alb.get(i).get(j).draw(batch,1);
-            }
+					alb.get(i).get(j).setPosition(895 - (64 * (counter + 1)),65+(64*j));
+				}else {
+					alb.get(i).get(j).setPosition(895 - (64 * counter) ,65+(64*j));
+				}
+				alb.get(i).get(j).draw(batch,1);
+			}
 			counter++;
 		}
 		batch.end();
-
-
-
 
 		for(MapObject object: gameBoardMap.getLayers().get("Stone").getObjects())
 		{
@@ -166,12 +237,54 @@ public class Backgammon extends Game implements InputProcessor {
 				TiledMapTile tile = tileMapObject.getTile();
 				TextureRegion textureRegion = new TextureRegion(tile.getTextureRegion());
 
+				// current animation frame for current statetime
+				TextureRegion currentFrame = (TextureRegion) diceanimation.getKeyFrame(stateTime, true); //loop frames
+				TextureRegion currentFrame2 = (TextureRegion) diceanimation2.getKeyFrame(stateTime2, true);
+
+
+
 				batch.begin();
 				batch.draw(textureRegion, x, y, STONE_WIDTH, STONE_HEIGHT);
+
+				//roll dice button and animation
+				int y = Gdx.graphics.getHeight()-dicebutton.getHeight();
+				int x = 50;
+				batch.draw(dicebutton,50,Gdx.graphics.getHeight()-dicebutton.getHeight(),DICE_BUTTON_WIDTH,DICE_BUTTON_HEIGHT);
+				if(Gdx.input.getX()< x + DICE_BUTTON_WIDTH && Gdx.input.getX()>x && Gdx.graphics.getHeight() -Gdx.input.getY()< y +DICE_BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY()>y) {
+					if(Gdx.input.isTouched()) {
+						batch.draw(currentFrame, 50, 50);
+						batch.draw(currentFrame2, 50, 120);
+					}
+				}
+				//for(int i=1;i<7;i++){
+				//drawdice(dice_sides.get(String.format("dice%s",i)));
+				//drawdice(dice_sides.get("dice1"));
+				//drawdice(dice_sides.get("dice2"));
+				//drawdice(dice_sides.get("getDice1"),100,100);
+				//drawing sprite on to the batch
+				//batch.draw(dice_textures.get(1),0,0);
+
 				batch.end();
 			}
 		}
 	}
+
+	//private void drawdice(Sprite dice) {
+	//	dice.setPosition(0, 0);
+	//	dice.draw(batch);
+	//}
+
+	//private void load_dice() {
+
+		//Array<TextureAtlas.AtlasRegion> regions = dicesides.getRegions();
+
+		//for (TextureAtlas.AtlasRegion region : regions) {
+			//Sprite dice = dicesides.createSprite(region.name);
+
+			//dice_sides.put(region.name, dice);
+		//}
+	//}
+
 
 
 	@Override
@@ -179,7 +292,6 @@ public class Backgammon extends Game implements InputProcessor {
 		batch.dispose();
 		stone.dispose();
 		gameBoardMap.dispose();
-		font.dispose();
 	}
 	public BitmapFont getFont()
 	{
@@ -264,6 +376,7 @@ public class Backgammon extends Game implements InputProcessor {
 
 				x = tileMapObject.getX();
 				y = tileMapObject.getY();
+
 
 
 				if (x <= worldCoordinates.x && worldCoordinates.x <= x + width &&
