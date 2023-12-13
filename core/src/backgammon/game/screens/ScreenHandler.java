@@ -1,7 +1,6 @@
 package backgammon.game.screens;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.ScreenAdapter;
 
 public class ScreenHandler extends Game {
 
