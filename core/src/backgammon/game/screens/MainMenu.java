@@ -25,12 +25,12 @@ public class MainMenu extends ScreenAdapter implements InputProcessor {
     private ImageButton settingsButton;
 
 
-    private Texture background;
-    private Texture startbutton = new Texture("PlayButton.png");
-    private Texture settingsbutton = new Texture("SettingsButton.png");
-    private Texture quitbutton = new Texture("QuitButton.png");
-    private OrthographicCamera menucam;
-    private Viewport menuport;
+    private final Texture background;
+    private final Texture startbutton = new Texture("PlayButton.png");
+    private final Texture settingsbutton = new Texture("SettingsButton.png");
+    private final Texture quitbutton = new Texture("QuitButton.png");
+    private final OrthographicCamera menucam;
+    private final Viewport menuport;
 
 
     public MainMenu() {
