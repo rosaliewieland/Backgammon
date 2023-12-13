@@ -1,7 +1,10 @@
 package backgammon.game;
 
+import backgammon.game.basic_backend.Board;
+import backgammon.game.basic_backend.PrintBoard;
+import backgammon.game.basic_backend.Rules;
+import backgammon.game.basic_frontend.HelperClass;
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.ai.btree.Task;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -14,14 +17,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.DestructionListener;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 
@@ -29,16 +25,18 @@ public class Backgammon extends Game implements InputProcessor {
 
 	OrthographicCamera camera;
 	private TiledMap gameBoardMap;
+	private Rules rules;
 	private TiledMapRenderer gameBoardRenderer;
 	private Texture stone;
 	public SpriteBatch batch;
-	TiledMapRenderer objectGroupRenderer;
 	BitmapFont font;
+	Board board;
+	private int[][] field;
 
 	private ShapeRenderer shape;
 	float x;
 	float y;
-	private int labelId;
+	private int newPostionID;
 	private int stoneId;
 
 	private final int STONE_WIDTH=64;
@@ -67,22 +65,23 @@ public class Backgammon extends Game implements InputProcessor {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-
+		board = new Board();
+		rules = new Rules();
+ 		field = board.getField();
 		shape = new ShapeRenderer();
 		font = new BitmapFont(Gdx.files.internal("bitmapHiero.fnt"));
 		alb = new ArrayList<ArrayList<Label>>();
-		Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.RED);
-		for(int i=0;i<26;i++)
+		Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.YELLOW);
+		//Label label = new Label()
+		//Map<Integer, ArrayList<ArrayList<Label>>> maps
+		for(int i=0;i<24;i++)
 		{
 			alb.add(new ArrayList<Label>());
 			for(int j=0;j<5;j++)
 			{
-				Label label = new Label("0",labelStyle);
-				alb.get(i).add(j,label);
+				HelperClass.startStoneField(i,j,labelStyle,board,alb);
 				alb.get(i).get(j).setSize(32, 32);
-
 			}
-
 		}
 
 		dicebutton = new Texture("assets/diceButton.png");
@@ -152,6 +151,8 @@ public class Backgammon extends Game implements InputProcessor {
 	@Override
 	public void render() {
 		int counter=0;
+		int xPos =0;
+
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -163,32 +164,35 @@ public class Backgammon extends Game implements InputProcessor {
 		gameBoardRenderer.setView(camera);
 		gameBoardRenderer.render();
 
-		batch.begin();
-		for(int i=0;i<13;i++)
-		{
-			for(int j=0;j<5;j++) {
-				if (i == 6) {
-					alb.get(i).get(j).setPosition(895 - (64 * (i + 1)), 830 - (64 * j));
-					alb.get(i).get(j).draw(batch, 1);
 
-				} else {
-					alb.get(i).get(j).setPosition(895 - (64 * i), 830 - (64 * j));
-					alb.get(i).get(j).draw(batch, 1);
-				}
+
+		batch.begin();
+		for(int i=0;i<12;i++)
+		{
+			if(i>=6)
+			{
+				xPos = 895 - (64 * (i+1));
 			}
-			//System.out.println(i);
+			else {
+				xPos = 895 - (64 * i);
+			}
+			for(int j=0;j<5;j++) {
+				alb.get(i).get(j).setPosition(xPos, 830 - (64 * j));
+				alb.get(i).get(j).draw(batch, 1);
+			}
 		}
 
-		for(int i=13;i<26;i++)
+		for(int i=12;i<24;i++)
 		{
+			if(i>=18)
+			{
+				xPos = 128 + (64 * (counter + 1));
+			}
+			else {
+				xPos = 128 + (64 * counter);
+			}
 			for(int j=0;j<5;j++) {
-
-				if(i==19)
-				{
-					alb.get(i).get(j).setPosition(895 - (64 * (counter + 1)),65+(64*j));
-				}else {
-					alb.get(i).get(j).setPosition(895 - (64 * counter) ,65+(64*j));
-				}
+				alb.get(i).get(j).setPosition(xPos,65+(64*j));
 				alb.get(i).get(j).draw(batch,1);
 			}
 			counter++;
@@ -269,6 +273,8 @@ public class Backgammon extends Game implements InputProcessor {
 		}
 	}
 
+
+
 	//private void drawdice(Sprite dice) {
 	//	dice.setPosition(0, 0);
 	//	dice.draw(batch);
@@ -314,16 +320,12 @@ public class Backgammon extends Game implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		Gdx.app.log("Mouse", "touch Down");
+		//Gdx.app.log("Mouse", "touch Down");
 		//FontGameMap test = new FontGameMap();
-
-
-
 		if(button == Input.Buttons.LEFT)
 		{
 			mouseMoved(screenX,screenY);
 			checkObjectClicked(screenX, screenY);
-
 		}
 		return false;
 	}
@@ -335,7 +337,6 @@ public class Backgammon extends Game implements InputProcessor {
 
 	@Override
 	public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-
 		return false;
 	}
 
@@ -367,43 +368,58 @@ public class Backgammon extends Game implements InputProcessor {
 		this.moveStone(screenX,screenY);
 		float width = 64;
 		float height = 64;
-		float x;
-		float y;
+		float xPos;
+		float yPos;
 		for (MapObject object : gameBoardMap.getLayers().get("Stone").getObjects()) {
 
 			if (object instanceof TiledMapTileMapObject) {
 				TiledMapTileMapObject tileMapObject = (TiledMapTileMapObject) object;
 
-				x = tileMapObject.getX();
-				y = tileMapObject.getY();
+				xPos = tileMapObject.getX();
+				yPos = tileMapObject.getY();
 
 
-
-				if (x <= worldCoordinates.x && worldCoordinates.x <= x + width &&
-						y <= worldCoordinates.y && worldCoordinates.y <= y + height) {
+				if (xPos <= worldCoordinates.x && worldCoordinates.x <= xPos + width &&
+						yPos <= worldCoordinates.y && worldCoordinates.y <= yPos + height) {
 					Gdx.app.log("Stein angeklickt", "ID: " + tileMapObject.getProperties().get("id", Integer.class));
 					stoneId = tileMapObject.getProperties().get("id", Integer.class);
 				}
 			}
 		}
 	}
-	public void moveStone(int screenX, int screenY)
-	{
+	public void moveStone(int screenX, int screenY) {
 		Vector3 worldCoordinates = camera.unproject(new Vector3(screenX, screenY, 0));
 		for (MapObject object : gameBoardMap.getLayers().get("Stone").getObjects()) {
 
 			if (object instanceof TiledMapTileMapObject) {
 				TiledMapTileMapObject tileMapObject = (TiledMapTileMapObject) object;
-				labelId = tileMapObject.getProperties().get("id", Integer.class);
-				if(labelId==stoneId) {
-					for(int i=0;i<24;i++) {
-						for(int j=0; j<5;j++)
-						{
+				newPostionID = tileMapObject.getProperties().get("id", Integer.class);
+				if (newPostionID == stoneId) {
+					for (int i = 0; i < 24; i++) {
+						for (int j = 0; j < 5; j++) {
 							if (alb.get(i).get(j).getX() <= worldCoordinates.x && worldCoordinates.x <= alb.get(i).get(j).getX() + 32 &&
 									alb.get(i).get(j).getY() <= worldCoordinates.y && worldCoordinates.y <= alb.get(i).get(j).getY() + 32) {
 								Gdx.app.log("Label", "Klicked");
+
+
+								//Loesche Stein von altem Feld
+								HelperClass.removeStoneId(stoneId, field, alb);
+
+								//Setze Stein auf neues Feld
+								field[i][j] = stoneId;
+								//int[] gameBoardEdge = new int[10];
+								//System.out.println(rules.isAccessible(true, i, field, gameBoardEdge));
+								alb.get(i).get(j).setText(stoneId);
+
+								//Bewege den Stein auf neues Feld
 								tileMapObject.setX(alb.get(i).get(j).getX());
 								tileMapObject.setY(alb.get(i).get(j).getY());
+
+								//CheckBoard ArrayList Label
+								HelperClass.checkGameField(alb);
+								//PrintBoard mit int[][]
+								PrintBoard.printBoard(field);
+								//System.out.println(rules.isAccessible(true, i,field,gameBoardEdge));
 							}
 						}
 					}

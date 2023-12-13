@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import java.io.ObjectInputFilter;
-/*
+
 public class MainMenu implements Screen{
 
     Backgammon game;
@@ -80,5 +80,5 @@ public class MainMenu implements Screen{
         settingsbutton.dispose();
         quitbutton.dispose();
     }
-}*/
+}
 

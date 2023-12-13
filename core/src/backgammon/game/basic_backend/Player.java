@@ -211,7 +211,7 @@ public class Player{
                 for (int j = 0; j < 5 && !control; j++) {
                     //Pruefe ob Stein gefunden
                     if (field[i][j] == stone) {
-                        if (rules.isAccessible(isBlack, i + diceNumber, field, opponentPlayer.gameBar, diceNumber)) {
+                        if (rules.isAccessible(isBlack, i + diceNumber, field, opponentPlayer.gameBar)) {
                             if (permissionToMoveStoneOutOfBoard(board, diceNumber, i)) {
                                 board.adjustReverenceSet(field[i][j]);
                                 outOfBoard.add(field[i][j]);
@@ -240,7 +240,7 @@ public class Player{
                 for (int j = 0; j < 5 && !control; j++) {
                     //Pruefe ob Stein gefunden
                     if (field[i][j] == stone) {
-                        if (rules.isAccessible(isBlack, i - diceNumber, field, opponentPlayer.gameBar, diceNumber)){
+                        if (rules.isAccessible(isBlack, i - diceNumber, field, opponentPlayer.gameBar)){
                                 if (permissionToMoveStoneOutOfBoard(board, diceNumber, i)) {
                                     board.adjustReverenceSet(field[i][j]);
                                     outOfBoard.add(field[i][j]);
