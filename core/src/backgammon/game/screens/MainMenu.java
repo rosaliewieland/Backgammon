@@ -14,9 +14,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import java.io.ObjectInputFilter;
 
 public class MainMenu implements Screen{
-    //nehme Backgammon Klasse
+
     Backgammon game;
-    //Hinzufüge Texturen
+
     private Texture background;
     private Texture startbutton;
     private Texture settingsbutton;
@@ -29,7 +29,8 @@ public class MainMenu implements Screen{
         startbutton = new Texture("PlayButton.png");
         settingsbutton = new Texture("SettingsButton.png");
         quitbutton = new Texture("QuitButton.png");
-
+        menucam = new OrthographicCamera();
+        menuport = new ScreenViewport(menucam);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class MainMenu implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.setProjectionMatrix(menucam.combined);
         game.batch.begin();
-        game.batch.draw(background, 0, 0);
+        game.batch.draw(background, -600, -475);
         game.batch.draw(startbutton, -150, 45);
         game.batch.draw(settingsbutton, -325, -100);
         game.batch.draw(quitbutton, 25, -100);
@@ -74,7 +75,10 @@ public class MainMenu implements Screen{
     @Override
     public void dispose() {
         game.dispose();
-        game.batch.dispose();
+        background.dispose();
+        startbutton.dispose();
+        settingsbutton.dispose();
+        quitbutton.dispose();
     }
 }
 

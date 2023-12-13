@@ -4,23 +4,22 @@ import backgammon.game.basic_backend.Board;
 import backgammon.game.basic_backend.PrintBoard;
 import backgammon.game.basic_backend.Rules;
 import backgammon.game.basic_frontend.HelperClass;
-import backgammon.game.screens.*;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import java.awt.*;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Backgammon extends Game implements InputProcessor {
 
@@ -30,15 +29,14 @@ public class Backgammon extends Game implements InputProcessor {
 	private TiledMapRenderer gameBoardRenderer;
 	private Texture stone;
 	public SpriteBatch batch;
-	TiledMapRenderer objectGroupRenderer;
 	BitmapFont font;
 	Board board;
 	private int[][] field;
+
 	private ShapeRenderer shape;
 	float x;
 	float y;
 	private int newPostionID;
-	private int labelId;
 	private int stoneId;
 
 	private final int STONE_WIDTH=64;
@@ -66,7 +64,6 @@ public class Backgammon extends Game implements InputProcessor {
 
 	@Override
 	public void create() {
-		setScreen(new MainMenu(this));
 		batch = new SpriteBatch();
 		board = new Board();
 		rules = new Rules();
@@ -104,6 +101,7 @@ public class Backgammon extends Game implements InputProcessor {
 			for (int j = 0; j < FRAME_COLS; j++) {
 				diceFrames[index++] = tmp[i][j];
 			}
+		}
 
 		//initialize animations + refresh rate
 		diceanimation = new Animation<>(0.25f, diceFrames);
@@ -112,7 +110,9 @@ public class Backgammon extends Game implements InputProcessor {
 		//set startpoint time
 		stateTime = 0f;
 		stateTime2 = 1f;
-		}
+
+
+
 
 
 
@@ -134,19 +134,22 @@ public class Backgammon extends Game implements InputProcessor {
 
 
 
+
+
 		gameBoardMap = new TmxMapLoader().load("tiled/export/BackgammonBoard.tmx");
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
+
+
 		gameBoardRenderer = new OrthogonalTiledMapRenderer(gameBoardMap);
+
+
 		Gdx.input.setInputProcessor(this);
 	}
 	@Override
 	public void render() {
-		super.render();
-		/*
-
 		int counter=0;
 		int xPos =0;
 
@@ -267,7 +270,7 @@ public class Backgammon extends Game implements InputProcessor {
 
 				batch.end();
 			}
-		}*/
+		}
 	}
 
 
@@ -295,7 +298,6 @@ public class Backgammon extends Game implements InputProcessor {
 		batch.dispose();
 		stone.dispose();
 		gameBoardMap.dispose();
-		font.dispose();
 	}
 	public BitmapFont getFont()
 	{
@@ -320,14 +322,10 @@ public class Backgammon extends Game implements InputProcessor {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		//Gdx.app.log("Mouse", "touch Down");
 		//FontGameMap test = new FontGameMap();
-
-
-
 		if(button == Input.Buttons.LEFT)
 		{
 			mouseMoved(screenX,screenY);
 			checkObjectClicked(screenX, screenY);
-
 		}
 		return false;
 	}
@@ -339,7 +337,6 @@ public class Backgammon extends Game implements InputProcessor {
 
 	@Override
 	public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-
 		return false;
 	}
 
