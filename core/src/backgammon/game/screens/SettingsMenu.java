@@ -42,7 +42,6 @@ public class SettingsMenu implements Screen{
         game.batch.begin();
         game.batch.draw(background, -600, -475);
         game.batch.draw(startbutton, -150, 45);
-        game.batch.draw(settingsbutton, -325, -100);
         game.batch.draw(quitbutton, 25, -100);
         game.batch.end();
         if(Gdx.input.isTouched()){

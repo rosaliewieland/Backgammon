@@ -6,30 +6,43 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import java.io.ObjectInputFilter;
 
 public class MainMenu implements Screen{
+    int i;
     //nehme Backgammon Klasse
     Backgammon game;
     //Hinzufüge Texturen
     private Texture background;
-    private Texture startbutton;
-    private Texture settingsbutton;
-    private Texture quitbutton;
+    private Button startbutton;
+    private Button setbutton;
+    public final static int GAME = 0;
+    public final static int SETTING = 1;
+    private SettingsMenu SetMenu;
     private OrthographicCamera menucam;
     private Viewport menuport;
+    Stage stage;
+    Table table = new Table();
+
     public MainMenu(Backgammon game) {
         this.game = game;
         background = new Texture("MainMenu.png");
-        startbutton = new Texture("PlayButton.png");
-        settingsbutton = new Texture("SettingsButton.png");
-        quitbutton = new Texture("QuitButton.png");
 
+        startbutton.texture = new Texture("PlayButton.png");
+        startbutton.value = 0;
+
+        setbutton.texture = new Texture("SettingsButton.png");
+        setbutton.value = 1;
+        setbutton.setBounds(0,0, setbutton.texture.getWidth(), setbutton.texture.getHeight());
+
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        stage.addActor(setbutton);
     }
 
     @Override
@@ -40,20 +53,14 @@ public class MainMenu implements Screen{
     public void render(float delta){
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        game.batch.setProjectionMatrix(menucam.combined);
         game.batch.begin();
         game.batch.draw(background, 0, 0);
-        game.batch.draw(startbutton, -150, 45);
-        game.batch.draw(settingsbutton, -325, -100);
-        game.batch.draw(quitbutton, 25, -100);
         game.batch.end();
 
     }
 
     @Override
     public void resize(int width, int height) {
-        menuport.update(width,height);
-        menucam.update();
     }
 
     @Override
@@ -68,6 +75,9 @@ public class MainMenu implements Screen{
 
     @Override
     public void hide() {
+        if(i == 1){
+            setbutton.setVisible(false);
+        }
 
     }
 
@@ -75,6 +85,18 @@ public class MainMenu implements Screen{
     public void dispose() {
         game.dispose();
         game.batch.dispose();
+    }
+    public void changeScreen(int screen){
+        switch(screen){
+            case GAME:
+                /*if(menuScreen == null) menuScreen = new MenuScreen();
+                this.setScreen(menuScreen);*/
+                break;
+            case SETTING:
+                if(SetMenu == null) SetMenu = new SettingsMenu(game);
+                game.setScreen(SetMenu);
+                break;
+        }
     }
 }
 
