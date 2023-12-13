@@ -18,7 +18,7 @@ public class Rules{
         }
         return false;
     }
-    public boolean isAccessible(boolean isBlack, int newPosition, int[][] field, int[] gameBoardEdge, int diceNumber)
+    public boolean isAccessible(boolean isBlack, int newPosition, int[][] field, int[] gameBoardEdge)
     {
         int counterStone = 0;
         int foundedStone = 0;
