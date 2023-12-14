@@ -47,13 +47,13 @@ public class Backgammon extends Game implements InputProcessor {
 
 	Texture dicebutton;
 
-	//Texture dicesheet;
-	//private final int FRAME_COLS = 6;
-	//private final int FRAME_ROWS = 1;
-	//Animation diceanimation;
-	//Animation diceanimation2;
-	//float stateTime;
-	//float stateTime2;
+	Texture dicesheet;
+	private final int FRAME_COLS = 6;
+	private final int FRAME_ROWS = 1;
+	Animation diceanimation;
+	Animation diceanimation2;
+	float stateTime;
+	float stateTime2;
 
 	private final int  DICE_BUTTON_WIDTH = 70;
 
@@ -98,29 +98,29 @@ public class Backgammon extends Game implements InputProcessor {
 		dicebutton = new Texture("assets/diceButton.png");
 
 
-		//dicesheet = new Texture("assets/sprites.png");
+		dicesheet = new Texture("assets/sprites.png");
 
 		//split to make equal split frames of dicesheet
 		//devide through number of height and with to get the single frames
-		//TextureRegion[][] tmp = TextureRegion.split(dicesheet,
-				//dicesheet.getWidth()/FRAME_COLS, dicesheet.getHeight()/FRAME_ROWS);
+		TextureRegion[][] tmp = TextureRegion.split(dicesheet,
+				dicesheet.getWidth()/FRAME_COLS, dicesheet.getHeight()/FRAME_ROWS);
 
 		// put in correct order in 1d array to be able to work with animation constructor
-		//TextureRegion[] diceFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-		//int index = 0;
-		//for (int i = 0; i < FRAME_ROWS; i++) {
-			//for (int j = 0; j < FRAME_COLS; j++) {
-				//diceFrames[index++] = tmp[i][j];
-			//}
-		//}
+		TextureRegion[] diceFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+		int index = 0;
+		for (int i = 0; i < FRAME_ROWS; i++) {
+			for (int j = 0; j < FRAME_COLS; j++) {
+				diceFrames[index++] = tmp[i][j];
+			}
+		}
 
 		//initialize animations + refresh rate
-		//diceanimation = new Animation<>(0.25f, diceFrames);
-		//diceanimation2 = new Animation<>(0.25f, diceFrames);
+		diceanimation = new Animation<>(0.25f, diceFrames);
+		diceanimation2 = new Animation<>(0.25f, diceFrames);
 
 		//set startpoint time
-		//stateTime = 0f;
-		//stateTime2 = 1f;
+		stateTime = 0f;
+		stateTime2 = 1f;
 
 
 		gameBoardMap = new TmxMapLoader().load("tiled/export/BackgammonBoard.tmx");
@@ -144,8 +144,8 @@ public class Backgammon extends Game implements InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		//accumulates animation time
-		//stateTime += Gdx.graphics.getDeltaTime();
-		//stateTime2 += Gdx.graphics.getDeltaTime();
+		stateTime += Gdx.graphics.getDeltaTime();
+		stateTime2 += Gdx.graphics.getDeltaTime();
 
 
 		gameBoardRenderer.setView(camera);
@@ -230,8 +230,8 @@ public class Backgammon extends Game implements InputProcessor {
 
 
 				// current animation frame for current statetime(in dice)
-				//TextureRegion currentFrame = (TextureRegion) diceanimation.getKeyFrame(stateTime, true); //loop frames
-				//TextureRegion currentFrame2 = (TextureRegion) diceanimation2.getKeyFrame(stateTime2, true);
+				TextureRegion currentFrame = (TextureRegion) diceanimation.getKeyFrame(stateTime, true); //loop frames
+				TextureRegion currentFrame2 = (TextureRegion) diceanimation2.getKeyFrame(stateTime2, true);
 
 
 
@@ -242,33 +242,44 @@ public class Backgammon extends Game implements InputProcessor {
 				int y = Gdx.graphics.getHeight()-dicebutton.getHeight();
 				int x = 50;
 				batch.draw(dicebutton,50,Gdx.graphics.getHeight()-dicebutton.getHeight(),DICE_BUTTON_WIDTH,DICE_BUTTON_HEIGHT);
-				if (Gdx.input.isTouched()) {
-					// Get the dice texture
-					Texture diceTexture = dice1.getDiceTexture(DICE1_BUTTON_X,DICE1_BUTTON_Y);
-					Texture diceTexture2 = dice2.getDiceTexture(DICE2_BUTTON_X,DICE2_BUTTON_Y);
+				if(Gdx.input.getX()< x + DICE_BUTTON_WIDTH && Gdx.input.getX()>x && Gdx.graphics.getHeight() -Gdx.input.getY()< y +DICE_BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY()>y) {
+						if (Gdx.input.isTouched()) {
+							//put in dice class dice.diceanimation(x,y)
+							batch.draw(currentFrame, DICE1_BUTTON_X, DICE1_BUTTON_Y);
+							batch.draw(currentFrame2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
 
-					// Draw the dice texture
-					batch.draw(diceTexture, DICE2_BUTTON_X, DICE1_BUTTON_Y);
-					batch.draw(diceTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
+							Texture diceTexture = dice1.getDiceTexture(DICE1_BUTTON_X, DICE1_BUTTON_Y);
+							Texture diceTexture2 = dice2.getDiceTexture(DICE2_BUTTON_X, DICE2_BUTTON_Y);
 
-					diceResultTexture = diceTexture;
-					diceResultTexture2 = diceTexture2;
+							diceResultTexture = diceTexture;
+							diceResultTexture2 = diceTexture2;
+						}
+
 				}
-				if (!Gdx.input.isTouched() && diceResultTexture != null) {
-					// Draw the result texture when the button is released
-					batch.draw(diceResultTexture, DICE1_BUTTON_X, DICE1_BUTTON_Y);
-					batch.draw(diceResultTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
-				}
+					if (!Gdx.input.isTouched() && diceResultTexture != null) {
+						// Draw the result texture when the button is released
+						batch.draw(diceResultTexture, DICE1_BUTTON_X, DICE1_BUTTON_Y);
+						batch.draw(diceResultTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
+					}
+					//if (Gdx.input.isTouched()) {
+						// Get the dice texture
+						//Texture diceTexture = dice1.getDiceTexture(DICE1_BUTTON_X, DICE1_BUTTON_Y);
+						//Texture diceTexture2 = dice2.getDiceTexture(DICE2_BUTTON_X, DICE2_BUTTON_Y);
 
-				batch.end();
+						// Draw the dice texture
+						//batch.draw(diceTexture, DICE2_BUTTON_X, DICE1_BUTTON_Y);
+						//batch.draw(diceTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
 
-				//if(Gdx.input.getX()< x + DICE_BUTTON_WIDTH && Gdx.input.getX()>x && Gdx.graphics.getHeight() -Gdx.input.getY()< y +DICE_BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY()>y) {
-					//if(Gdx.input.isTouched()) {
-						// put in dice class dice.diceanimation(x,y)
-						//batch.draw(currentFrame, 50, 50);
-						//batch.draw(currentFrame2, 50, 120);
+						//diceResultTexture = diceTexture;
+						//diceResultTexture2 = diceTexture2;
+					//}
+					//if (!Gdx.input.isTouched() && diceResultTexture != null) {
+						// Draw the result texture when the button is released
+						//batch.draw(diceResultTexture, DICE1_BUTTON_X, DICE1_BUTTON_Y);
+						//batch.draw(diceResultTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
 					//}
 
+				batch.end();
 
 			}
 		}
