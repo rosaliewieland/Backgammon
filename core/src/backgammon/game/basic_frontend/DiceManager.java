@@ -1,41 +1,69 @@
 package backgammon.game.basic_frontend;
 
 import backgammon.game.basic_backend.Dice;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.security.SecureRandom;
 import java.util.HashMap;
 
 public class DiceManager extends Dice {
-    //public TextureRegion diceanimation(x,y){
+    private int randomNumber;
 
-    //dicesheet = new Texture("assets/sprites.png");
+    public DiceManager() {
+    }
 
+    public TextureRegion diceanimation() {
 
-    ////split to make equal split frames of dicesheet
-    //		//devide through number of height and with to get the single frames
-    //		TextureRegion[][] tmp = TextureRegion.split(dicesheet,
-    //				dicesheet.getWidth()/FRAME_COLS, dicesheet.getHeight()/FRAME_ROWS);
-    //
-    //		// put in correct order in 1d array to be able to work with animation constructor
-    //		TextureRegion[] diceFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-    //		int index = 0;
-    //		for (int i = 0; i < FRAME_ROWS; i++) {
-    //			for (int j = 0; j < FRAME_COLS; j++) {
-    //				diceFrames[index++] = tmp[i][j];
-    //			}
-    //		}
-    //
-    //		//initialize animations + refresh rate
-    //		diceanimation = new Animation<>(0.25f, diceFrames);
-    //		diceanimation2 = new Animation<>(0.25f, diceFrames);
+        Texture dicesheet;
+        final int FRAME_COLS = 6;
+        final int FRAME_ROWS = 1;
+        Animation diceanimation;
+        float stateTime = 0;
 
 
-    //textureregion
-    //batch.draw(currentframe,x,y)
+        dicesheet = new Texture("assets/sprites.png");
 
-    public Texture getDiceTexture(int x, int y) {
+
+        ////split to make equal split frames of dicesheet
+        //		devide through number of height and with to get the single frames
+        TextureRegion[][] tmp = TextureRegion.split(dicesheet,
+                dicesheet.getWidth() / FRAME_COLS, dicesheet.getHeight() / FRAME_ROWS);
+        //
+        //		// put in correct order in 1d array to be able to work with animation constructor
+        TextureRegion[] diceFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        int index = 0;
+        for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_COLS; j++) {
+                diceFrames[index++] = tmp[i][j];
+            }
+        }
+        //
+        stateTime += Gdx.graphics.getDeltaTime();
+
+        //		//initialize animations + refresh rate
+        diceanimation = new Animation<>(0.25f, diceFrames);
+
+
+        TextureRegion currentFrame = (TextureRegion) diceanimation.getKeyFrame(stateTime, true); //loop frames
+
+        return currentFrame;
+
+
+
+
+    }
+
+
+    public int getDiceResult() {
+        SecureRandom rand = new SecureRandom();
+        int randomNumber = rand.nextInt(5) + 1;
+        //System.out.println(randomNumber);
+        return randomNumber;
+    }
+    public Texture getDiceTexture(int x, int y,int randomNumber) {
 
 
         Texture side1 = new Texture("assets/dice_1.png");
@@ -53,15 +81,11 @@ public class DiceManager extends Dice {
         dice_textures.put(5, side5);
         dice_textures.put(6, side6);
 
-        SecureRandom rand = new SecureRandom();
-        int randomNumber = rand.nextInt(5) + 1;
-        System.out.println(randomNumber);
 
+        //System.out.println(dice_textures.get(getDiceResult()));
         return dice_textures.get(randomNumber);
     }
-   // public Texture getDiceResult(int x, int y) {
-        //SecureRandom rand = new SecureRandom();
-        //int randomNumber = rand.nextInt(5) + 1;
+
 
 
 //}
