@@ -1,32 +1,18 @@
 package backgammon.game.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 
-public class Button extends Actor{
+public class Button extends InputListener{
     Texture texture;
     int value;
 
-    @Override
-    public boolean addListener(EventListener listener) {
-        return super.addListener(listener);
-    }
+    MainMenu menu;
 
     @Override
-    public void setBounds(float x, float y, float width, float height) {
-        super.setBounds(x, y, width, height);
-    }
-
-    @Override
-    public void setVisible(boolean visible) {
-        super.setVisible(visible);
+    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        menu.changeScreen(button);
+        return super.touchDown(event, x, y, pointer, button);
     }
 }

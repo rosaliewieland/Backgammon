@@ -38,11 +38,6 @@ public class MainMenu implements Screen{
 
         setbutton.texture = new Texture("SettingsButton.png");
         setbutton.value = 1;
-        setbutton.setBounds(0,0, setbutton.texture.getWidth(), setbutton.texture.getHeight());
-
-        stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
-        stage.addActor(setbutton);
     }
 
     @Override
@@ -75,9 +70,6 @@ public class MainMenu implements Screen{
 
     @Override
     public void hide() {
-        if(i == 1){
-            setbutton.setVisible(false);
-        }
 
     }
 
