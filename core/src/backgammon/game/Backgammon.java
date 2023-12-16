@@ -23,8 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Backgammon extends Game implements InputProcessor {
-
-	OrthographicCamera camera;
+	public OrthographicCamera camera;
 	private TiledMap gameBoardMap;
 	private Rules rules;
 	private TiledMapRenderer gameBoardRenderer;
@@ -37,36 +36,30 @@ public class Backgammon extends Game implements InputProcessor {
 	private ShapeRenderer shape;
 	float x;
 	float y;
+	public int inputx;
+	public int inputy;
 	private int newPostionID;
 	private int labelId;
 	private int stoneId;
-
 	private final int STONE_WIDTH=64;
 	private final int STONE_HEIGHT=64;
-
+	public static final int WORLDWIDTH=1400;
+	public static final int WORLDHEIGHT=950;
 	ArrayList<ArrayList<Label>> alb;
-
 	Texture dicebutton;
 	Texture dicesheet;
-
 	private final int FRAME_COLS = 6;
 	private final int FRAME_ROWS = 1;
 	Animation diceanimation;
 	Animation diceanimation2;
-
 	float stateTime;
 	float stateTime2;
-
 	private final int  DICE_BUTTON_WIDTH = 60;
-
 	private final int  DICE_BUTTON_HEIGHT = 70;
-
-
-
 
 	@Override
 	public void create() {
-		setScreen(new MainMenu(this));
+		setScreen(new EndingScreen(this));
 		batch = new SpriteBatch();
 		board = new Board();
 		rules = new Rules();
@@ -140,7 +133,7 @@ public class Backgammon extends Game implements InputProcessor {
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
 		gameBoardRenderer = new OrthogonalTiledMapRenderer(gameBoardMap);
-		Gdx.input.setInputProcessor(this);
+		//Gdx.input.setInputProcessor(this);
 	}
 	@Override
 	public void render() {
@@ -320,9 +313,8 @@ public class Backgammon extends Game implements InputProcessor {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		//Gdx.app.log("Mouse", "touch Down");
 		//FontGameMap test = new FontGameMap();
-
-
-
+		this.inputx = screenX;
+		this.inputy = screenY;
 		if(button == Input.Buttons.LEFT)
 		{
 			mouseMoved(screenX,screenY);
