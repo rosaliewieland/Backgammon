@@ -15,13 +15,13 @@ public class DiceManager extends Dice {
     public DiceManager() {
     }
 
-    public TextureRegion diceanimation() {
+    public TextureRegion diceanimation(float statetime) {
 
         Texture dicesheet;
         final int FRAME_COLS = 6;
         final int FRAME_ROWS = 1;
         Animation diceanimation;
-        float stateTime = 0;
+
 
 
         dicesheet = new Texture("assets/sprites.png");
@@ -40,14 +40,14 @@ public class DiceManager extends Dice {
                 diceFrames[index++] = tmp[i][j];
             }
         }
-        //
-        stateTime += Gdx.graphics.getDeltaTime();
+        //wird beim Aufruf übergeben
+        //statetime = Gdx.graphics.getDeltaTime();
 
-        //		//initialize animations + refresh rate
+        //initialize animations + refresh rate
         diceanimation = new Animation<>(0.25f, diceFrames);
 
 
-        TextureRegion currentFrame = (TextureRegion) diceanimation.getKeyFrame(stateTime, true); //loop frames
+        TextureRegion currentFrame = (TextureRegion) diceanimation.getKeyFrame(statetime, true); //loop frames
 
         return currentFrame;
 
