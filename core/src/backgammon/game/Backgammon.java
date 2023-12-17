@@ -333,8 +333,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 
 						if (Gdx.input.isTouched())
 						{
-							diceNumber1= dice1.getDiceResult();
-							diceNumber2= dice2.getDiceResult();
+
 
 
 							//TextureRegion dice1animation = dice1.diceanimation(stateTime + 0.25f);
@@ -345,6 +344,8 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 						}
 
 						if (Gdx.input.isTouched() && !control) {
+							diceNumber1= dice1.getDiceResult();
+							diceNumber2= dice2.getDiceResult();
 								//TextureRegion dice1animation = dice1.diceanimation(stateTime + 0.25f);
 								//TextureRegion dice2animation = dice2.diceanimation(stateTime2);
 								//put in dice class dice.diceanimation(x,y)
@@ -696,6 +697,13 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 		else {
 			turn=true;
 		}
+		movedWithTwoStone = false;
+		movedDiceOne = false;
+		movedDiceTwo = false;
+		isMovedDiceOne = false;
+		isMovedDiceTwo = false;
+		control=false;
+
 	}
 
 	public boolean setStone(int screenX, int screenY) {
@@ -876,12 +884,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 									if(((movedDiceOne && movedDiceTwo) || movedWithTwoStone) || isMovedDiceOne || isMovedDiceTwo)
 									{
 										whoesTurn();
-										movedWithTwoStone = false;
-										movedDiceOne = false;
-										movedDiceTwo = false;
-										isMovedDiceOne = false;
-										isMovedDiceTwo = false;
-										control=false;
+
 									}
 									this.printGameBar(playerTwo, true);
 									this.printGameBar(playerOne, false);
@@ -1027,6 +1030,11 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				HelperClass.removeStoneId(stoneId, field, alb);
 				board.adjustReverenceSet(stoneId);
 				playerOne.setOutOfBoard(stoneId, board);
+				isMovedDiceOne=true;
+				isMovedDiceTwo=true;
+			}
+			if(isMovedDiceOne && isMovedDiceTwo)
+			{
 				whoesTurn();
 			}
 			if(playerOne.isTheWinner())
@@ -1060,6 +1068,12 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				HelperClass.removeStoneId(stoneId, field, alb);
 				board.adjustReverenceSet(stoneId);
 				playerTwo.setOutOfBoard(stoneId,board);
+				isMovedDiceOne=true;
+				isMovedDiceTwo=true;
+
+			}
+			if(isMovedDiceOne && isMovedDiceTwo)
+			{
 				whoesTurn();
 			}
 

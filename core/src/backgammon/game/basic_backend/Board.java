@@ -22,23 +22,23 @@ public class Board {
 
 
     public Board(){
-        field[0][0] = -1;
-        field[0][1] = -2;
-        /*field[19][2] = -3;
+   //     field[0][0] = -1;
+   //     field[0][1] = -2;
+       /* field[19][2] = -3;
         field[19][3] = -4;
         field[19][4] = -5;
         field[22][0] = -6;
         field[22][1] = -7;
         field[22][2] = -8;
         field[20][2] = -9;
-        field[21][3] = -10;
+        field[21][3] = -10;*/
 
-*/
 
-        field[0][0] = -1;
+
+       field[0][0] = -1;
        field[0][1] = -2;
 
-        field[5][0] = 11;
+       field[5][0] = 11;
         field[5][1] = 12;
         field[5][2] = 13;
         field[5][3] = 14;
@@ -60,16 +60,17 @@ public class Board {
         field[12][3] = 6;
         field[12][4] = 7;
 
-       field[16][0] = -8;
-       field[16][1] = -9;
+        field[16][0] = -8;
+        field[16][1] = -9;
         field[16][2] = -10;
 
-        field[18][0] = -11;
+      field[18][0] = -11;
         field[18][1] = -12;
         field[18][2] = -13;
         field[18][3] = -14;
         field[18][4] = -15;
-
+       // field[23][0] = -1;
+       // field[23][1] =- 2;
        field[23][0] = 1;
        field[23][1] = 2;
 
