@@ -13,6 +13,7 @@ import java.util.HashMap;
 public class DiceManager extends Dice  {
     private int randomNumber;
     private Sound soundThrow;
+    private Animation dice1animation;
     //private boolean soundPlayed;
 
     public DiceManager() {
@@ -54,7 +55,6 @@ public class DiceManager extends Dice  {
 
         TextureRegion currentFrame = (TextureRegion) diceanimation.getKeyFrame(statetime, true); //loop frames
 
-
         return currentFrame;
     }
 
@@ -84,14 +84,14 @@ public class DiceManager extends Dice  {
         dice_textures.put(5, side5);
         dice_textures.put(6, side6);
 
-
         //System.out.println(dice_textures.get(getDiceResult()));
         return dice_textures.get(randomNumber);
     }
 
     public void getsound(){
         soundThrow= Gdx.audio.newSound(Gdx.files.internal("assets/diceland-90279.mp3"));
-           soundThrow.play();
+        soundThrow.play();
+
     }
 
 //}
