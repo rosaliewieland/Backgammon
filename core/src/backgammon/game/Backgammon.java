@@ -298,9 +298,9 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				batch.draw(textureRegion, x, y, STONE_WIDTH, STONE_HEIGHT);
 
 				//roll dice button and animation
-				int y = Gdx.graphics.getHeight() - dicebutton.getHeight();
+				int y = 200;
 				int x = 50;
-				batch.draw(dicebutton, 50, Gdx.graphics.getHeight() - dicebutton.getHeight(), DICE_BUTTON_WIDTH, DICE_BUTTON_HEIGHT);
+				batch.draw(dicebutton, x, y, DICE_BUTTON_WIDTH, DICE_BUTTON_HEIGHT);
 
 					if (Gdx.input.getX() < x + DICE_BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < y + DICE_BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > y) {
 
@@ -370,22 +370,6 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 		}
 
 
-
-	//private void drawdice(Sprite dice) {
-	//	dice.setPosition(0, 0);
-	//	dice.draw(batch);
-	//}
-
-	//private void load_dice() {
-
-	//Array<TextureAtlas.AtlasRegion> regions = dicesides.getRegions();
-
-	//for (TextureAtlas.AtlasRegion region : regions) {
-	//Sprite dice = dicesides.createSprite(region.name);
-
-	//dice_sides.put(region.name, dice);
-	//}
-	//}
 
 
 	@Override
