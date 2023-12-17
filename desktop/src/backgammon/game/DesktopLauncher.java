@@ -1,5 +1,6 @@
 package backgammon.game;
 
+import backgammon.game.screens.ScreenHandler;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
@@ -13,7 +14,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("Backgammon");
 		// Set Window size
-		config.setWindowedMode(1400, 950);
-		new Lwjgl3Application(new Backgammon(), config);
+		config.setWindowedMode(1500, 1000);
+		new Lwjgl3Application(new ScreenHandler(), config);
 	}
 }

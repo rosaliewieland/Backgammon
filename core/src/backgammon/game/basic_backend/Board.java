@@ -24,6 +24,19 @@ public class Board {
     public Board(){
         field[0][0] = -1;
         field[0][1] = -2;
+        /*field[19][2] = -3;
+        field[19][3] = -4;
+        field[19][4] = -5;
+        field[22][0] = -6;
+        field[22][1] = -7;
+        field[22][2] = -8;
+        field[20][2] = -9;
+        field[21][3] = -10;
+
+*/
+
+        field[0][0] = -1;
+       field[0][1] = -2;
 
         field[5][0] = 11;
         field[5][1] = 12;
@@ -38,8 +51,8 @@ public class Board {
         field[11][0] = -3;
         field[11][1] = -4;
         field[11][2] = -5;
-        field[11][3] = -6;
-        field[11][4] = -7;
+      field[11][3] = -6;
+       field[11][4] = -7;
 
         field[12][0] = 3;
         field[12][1] = 4;
@@ -47,8 +60,8 @@ public class Board {
         field[12][3] = 6;
         field[12][4] = 7;
 
-        field[16][0] = -8;
-        field[16][1] = -9;
+       field[16][0] = -8;
+       field[16][1] = -9;
         field[16][2] = -10;
 
         field[18][0] = -11;
@@ -57,8 +70,9 @@ public class Board {
         field[18][3] = -14;
         field[18][4] = -15;
 
-        field[23][0] = 1;
-        field[23][1] = 2;
+       field[23][0] = 1;
+       field[23][1] = 2;
+
     }
 
 
@@ -93,6 +107,7 @@ public class Board {
         }
         for (int i = -1; i > -16; i--) {
             reverenceSetWhite.add(i);
+
         }
     }
 
@@ -100,9 +115,11 @@ public class Board {
     public void adjustReverenceSet(int stoneToRemove){
         if (stoneToRemove > 0) {
             this.reverenceSetBlack.remove(stoneToRemove);
+            this.homeFieldBlack.remove(stoneToRemove);
         }
         else {
             this.reverenceSetWhite.remove(stoneToRemove);
+           this.homeFieldWhite.remove(stoneToRemove);
         }
     }
 
@@ -117,6 +134,10 @@ public class Board {
     // Getter-Methode
     public boolean isBlackPermittedRemoveStones() {
         return blackPermittedRemoveStones;
+    }
+
+    public Set<Integer> getReverenceSetWhite() {
+        return reverenceSetWhite;
     }
 
     public boolean isWhitePermittedRemoveStones() {

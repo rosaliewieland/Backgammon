@@ -1,9 +1,18 @@
 package backgammon.game.basic_backend;
 
+import backgammon.game.Backgammon;
+import backgammon.game.basic_frontend.ErrorMessage;
+import backgammon.game.screens.ScreenHandler;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Rules{
+public class Rules extends Backgammon{
 
     Scanner scanner = new Scanner(System.in);
     public boolean isStoneYours(boolean isBlack, int movingStone)
@@ -18,7 +27,7 @@ public class Rules{
         }
         return false;
     }
-    public boolean isAccessible(boolean isBlack, int newPosition, int[][] field, int[] gameBoardEdge)
+    public boolean isAccessible(boolean isBlack, int newPosition, int[][] field, int[] gameBoardEdge, boolean control)
     {
         int counterStone = 0;
         int foundedStone = 0;
@@ -45,9 +54,18 @@ public class Rules{
         {    // counterStone ist größer als null, wenn mindestens ein Stein gefunden wurde
             if (foundedStone <0 && isBlack || foundedStone >0 && !isBlack )
             {   // wenn foundedStone ein Gegnerstein ist
-                if (counterStone == 1)
+                if (counterStone == 1 && control)
                 {    //wenn nur ein Gegnerstein im Feld liegt, wird dieser geschlagen
                     hitStone(field, field[newPosition][0], gameBoardEdge, newPosition);
+                }
+                else if(counterStone==1)
+                {
+                    return true;
+                }
+                else if(counterStone>=2)
+                {
+                    System.out.println("Ein Gegner Stein auf dem Feld");
+                    return false;
                 }
                 else
                 {  //wenn mehr als ein Gegnerstein im Feld ist
@@ -72,6 +90,7 @@ public class Rules{
                 if(gameBoardEdge[i] == 0)
                 {
                     gameBoardEdge[i] = killStone;
+                    System.out.println("Stein wurde rausgeworfen:" + killStone);
                     field[newPosition][0] = 0;
                     return;
                 }

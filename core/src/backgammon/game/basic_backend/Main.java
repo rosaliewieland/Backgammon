@@ -1,7 +1,5 @@
 package backgammon.game.basic_backend;
 
-
-
 public class Main {
     public void main(String[] args)
     {
