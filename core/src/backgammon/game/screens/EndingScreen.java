@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+/*
 
 public class EndingScreen implements Screen {
     private static final int EXIT_BUTTON_WIDTH = 250;
@@ -77,4 +78,4 @@ public class EndingScreen implements Screen {
     public void dispose() {
         game.batch.dispose();
     }
-}
+}*/
