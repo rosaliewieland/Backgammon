@@ -29,12 +29,12 @@ public class EndingScreen implements Screen {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 //Exit button
-                if (screenX < EXIT_BUTTON_X + EXIT_BUTTON_WIDTH && screenX > EXIT_BUTTON_X && Backgammon.WORLDHEIGHT - screenY < BUTTON_Y + EXIT_BUTTON_HEIGHT && Backgammon.WORLDHEIGHT - screenY > BUTTON_Y) {
+                if (screenX < EXIT_BUTTON_X + EXIT_BUTTON_WIDTH && screenX > EXIT_BUTTON_X && Backgammon.WORLD_HEIGHT - screenY < BUTTON_Y + EXIT_BUTTON_HEIGHT && Backgammon.WORLD_HEIGHT - screenY > BUTTON_Y) {
                     Gdx.app.exit();
                 }
 
                 //Play game button
-                if (screenX < PLAY_BUTTON_X + PLAY_BUTTON_WIDTH && screenX > PLAY_BUTTON_X && Backgammon.WORLDHEIGHT - screenY < BUTTON_Y + PLAY_BUTTON_HEIGHT && Backgammon.WORLDHEIGHT - screenY > BUTTON_Y) {
+                if (screenX < PLAY_BUTTON_X + PLAY_BUTTON_WIDTH && screenX > PLAY_BUTTON_X && Backgammon.WORLD_HEIGHT - screenY < BUTTON_Y + PLAY_BUTTON_HEIGHT && Backgammon.WORLD_HEIGHT - screenY > BUTTON_Y) {
                     game.setScreen(new MainMenu());
                 }
 
@@ -53,7 +53,7 @@ public class EndingScreen implements Screen {
         Gdx.gl.glClearColor(0.15f, 0.15f, 0.3f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
-        game.batch.draw(winner, game.WORLDWIDTH/2-280, game.WORLDHEIGHT/2);
+        game.batch.draw(winner, game.WORLD_WIDTH/2-280, game.WORLD_HEIGHT/2);
         game.batch.draw(returnbutton, EXIT_BUTTON_X, BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
         game.batch.draw(againbutton, PLAY_BUTTON_X, BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         game.batch.end();

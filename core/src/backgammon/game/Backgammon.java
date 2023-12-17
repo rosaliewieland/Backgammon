@@ -25,7 +25,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Backgammon extends Game implements InputProcessor {
-
 	OrthographicCamera camera;
 	private TiledMap gameBoardMap;
 	private Rules rules;
@@ -35,15 +34,15 @@ public class Backgammon extends Game implements InputProcessor {
 	BitmapFont font;
 	Board board;
 	private int[][] field;
-
 	private ShapeRenderer shape;
 	float x;
 	float y;
 	private int newPostionID;
 	private int stoneId;
-
 	private final int STONE_WIDTH = 64;
 	private final int STONE_HEIGHT = 64;
+	public static final int WORLD_WIDTH = 1400;
+	public static final int WORLD_HEIGHT = 950;
 
 	ArrayList<ArrayList<Label>> alb;
 
