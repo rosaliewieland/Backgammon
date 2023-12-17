@@ -43,16 +43,17 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 	BitmapFont font;
 	Board board;
 	private int[][] field;
-
+    private Label greenLabel;
 	private ShapeRenderer shape;
 	float x;
 	float y;
 	private int newPostionID;
 	private int stoneId;
-	private Label greenLabel;
 
 	private final int STONE_WIDTH = 64;
 	private final int STONE_HEIGHT = 64;
+	public static final int WORLD_WIDTH = 1400;
+	public static final int WORLD_HEIGHT = 950;
 
 	ArrayList<ArrayList<Label>> alb;
 	private boolean whiteStonesOut=false, blackStonesOut = false;
@@ -118,6 +119,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 		whiteGameBarLabel = new ArrayList<Label>();
 		batch = new SpriteBatch();
 		board = new Board();
+		rules = new Rules();
 		field = board.getField();
 		shape = new ShapeRenderer();
 		font = new BitmapFont(Gdx.files.internal("bitmapHiero.fnt"));
@@ -159,8 +161,8 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 		dice2 = new DiceManager();
 
 
-		//soundshake= Gdx.audio.newSound(Gdx.files.internal("assets/shaking-dice-25620.mp3"));
-		//soundthrow= Gdx.audio.newSound(Gdx.files.internal("assets/diceland-90279.mp3"));
+		soundshake= Gdx.audio.newSound(Gdx.files.internal("assets/shaking-dice-25620.mp3"));
+		soundthrow= Gdx.audio.newSound(Gdx.files.internal("assets/diceland-90279.mp3"));
 
 		dicebutton = new Texture("assets/diceButton.png");
 
@@ -180,6 +182,9 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 
 
 	}
+
+
+
 	@Override
 	public void render(float delta) {
 		int counter = 0;
@@ -187,6 +192,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 		//accumulates animation time
 		stateTime += Gdx.graphics.getDeltaTime();
 		stateTime2 += Gdx.graphics.getDeltaTime();
@@ -197,61 +203,35 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 
 
 		batch.begin();
-		batch.draw(gamebarBottomWhite, 1200,100);
-		batch.draw(gamebarTopBlack,1200,625);
-		for (int i = 0; i < 5; i++) {
-			blackGameBarLabel.get(i).draw(batch, 1);
-		}
-		for (int i = 0; i < 5; i++) {
-			whiteGameBarLabel.get(i).draw(batch, 1);
-		}
-
-
-		// Anzeige, wer dran ist
-		if (turn) {
-			batch.draw(blackTurnTexture, 50, 900);
-		} else {
-			batch.draw(whiteTurnTexture, 50, 900);
-		}
-
 		for (int i = 0; i < 12; i++) {
 			if (i >= 6) {
-				xPos = (895 + 128) - (64 * (i + 1));
+				xPos = 895 - (64 * (i + 1));
 			} else {
-				xPos = (895 + 128) - (64 * i);
+				xPos = 895 - (64 * i);
 			}
 			for (int j = 0; j < 5; j++) {
-				alb.get(i).get(j).setPosition(xPos, 894 - (64 * j));
+				alb.get(i).get(j).setPosition(xPos, 830 - (64 * j));
 				alb.get(i).get(j).draw(batch, 1);
 			}
 		}
 
 		for (int i = 12; i < 24; i++) {
 			if (i >= 18) {
-				xPos = 256 + (64 * (counter + 1));
+				xPos = 128 + (64 * (counter + 1));
 			} else {
-				xPos = 256 + (64 * counter);
+				xPos = 128 + (64 * counter);
 			}
 			for (int j = 0; j < 5; j++) {
-				alb.get(i).get(j).setPosition(xPos, 129 + (64 * j));
+				alb.get(i).get(j).setPosition(xPos, 65 + (64 * j));
 				alb.get(i).get(j).draw(batch, 1);
 			}
 			counter++;
 		}
-		//whiteLabelDismantle.draw(batch,1);
-
-
-		blackLabelDismantle.draw(batch, 1);
-		whiteLabelDismantle.draw(batch,1);
-
-
 		batch.end();
 
-		for(MapObject object: gameBoardMap.getLayers().get("Stone").getObjects())
-		{
-			if(object instanceof RectangleMapObject)
-			{
-				Rectangle rect  = ((RectangleMapObject) object).getRectangle();
+		for (MapObject object : gameBoardMap.getLayers().get("Stone").getObjects()) {
+			if (object instanceof RectangleMapObject) {
+				Rectangle rect = ((RectangleMapObject) object).getRectangle();
 				shape.begin(ShapeRenderer.ShapeType.Filled);
 				shape.rect(rect.x, rect.y, rect.width, rect.height);
 				shape.end();
@@ -279,7 +259,6 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				shape.end();
 			} else if (object instanceof TiledMapTileMapObject) {
 				TiledMapTileMapObject tileMapObject = (TiledMapTileMapObject) object;
-
 
 
 				x = tileMapObject.getX();
@@ -364,7 +343,9 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 	@Override
 	public void dispose() {
 		batch.dispose();
+
 		gameBoardMap.dispose();
+
 	}
 	public BitmapFont getFont()
 	{
@@ -389,7 +370,9 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		//Gdx.app.log("Mouse", "touch Down");
 		//FontGameMap test = new FontGameMap();
-		if (button == Input.Buttons.LEFT) {
+		if(button == Input.Buttons.LEFT)
+		{
+			mouseMoved(screenX,screenY);
 			checkObjectClicked(screenX, screenY);
 		}
 		return false;
@@ -430,7 +413,6 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 
 	public void checkObjectClicked(int screenX, int screenY) {
 		Vector3 worldCoordinates = camera.unproject(new Vector3(screenX, screenY, 0));
-
 		float width = 64;
 		float height = 64;
 		float xPos;
@@ -661,8 +643,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 					for (int i = 0; i < 24; i++) {
 						for (int j = 0; j < 5; j++) {
 							if (alb.get(i).get(j).getX() <= worldCoordinates.x && worldCoordinates.x <= alb.get(i).get(j).getX() + 32 &&
-									alb.get(i).get(j).getY() <= worldCoordinates.y && worldCoordinates.y <= alb.get(i).get(j).getY() + 32)
-							{
+									alb.get(i).get(j).getY() <= worldCoordinates.y && worldCoordinates.y <= alb.get(i).get(j).getY() + 32) {
 								Gdx.app.log("Label", "Klicked");
 
 								if(alb.get(i).get(j).getColor().equals(greenLabel.getColor()))
