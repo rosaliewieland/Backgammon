@@ -380,9 +380,15 @@ public class Player{
         }
     }
 
-    public void setOutOfBoard(int stoneId) {
+    public void setOutOfBoard(int stoneId, Board board) {
         this.outOfBoard.add(stoneId);
-        System.out.println(outOfBoard);
+       System.out.println("Refeenzset Black: " + board.getReverenceSetBlack());
+        System.out.println("HomeFiled BLack: " + board.getHomeFieldBlack());
+
+        System.out.println("Refeenzset W: " + board.getReverenceSetWhite());
+        System.out.println("HomeFiled BLack: " + board.getHomeFieldWhite());
+        System.out.println("outofBoard:" +outOfBoard);
+
     }
 
     public Set<Integer> getOutOfBoard() {

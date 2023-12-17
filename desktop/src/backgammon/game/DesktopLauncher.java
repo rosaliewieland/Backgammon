@@ -14,7 +14,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("Backgammon");
 		// Set Window size
-		config.setWindowedMode(1500, 1000);
+		config.setWindowedMode(1350, 1000);
 		new Lwjgl3Application(new ScreenHandler(), config);
 	}
 }

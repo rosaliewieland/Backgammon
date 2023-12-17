@@ -131,9 +131,21 @@ public class Board {
         this.whitePermittedRemoveStones = homeFieldWhite.equals(reverenceSetWhite);
     }
 
+    public Set<Integer> getHomeFieldWhite() {
+        return homeFieldWhite;
+    }
+
     // Getter-Methode
     public boolean isBlackPermittedRemoveStones() {
         return blackPermittedRemoveStones;
+    }
+
+    public Set<Integer> getReverenceSetBlack() {
+        return reverenceSetBlack;
+    }
+
+    public Set<Integer> getHomeFieldBlack() {
+        return homeFieldBlack;
     }
 
     public Set<Integer> getReverenceSetWhite() {

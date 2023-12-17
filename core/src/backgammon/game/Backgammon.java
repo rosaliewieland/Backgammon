@@ -59,6 +59,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 	private int[][] field;
 
 	private ShapeRenderer shape;
+	private boolean control=false;
 	float x;
 	float y;
 	private int newPostionID;
@@ -300,47 +301,65 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				int y = Gdx.graphics.getHeight() - dicebutton.getHeight();
 				int x = 50;
 				batch.draw(dicebutton, 50, Gdx.graphics.getHeight() - dicebutton.getHeight(), DICE_BUTTON_WIDTH, DICE_BUTTON_HEIGHT);
-				if (Gdx.input.getX() < x + DICE_BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < y + DICE_BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > y) {
-					if (Gdx.input.isTouched()) {
 
-						TextureRegion dice1animation = dice1.diceanimation(stateTime + 0.25f);
-						TextureRegion dice2animation = dice2.diceanimation(stateTime2);
-						//put in dice class dice.diceanimation(x,y)
-						batch.draw(dice1animation, DICE1_BUTTON_X, DICE1_BUTTON_Y);
-						batch.draw(dice2animation, DICE2_BUTTON_X, DICE2_BUTTON_Y);
+					if (Gdx.input.getX() < x + DICE_BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < y + DICE_BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > y) {
 
-						diceNumber2 = dice2.getDiceResult();
-						diceNumber1 = dice1.getDiceResult();
+						if (Gdx.input.isTouched())
+						{
+							TextureRegion dice1animation = dice1.diceanimation(stateTime + 0.25f);
+							TextureRegion dice2animation = dice2.diceanimation(stateTime2);
+							//put in dice class dice.diceanimation(x,y)
+							batch.draw(dice1animation, DICE1_BUTTON_X, DICE1_BUTTON_Y);
+							batch.draw(dice2animation, DICE2_BUTTON_X, DICE2_BUTTON_Y);
+						}
+
+						if (Gdx.input.isTouched() && !control) {
+								TextureRegion dice1animation = dice1.diceanimation(stateTime + 0.25f);
+								TextureRegion dice2animation = dice2.diceanimation(stateTime2);
+								//put in dice class dice.diceanimation(x,y)
+								batch.draw(dice1animation, DICE1_BUTTON_X, DICE1_BUTTON_Y);
+								batch.draw(dice2animation, DICE2_BUTTON_X, DICE2_BUTTON_Y);
+
+								diceNumber2 = dice2.getDiceResult();
+								diceNumber1 = dice1.getDiceResult();
+
+								if(diceNumber1==diceNumber2)
+								{
+									diceNumber2++;
+								}
+
+								Texture diceTexture = dice1.getDiceTexture(DICE1_BUTTON_X, DICE1_BUTTON_Y, diceNumber1);
+								Texture diceTexture2 = dice2.getDiceTexture(DICE2_BUTTON_X, DICE2_BUTTON_Y, diceNumber2);
+
+								diceResultTexture = diceTexture;
+								diceResultTexture2 = diceTexture2;
+								control=true;
 
 
-						Texture diceTexture = dice1.getDiceTexture(DICE1_BUTTON_X, DICE1_BUTTON_Y, diceNumber1);
-						Texture diceTexture2 = dice2.getDiceTexture(DICE2_BUTTON_X, DICE2_BUTTON_Y, diceNumber2);
 
-						diceResultTexture = diceTexture;
-						diceResultTexture2 = diceTexture2;
+							//System.out.println(dicenumber1);
+							//System.out.println(dicenumber2);
 
 
-						//System.out.println(dicenumber1);
-						//System.out.println(dicenumber2);
+						}
+
+						//System.out.println(diceResultTexture);
+
+					}
+					if (!Gdx.input.isTouched() && diceResultTexture != null) {
+
+						// Draw the result texture when the button is release
+						batch.draw(diceResultTexture, DICE1_BUTTON_X, DICE1_BUTTON_Y);
+						batch.draw(diceResultTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
+						soundshake.play();
+						//System.out.println(diceResultTexture);
+
+						// Set the flag to true to indicate that the sound has been played
 
 
 					}
 
-					//System.out.println(diceResultTexture);
 
-				}
-				if (!Gdx.input.isTouched() && diceResultTexture != null) {
-
-					// Draw the result texture when the button is release
-					batch.draw(diceResultTexture, DICE1_BUTTON_X, DICE1_BUTTON_Y);
-					batch.draw(diceResultTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
-					soundshake.play();
-					//System.out.println(diceResultTexture);
-
-					// Set the flag to true to indicate that the sound has been played
-
-
-				}
 
 			}
 
@@ -641,12 +660,17 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 		}
 	}
 	public void fieldsAllowedToMove(boolean isBlack) {
-		allowedFields(isBlack,diceNumber1, movedDiceOne);
-		allowedFields(isBlack,diceNumber2, movedDiceTwo);
-		if(!movedDiceOne && !movedDiceTwo)
+		if(control)
 		{
-			allowedFields(isBlack,diceNumber1+diceNumber2, movedWithTwoStone);
+			allowedFields(isBlack,diceNumber1, movedDiceOne);
+			allowedFields(isBlack,diceNumber2, movedDiceTwo);
+			if(!movedDiceOne && !movedDiceTwo)
+			{
+				allowedFields(isBlack,diceNumber1+diceNumber2, movedWithTwoStone);
+			}
+
 		}
+
 
 	}
 	public void whoesTurn()
@@ -843,6 +867,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 										movedDiceTwo = false;
 										isMovedDiceOne = false;
 										isMovedDiceTwo = false;
+										control=false;
 									}
 									this.printGameBar(playerTwo, true);
 									this.printGameBar(playerOne, false);
@@ -969,7 +994,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				stone.setY(whiteLabelDismantle.getY());
 				HelperClass.removeStoneId(stoneId, field, alb);
 				board.adjustReverenceSet(stoneId);
-				playerOne.setOutOfBoard(stoneId);
+				playerOne.setOutOfBoard(stoneId,board);
 				isMovedDiceOne = true;
 			}
 			else if(indexIStone+diceNumber2>23 && !isMovedDiceTwo)
@@ -978,7 +1003,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				stone.setY(whiteLabelDismantle.getY());
 				HelperClass.removeStoneId(stoneId, field, alb);
 				board.adjustReverenceSet(stoneId);
-				playerOne.setOutOfBoard(stoneId);
+				playerOne.setOutOfBoard(stoneId, board);
 				isMovedDiceTwo = true;
 			}
 			else if(indexIStone+diceNumber2+diceNumber1 >23 && !isMovedDiceOne && !isMovedDiceTwo)
@@ -987,7 +1012,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				stone.setY(whiteLabelDismantle.getY());
 				HelperClass.removeStoneId(stoneId, field, alb);
 				board.adjustReverenceSet(stoneId);
-				playerOne.setOutOfBoard(stoneId);
+				playerOne.setOutOfBoard(stoneId, board);
 				whoesTurn();
 			}
 			if(playerOne.isTheWinner())
@@ -1002,7 +1027,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				stone.setY(blackLabelDismantle.getY());
 				HelperClass.removeStoneId(stoneId, field, alb);
 				board.adjustReverenceSet(stoneId);
-				playerTwo.setOutOfBoard(stoneId);
+				playerTwo.setOutOfBoard(stoneId, board);
 				isMovedDiceOne = true;
 			}
 			else if(indexIStone-diceNumber2<0 && !isMovedDiceTwo)
@@ -1011,7 +1036,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				stone.setY(blackLabelDismantle.getY());
 				HelperClass.removeStoneId(stoneId, field, alb);
 				board.adjustReverenceSet(stoneId);
-				playerTwo.setOutOfBoard(stoneId);
+				playerTwo.setOutOfBoard(stoneId, board);
 				isMovedDiceTwo = true;
 			}
 			else if(indexIStone-diceNumber2-diceNumber1 <0 && !isMovedDiceOne && !isMovedDiceTwo)
@@ -1020,7 +1045,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				stone.setY(blackLabelDismantle.getY());
 				HelperClass.removeStoneId(stoneId, field, alb);
 				board.adjustReverenceSet(stoneId);
-				playerTwo.setOutOfBoard(stoneId);
+				playerTwo.setOutOfBoard(stoneId,board);
 				whoesTurn();
 			}
 
