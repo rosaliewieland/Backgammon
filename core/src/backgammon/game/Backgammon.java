@@ -9,6 +9,7 @@ import backgammon.game.basic_frontend.HelperClass;
 import backgammon.game.screens.EndingScreen;
 import backgammon.game.screens.ScreenHandler;
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -99,6 +100,8 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 	int diceNumber1;
 	int diceNumber2;
 
+	Sound soundshake;
+
 
 	@Override
 	public void show() {
@@ -158,6 +161,8 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 		//set startpoint time
 		stateTime = 0f;
 		stateTime2 = 1f;
+
+		soundshake = Gdx.audio.newSound(Gdx.files.internal("assets/shaking-dice-25620.mp3"));
 
 
 
@@ -329,6 +334,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 					// Draw the result texture when the button is release
 					batch.draw(diceResultTexture, DICE1_BUTTON_X, DICE1_BUTTON_Y);
 					batch.draw(diceResultTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
+					soundshake.play();
 					//System.out.println(diceResultTexture);
 
 					// Set the flag to true to indicate that the sound has been played
