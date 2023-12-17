@@ -1,7 +1,7 @@
 package backgammon.game.basic_backend;
 
 import backgammon.game.basic_backend.Rules;
-import backgammon.game.basic_frontend.ErrorMessage;
+//import backgammon.game.basic_frontend.ErrorMessage;
 import backgammon.game.screens.ScreenHandler;
 
 import java.util.HashSet;

@@ -6,6 +6,8 @@ import backgammon.game.basic_backend.PrintBoard;
 import backgammon.game.basic_backend.Rules;
 import backgammon.game.basic_frontend.DiceManager;
 import backgammon.game.basic_frontend.HelperClass;
+import backgammon.game.screens.EndingScreen;
+import backgammon.game.screens.ScreenHandler;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -62,9 +64,11 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 	private int stoneId;
 
 	private Label greenLabel;
-
 	private final int STONE_WIDTH = 64;
 	private final int STONE_HEIGHT = 64;
+
+	public static final int WORLD_WIDTH =1500;
+	public static final int WORLD_HEIGHT =1000;
 
 	ArrayList<ArrayList<Label>> alb;
 
@@ -652,7 +656,6 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 
 	public boolean setStone(int screenX, int screenY) {
 		boolean accessMove = false;
-
 		Vector3 worldCoordinates = camera.unproject(new Vector3(screenX, screenY, 0));
 		for (MapObject object : gameBoardMap.getLayers().get("Stone").getObjects()) {
 
@@ -983,7 +986,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 			}
 			if(playerOne.isTheWinner())
 			{
-				Gdx.app.exit();
+				ScreenHandler.INSTANCE.setScreen(new EndingScreen(this, 0));
 			}
 		}
 		else {
@@ -1014,9 +1017,10 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				playerTwo.setOutOfBoard(stoneId);
 				whoesTurn();
 			}
+
 			if(playerTwo.isTheWinner())
 			{
-				Gdx.app.exit();
+				ScreenHandler.INSTANCE.setScreen(new EndingScreen(this, 1));
 			}
 		}
 	}

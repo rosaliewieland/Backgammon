@@ -1,7 +1,7 @@
 package backgammon.game.screens;
 
 import backgammon.game.Backgammon;
-import backgammon.game.basic_frontend.ErrorMessage;
+//import backgammon.game.basic_frontend.ErrorMessage;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 
