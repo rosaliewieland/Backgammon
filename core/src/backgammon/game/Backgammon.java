@@ -20,8 +20,9 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Backgammon extends Game implements InputProcessor {
 
@@ -48,9 +49,7 @@ public class Backgammon extends Game implements InputProcessor {
 
 	Texture dicebutton;
 
-	//Texture dicesheet;
-	private final int FRAME_COLS = 6;
-	private final int FRAME_ROWS = 1;
+
 	Animation diceanimation;
 	Animation diceanimation2;
 	float stateTime;
@@ -77,6 +76,10 @@ public class Backgammon extends Game implements InputProcessor {
 	Sound soundshake;
 	Sound soundthrow;
 	boolean soundPlayed = false;
+
+	TimerTask timer;
+
+
 
 
 	@Override
@@ -107,31 +110,6 @@ public class Backgammon extends Game implements InputProcessor {
 		soundthrow= Gdx.audio.newSound(Gdx.files.internal("assets/diceland-90279.mp3"));
 
 		dicebutton = new Texture("assets/diceButton.png");
-
-
-		//dicesheet = new Texture("assets/sprites.png");
-
-		//split to make equal split frames of dicesheet
-		//devide through number of height and with to get the single frames
-		//TextureRegion[][] tmp = TextureRegion.split(dicesheet,
-				//dicesheet.getWidth() / FRAME_COLS, dicesheet.getHeight() / FRAME_ROWS);
-
-		// put in correct order in 1d array to be able to work with animation constructor
-		//TextureRegion[] diceFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-		//int index = 0;
-		//for (int i = 0; i < FRAME_ROWS; i++) {
-			//for (int j = 0; j < FRAME_COLS; j++) {
-				//diceFrames[index++] = tmp[i][j];
-			//}
-		//}
-
-		//initialize animations + refresh rate
-		//diceanimation = new Animation<>(0.075f, diceFrames);
-		//diceanimation2 = new Animation<>(0.075f, diceFrames);
-
-		//set startpoint time
-		//stateTime = 0f;
-		//stateTime2 = 0.25f;
 
 
 		gameBoardMap = new TmxMapLoader().load("tiled/export/BackgammonBoard.tmx");
@@ -277,77 +255,38 @@ public class Backgammon extends Game implements InputProcessor {
 					//System.out.println(diceResultTexture);
 
 				}
-				if (!Gdx.input.isTouched() && diceResultTexture != null ) {
+				if (!Gdx.input.isTouched() && diceResultTexture != null) {
+
 					// Draw the result texture when the button is release
 					batch.draw(diceResultTexture, DICE1_BUTTON_X, DICE1_BUTTON_Y);
 					batch.draw(diceResultTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
 					//System.out.println(diceResultTexture);
 					soundshake.play();
+					float delaySeconds = 1.0f; // Adjust this value based on your sound's duration
+					//soundPlayed = true;
+
+
+					if(soundPlayed){
+						soundthrow.play();
+						soundPlayed = false;
+					}
 
 					// Set the flag to true to indicate that the sound has been played
 
 
 				}
-			}
-
-
-
-
-
-				//System.out.println(dice1.getDiceResult());
-				//if (Gdx.input.isTouched()) {
-				// Get the dice texture
-				//Texture diceTexture = dice1.getDiceTexture(DICE1_BUTTON_X, DICE1_BUTTON_Y);
-				//Texture diceTexture2 = dice2.getDiceTexture(DICE2_BUTTON_X, DICE2_BUTTON_Y);
-
-				// Draw the dice texture
-				//batch.draw(diceTexture, DICE2_BUTTON_X, DICE1_BUTTON_Y);
-				//batch.draw(diceTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
-
-				//diceResultTexture = diceTexture;
-				//diceResultTexture2 = diceTexture2;
-				//}
-				//if (!Gdx.input.isTouched() && diceResultTexture != null) {
-				// Draw the result texture when the button is released
-				//batch.draw(diceResultTexture, DICE1_BUTTON_X, DICE1_BUTTON_Y);
-				//batch.draw(diceResultTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
-				//}
-
-				batch.end();
-
-
 
 
 
 			}
 
+
+			batch.end();
 
 		}
+	}
 
 
-
-
-
-
-
-
-
-
-//private void drawdice(Sprite dice) {
-	//	dice.setPosition(0, 0);
-	//	dice.draw(batch);
-	//}
-
-	//private void load_dice() {
-
-		//Array<TextureAtlas.AtlasRegion> regions = dicesides.getRegions();
-
-		//for (TextureAtlas.AtlasRegion region : regions) {
-			//Sprite dice = dicesides.createSprite(region.name);
-
-			//dice_sides.put(region.name, dice);
-		//}
-	//}
 
 
 

@@ -10,9 +10,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.security.SecureRandom;
 import java.util.HashMap;
 
-public class DiceManager extends Dice {
+public class DiceManager extends Dice  {
     private int randomNumber;
-    //private Sound soundThrow;
+    private Sound soundThrow;
     //private boolean soundPlayed;
 
     public DiceManager() {
@@ -89,7 +89,10 @@ public class DiceManager extends Dice {
         return dice_textures.get(randomNumber);
     }
 
-
+    public void getsound(){
+        soundThrow= Gdx.audio.newSound(Gdx.files.internal("assets/diceland-90279.mp3"));
+           soundThrow.play();
+    }
 
 //}
 }
