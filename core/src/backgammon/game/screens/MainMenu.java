@@ -1,94 +1,172 @@
 package backgammon.game.screens;
 
-import backgammon.game.Backgammon;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class MainMenu implements Screen{
-    int i;
-    //nehme Backgammon Klasse
-    Backgammon game;
-    //Hinzufüge Texturen
-    private Texture background;
-    private Button startbutton;
-    private Button setbutton;
-    public final static int GAME = 0;
-    public final static int SETTING = 1;
-    private SettingsMenu SetMenu;
-    private OrthographicCamera menucam;
-    private Viewport menuport;
-    Stage stage;
-    Table table = new Table();
+public class MainMenu extends ScreenAdapter implements InputProcessor {
 
-    public MainMenu(Backgammon game) {
-        this.game = game;
+    public SpriteBatch batch;
+    private ImageButton quitButton;
+    private ImageButton startButton;
+    private ImageButton settingsButton;
+
+
+    private final Texture background;
+    private final Texture startbutton = new Texture("PlayButton.png");
+    private final Texture settingsbutton = new Texture("SettingsButton.png");
+    private final Texture quitbutton = new Texture("QuitButton.png");
+    private final OrthographicCamera menucam;
+    private final Viewport menuport;
+
+
+    public MainMenu() {
+        batch = new SpriteBatch();
         background = new Texture("MainMenu.png");
-
-        startbutton.texture = new Texture("PlayButton.png");
-        startbutton.value = 0;
-
-        setbutton.texture = new Texture("SettingsButton.png");
-        setbutton.value = 1;
-    }
-
-    @Override
-    public void show() {
+        menucam = new OrthographicCamera();
+        menuport = new ScreenViewport(menucam);
+        windowQuitButton();
+        windowSettingsButton();
+        windowStartButton();
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
     public void render(float delta){
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        game.batch.begin();
-        game.batch.draw(background, 0, 0);
-        game.batch.end();
+        batch.setProjectionMatrix(menucam.combined);
+        batch.begin();
+        batch.draw(background, -600, -475);
+        quitButton.draw(batch, 1);
+        startButton.draw(batch,1);
+        settingsButton.draw(batch,1);
+        batch.end();
 
     }
 
     @Override
     public void resize(int width, int height) {
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
+        menuport.update(width,height);
+        menucam.update();
     }
 
     @Override
     public void dispose() {
-        game.dispose();
-        game.batch.dispose();
+        batch.dispose();
+        background.dispose();
+        startbutton.dispose();
+        settingsbutton.dispose();
+        quitbutton.dispose();
     }
-    public void changeScreen(int screen){
-        switch(screen){
-            case GAME:
-                /*if(menuScreen == null) menuScreen = new MenuScreen();
-                this.setScreen(menuScreen);*/
-                break;
-            case SETTING:
-                if(SetMenu == null) SetMenu = new SettingsMenu(game);
-                game.setScreen(SetMenu);
-                break;
+
+    @Override
+    public void hide() {
+        this.dispose();
+    }
+
+
+    public void windowQuitButton(){
+        TextureRegionDrawable quitButtonDrawable = new TextureRegionDrawable(new TextureRegion(quitbutton));
+        quitButton = new ImageButton(quitButtonDrawable);
+        quitButton.setPosition(25, -100);
+
+        quitButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+                return true;
+            }
+        });
+
+
+    }    public void windowStartButton(){
+        TextureRegionDrawable startButtonDrawable = new TextureRegionDrawable(new TextureRegion(startbutton));
+        startButton = new ImageButton(startButtonDrawable);
+        startButton.setPosition(-150, 45);
+
+        startButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+            }
+        });
+
+
+    }    public void windowSettingsButton(){
+        TextureRegionDrawable settingButtonDrawable = new TextureRegionDrawable(new TextureRegion(settingsbutton));
+        settingsButton = new ImageButton(settingButtonDrawable);
+        settingsButton.setPosition(-325, -100);
+
+        settingsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("ClickListener", "Einstellungsbutton wurde geklickt. Koordinaten: (" + x + ", " + y + ")");
+
+                Gdx.app.exit();
+            }
+        });
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if(button == Input.Buttons.LEFT) {
+            Gdx.app.log("ClickListener", "TouchDown auf dem Einstellungsbutton");
         }
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+        return false;
     }
 }
 

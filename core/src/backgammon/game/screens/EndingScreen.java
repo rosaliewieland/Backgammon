@@ -35,7 +35,7 @@ public class EndingScreen implements Screen {
 
                 //Play game button
                 if (screenX < PLAY_BUTTON_X + PLAY_BUTTON_WIDTH && screenX > PLAY_BUTTON_X && Backgammon.WORLDHEIGHT - screenY < BUTTON_Y + PLAY_BUTTON_HEIGHT && Backgammon.WORLDHEIGHT - screenY > BUTTON_Y) {
-                    game.setScreen(new MainMenu(game));
+                    game.setScreen(new MainMenu());
                 }
 
                 return super.touchUp(screenX, screenY, pointer, button);
