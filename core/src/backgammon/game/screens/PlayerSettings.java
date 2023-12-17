@@ -2,6 +2,7 @@ package backgammon.game.screens;
 
 import backgammon.game.Backgammon;
 import com.badlogic.gdx.Gdx;
+import backgammon.game.basic_frontend.DiceManager;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,8 +15,25 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.graphics.Texture;
 
 public class PlayerSettings extends ScreenAdapter {
+    DiceManager dice1;
+    DiceManager dice2;
+    Texture dicebutton;
+    float stateTime;
+    float stateTime2;
+    private final int DICE_BUTTON_WIDTH = 70;
+    private final int DICE_BUTTON_HEIGHT = 80;
+    int dicenumber1;
+    int dicenumber2;
+    private Texture diceResultTexture;
+    private Texture diceResultTexture2;
+    private final int DICE1_BUTTON_X = 50;
+    private final int DICE1_BUTTON_Y = 50;
+    private final int DICE2_BUTTON_X = 50;
+    private final int DICE2_BUTTON_Y = 120;
+
 
     private Stage stage;
     private Viewport viewport;
