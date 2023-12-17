@@ -380,6 +380,15 @@ public class Player{
         }
     }
 
+    public void setOutOfBoard(int stoneId) {
+        this.outOfBoard.add(stoneId);
+        System.out.println(outOfBoard);
+    }
+
+    public Set<Integer> getOutOfBoard() {
+        return outOfBoard;
+    }
+
     public boolean isTheWinner() {
         if (outOfBoard.size() == 15) {
             return true;
