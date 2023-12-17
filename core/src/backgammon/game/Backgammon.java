@@ -6,6 +6,7 @@ import backgammon.game.basic_backend.Rules;
 import backgammon.game.basic_frontend.DiceManager;
 import backgammon.game.basic_frontend.HelperClass;
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -19,11 +20,13 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Backgammon extends Game implements InputProcessor {
-	public OrthographicCamera camera;
+
+	OrthographicCamera camera;
 	private TiledMap gameBoardMap;
 	private Rules rules;
 	private TiledMapRenderer gameBoardRenderer;
@@ -32,32 +35,26 @@ public class Backgammon extends Game implements InputProcessor {
 	BitmapFont font;
 	Board board;
 	private int[][] field;
+
 	private ShapeRenderer shape;
 	float x;
 	float y;
-	public int inputx;
-	public int inputy;
 	private int newPostionID;
 	private int stoneId;
-	private final int STONE_WIDTH=64;
-	private final int STONE_HEIGHT=64;
-	public static final int WORLDWIDTH=1400;
-	public static final int WORLDHEIGHT=950;
+
+	private final int STONE_WIDTH = 64;
+	private final int STONE_HEIGHT = 64;
 
 	ArrayList<ArrayList<Label>> alb;
+
 	Texture dicebutton;
-	//Texture dicesheet;
-	//private final int FRAME_COLS = 6;
-	//private final int FRAME_ROWS = 1;
-	//Animation diceanimation;
-	//Animation diceanimation2;
-	Texture dicesheet;
-	private final int FRAME_COLS = 6;
-	private final int FRAME_ROWS = 1;
+
+
 	Animation diceanimation;
 	Animation diceanimation2;
 	float stateTime;
 	float stateTime2;
+
 	private final int DICE_BUTTON_WIDTH = 70;
 
 	private final int DICE_BUTTON_HEIGHT = 80;
@@ -75,6 +72,14 @@ public class Backgammon extends Game implements InputProcessor {
 	private final int DICE1_BUTTON_Y = 50;
 	private final int DICE2_BUTTON_X = 50;
 	private final int DICE2_BUTTON_Y = 120;
+
+	Sound soundshake;
+	Sound soundthrow;
+	boolean soundPlayed = false;
+
+	TimerTask timer;
+
+
 
 
 	@Override
@@ -101,33 +106,10 @@ public class Backgammon extends Game implements InputProcessor {
 		dice2 = new DiceManager();
 
 
+		soundshake= Gdx.audio.newSound(Gdx.files.internal("assets/shaking-dice-25620.mp3"));
+		soundthrow= Gdx.audio.newSound(Gdx.files.internal("assets/diceland-90279.mp3"));
 
 		dicebutton = new Texture("assets/diceButton.png");
-
-
-		//dicesheet = new Texture("assets/sprites.png");
-
-		//split to make equal split frames of dicesheet
-		//devide through number of height and with to get the single frames
-		//TextureRegion[][] tmp = TextureRegion.split(dicesheet,
-				//dicesheet.getWidth() / FRAME_COLS, dicesheet.getHeight() / FRAME_ROWS);
-
-		// put in correct order in 1d array to be able to work with animation constructor
-		//TextureRegion[] diceFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-		//int index = 0;
-		//for (int i = 0; i < FRAME_ROWS; i++) {
-			//for (int j = 0; j < FRAME_COLS; j++) {
-				//diceFrames[index++] = tmp[i][j];
-			//}
-		//}
-
-		//initialize animations + refresh rate
-		//diceanimation = new Animation<>(0.075f, diceFrames);
-		//diceanimation2 = new Animation<>(0.075f, diceFrames);
-
-		//set startpoint time
-		//stateTime = 0f;
-		//stateTime2 = 0.25f;
 
 
 		gameBoardMap = new TmxMapLoader().load("tiled/export/BackgammonBoard.tmx");
@@ -162,7 +144,6 @@ public class Backgammon extends Game implements InputProcessor {
 
 		gameBoardRenderer.setView(camera);
 		gameBoardRenderer.render();
-
 
 
 		batch.begin();
@@ -242,11 +223,13 @@ public class Backgammon extends Game implements InputProcessor {
 				//roll dice button and animation
 				int y = Gdx.graphics.getHeight() - dicebutton.getHeight();
 				int x = 50;
+
 				batch.draw(dicebutton, 50, Gdx.graphics.getHeight() - dicebutton.getHeight(), DICE_BUTTON_WIDTH, DICE_BUTTON_HEIGHT);
 				if (Gdx.input.getX() < x + DICE_BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < y + DICE_BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > y) {
 					if (Gdx.input.isTouched()) {
 
-						TextureRegion dice1animation = dice1.diceanimation(stateTime+0.25f);
+
+						TextureRegion dice1animation = dice1.diceanimation(stateTime + 0.25f);
 						TextureRegion dice2animation = dice2.diceanimation(stateTime2);
 						//put in dice class dice.diceanimation(x,y)
 						batch.draw(dice1animation, DICE1_BUTTON_X, DICE1_BUTTON_Y);
@@ -255,70 +238,55 @@ public class Backgammon extends Game implements InputProcessor {
 						dicenumber2 = dice2.getDiceResult();
 						dicenumber1 = dice1.getDiceResult();
 
+
 						Texture diceTexture = dice1.getDiceTexture(DICE1_BUTTON_X, DICE1_BUTTON_Y, dicenumber1);
 						Texture diceTexture2 = dice2.getDiceTexture(DICE2_BUTTON_X, DICE2_BUTTON_Y, dicenumber2);
 
-						diceResultTexture= diceTexture;
-						diceResultTexture2=diceTexture2;
+						diceResultTexture = diceTexture;
+						diceResultTexture2 = diceTexture2;
 
 
 						//System.out.println(dicenumber1);
 						//System.out.println(dicenumber2);
 
 
-
 					}
+
 					//System.out.println(diceResultTexture);
 
 				}
 				if (!Gdx.input.isTouched() && diceResultTexture != null) {
-					// Draw the result texture when the button is released
 
+					// Draw the result texture when the button is release
 					batch.draw(diceResultTexture, DICE1_BUTTON_X, DICE1_BUTTON_Y);
 					batch.draw(diceResultTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
 					//System.out.println(diceResultTexture);
+					soundshake.play();
+					float delaySeconds = 1.0f; // Adjust this value based on your sound's duration
+					//soundPlayed = true;
+
+
+					if(soundPlayed){
+						soundthrow.play();
+						soundPlayed = false;
+					}
+
+					// Set the flag to true to indicate that the sound has been played
+
 
 				}
 
 
-				//System.out.println(dice1.getDiceResult());
-				//if (Gdx.input.isTouched()) {
-				// Get the dice texture
-				//Texture diceTexture = dice1.getDiceTexture(DICE1_BUTTON_X, DICE1_BUTTON_Y);
-				//Texture diceTexture2 = dice2.getDiceTexture(DICE2_BUTTON_X, DICE2_BUTTON_Y);
 
-				// Draw the dice texture
-				//batch.draw(diceTexture, DICE2_BUTTON_X, DICE1_BUTTON_Y);
-				//batch.draw(diceTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
-
-				//diceResultTexture = diceTexture;
-				//diceResultTexture2 = diceTexture2;
-				//}
-				//if (!Gdx.input.isTouched() && diceResultTexture != null) {
-				// Draw the result texture when the button is released
-				//batch.draw(diceResultTexture, DICE1_BUTTON_X, DICE1_BUTTON_Y);
-				//batch.draw(diceResultTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
-				//}
-
-				batch.end();
 			}
+
+
+			batch.end();
+
 		}
 	}
-//private void drawdice(Sprite dice) {
-	//	dice.setPosition(0, 0);
-	//	dice.draw(batch);
-	//}
 
-	//private void load_dice() {
 
-		//Array<TextureAtlas.AtlasRegion> regions = dicesides.getRegions();
-
-		//for (TextureAtlas.AtlasRegion region : regions) {
-			//Sprite dice = dicesides.createSprite(region.name);
-
-			//dice_sides.put(region.name, dice);
-		//}
-	//}
 
 
 
@@ -327,6 +295,7 @@ public class Backgammon extends Game implements InputProcessor {
 		batch.dispose();
 		stone.dispose();
 		gameBoardMap.dispose();
+
 	}
 	public BitmapFont getFont()
 	{
