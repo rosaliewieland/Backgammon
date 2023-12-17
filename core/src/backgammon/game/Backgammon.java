@@ -1035,6 +1035,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 			if(isMovedDiceOne && isMovedDiceTwo)
 			{
 				whoesTurn();
+
 			}
 			if(playerOne.isTheWinner())
 			{
