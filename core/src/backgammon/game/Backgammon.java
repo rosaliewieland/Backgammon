@@ -100,10 +100,14 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 
 	int diceNumber1;
 	int diceNumber2;
-	TextureRegion dice1animation;
-	TextureRegion dice2animation;
 
 	Sound soundshake;
+	Animation diceanimation;
+	Animation diceanimation2;
+	private final int FRAME_COLS = 6;
+	private final int FRAME_ROWS = 1;
+
+
 
 
 	@Override
@@ -113,10 +117,6 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 		rules =  new Rules();
 		gamebarBottomWhite = new Texture("assets/GamebarbottomWhite.png");
 		gamebarTopBlack = new Texture("assets/GamebartopBlack.png");
-
-
-
-
 
 		whiteTurnTexture = new Texture("assets/WhitePlayer.png");
 		blackTurnTexture = new Texture("assets/BlackPlayer.png");
@@ -165,6 +165,26 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 		dice1 = new DiceManager();
 		dice2 = new DiceManager();
 
+		Texture dicesheet = new Texture("assets/sprites.png");
+
+		//split to make equal split frames of dicesheet
+		//devide through number of height and with to get the single frames
+		TextureRegion[][] tmp = TextureRegion.split(dicesheet,
+		dicesheet.getWidth() / FRAME_COLS, dicesheet.getHeight() / FRAME_ROWS);
+
+		// put in correct order in 1d array to be able to work with animation constructor
+		TextureRegion[] diceFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+			int index = 0;
+			for (int i = 0; i < FRAME_ROWS; i++) {
+			for (int j = 0; j < FRAME_COLS; j++) {
+			diceFrames[index++] = tmp[i][j];
+		}
+		}
+
+		//initialize animations + refresh rate
+		diceanimation = new Animation<>(0.075f, diceFrames);
+		diceanimation2 = new Animation<>(0.075f, diceFrames);
+
 		//set startpoint time
 		stateTime = 0f;
 		stateTime2 = 1f;
@@ -191,7 +211,6 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 	public void render(float delta) {
 		int counter = 0;
 		int xPos = 0;
-
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -297,40 +316,42 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				TextureRegion textureRegion = new TextureRegion(tile.getTextureRegion());
 
 				// current animation frame for current statetime
-				//TextureRegion currentFrame = (TextureRegion) diceanimation.getKeyFrame(stateTime, true); //loop frames
-				//TextureRegion currentFrame2 = (TextureRegion) diceanimation2.getKeyFrame(stateTime2, true);
+				TextureRegion currentFrame = (TextureRegion) diceanimation.getKeyFrame(stateTime, true); //loop frames
+
+				TextureRegion currentFrame2 = (TextureRegion) diceanimation2.getKeyFrame(stateTime2, true);
 
 
 				batch.begin();
 				batch.draw(textureRegion, x, y, STONE_WIDTH, STONE_HEIGHT);
 
 				//roll dice button and animation
-				int y = Gdx.graphics.getHeight() - dicebutton.getHeight();
+				int y = 200;
 				int x = 50;
-				batch.draw(dicebutton, 50, Gdx.graphics.getHeight() - dicebutton.getHeight(), DICE_BUTTON_WIDTH, DICE_BUTTON_HEIGHT);
+				batch.draw(dicebutton, x, y, DICE_BUTTON_WIDTH, DICE_BUTTON_HEIGHT);
 
 					if (Gdx.input.getX() < x + DICE_BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < y + DICE_BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > y) {
 
 						if (Gdx.input.isTouched())
 						{
-							dice1animation  = dice1.diceanimation(stateTime + 0.25f);
-							dice2animation =  dice2.diceanimation(stateTime2);
+							diceNumber1= dice1.getDiceResult();
+							diceNumber2= dice2.getDiceResult();
 
 
+							//TextureRegion dice1animation = dice1.diceanimation(stateTime + 0.25f);
+							//TextureRegion dice2animation = dice2.diceanimation(stateTime2);
 							//put in dice class dice.diceanimation(x,y)
-							batch.draw(dice1animation, DICE1_BUTTON_X, DICE1_BUTTON_Y);
-							batch.draw(dice2animation, DICE2_BUTTON_X, DICE2_BUTTON_Y);
+							batch.draw(currentFrame, DICE1_BUTTON_X, DICE1_BUTTON_Y);
+							batch.draw(currentFrame2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
 						}
 
 						if (Gdx.input.isTouched() && !control) {
-								dice1animation  = dice1.diceanimation(stateTime + 0.25f);
-								dice2animation =  dice2.diceanimation(stateTime2);
+								//TextureRegion dice1animation = dice1.diceanimation(stateTime + 0.25f);
+								//TextureRegion dice2animation = dice2.diceanimation(stateTime2);
 								//put in dice class dice.diceanimation(x,y)
-								batch.draw(dice1animation, DICE1_BUTTON_X, DICE1_BUTTON_Y);
-								batch.draw(dice2animation, DICE2_BUTTON_X, DICE2_BUTTON_Y);
+								batch.draw(currentFrame, DICE1_BUTTON_X, DICE1_BUTTON_Y);
+								batch.draw(currentFrame2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
 
-								diceNumber2 = dice2.getDiceResult();
-								diceNumber1 = dice1.getDiceResult();
+
 
 								if(diceNumber1==diceNumber2)
 								{
@@ -343,9 +364,6 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 								diceResultTexture = diceTexture;
 								diceResultTexture2 = diceTexture2;
 								control=true;
-								diceTexture.dispose();
-								diceTexture2.dispose();
-
 
 
 
@@ -363,8 +381,6 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 						// Draw the result texture when the button is release
 						batch.draw(diceResultTexture, DICE1_BUTTON_X, DICE1_BUTTON_Y);
 						batch.draw(diceResultTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
-						diceResultTexture.dispose();
-						diceResultTexture2.dispose();
 						soundshake.play();
 						//System.out.println(diceResultTexture);
 
@@ -385,25 +401,6 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 
 
 
-	//private void drawdice(Sprite dice) {
-	//	dice.setPosition(0, 0);
-	//	dice.draw(batch);
-	//}
-
-	//private void load_dice() {
-
-	//Array<TextureAtlas.AtlasRegion> regions = dicesides.getRegions();
-
-	//for (TextureAtlas.AtlasRegion region : regions) {
-	//Sprite dice = dicesides.createSprite(region.name);
-
-	//dice_sides.put(region.name, dice);
-	//}
-	//}
-	public void rollDice()
-	{
-
-	}
 
 	@Override
 	public void dispose() {
@@ -1032,11 +1029,6 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				playerOne.setOutOfBoard(stoneId, board);
 				whoesTurn();
 			}
-			if(isMovedDiceOne && isMovedDiceTwo)
-			{
-				whoesTurn();
-
-			}
 			if(playerOne.isTheWinner())
 			{
 				ScreenHandler.INSTANCE.setScreen(new EndingScreen(this, 0));
@@ -1070,10 +1062,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				playerTwo.setOutOfBoard(stoneId,board);
 				whoesTurn();
 			}
-			if(isMovedDiceOne && isMovedDiceTwo)
-			{
-				whoesTurn();
-			}
+
 			if(playerTwo.isTheWinner())
 			{
 				ScreenHandler.INSTANCE.setScreen(new EndingScreen(this, 1));
