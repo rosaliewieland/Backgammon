@@ -59,7 +59,7 @@ public class DiceManager extends Dice  {
         //System.out.println(randomNumber);
         return randomNumber;
     }
-    public Texture getDiceTexture(int x, int y,int randomNumber) {
+    public Texture getDiceTexture(int randomNumber) {
 
 
         Texture side1 = new Texture("assets/dice_1.png");

@@ -303,8 +303,8 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 							diceNumber2++;
 						}
 						//bekommt passende würfelseite zur gefürwelten zahl
-						diceTexture = dice1.getDiceTexture(DICE1_BUTTON_X, DICE1_BUTTON_Y, diceNumber1);
-						diceTexture2 = dice2.getDiceTexture(DICE2_BUTTON_X, DICE2_BUTTON_Y, diceNumber2);
+						diceTexture = dice1.getDiceTexture(diceNumber1);
+						diceTexture2 = dice2.getDiceTexture(diceNumber2);
 
 						controlDiceRoll = true;
 					}
