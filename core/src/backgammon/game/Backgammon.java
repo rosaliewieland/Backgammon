@@ -41,7 +41,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 	public OrthographicCamera camera;
 	private TiledMap gameBoardMap;
 	private TiledMapRenderer gameBoardRenderer;
-	private Texture diceResultTexture, diceResultTexture2;
+	private Texture diceTexture, diceTexture2;
 	private BitmapFont font;
 	private Board board;
 	private ShapeRenderer shape;
@@ -73,6 +73,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 	private final int DICE2_BUTTON_Y = 120;
 	private final int FRAME_COLS = 6;
 	private final int FRAME_ROWS = 1;
+
 	@Override
 	public void show() {
 		int index = 0;
@@ -127,6 +128,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 			whiteGameBarLabel.get(i).setPosition(1235, 894 - (64 * i));
 		}
 
+
 		dicebutton = new Texture("assets/diceButton.png");
 
 		dice1 = new DiceManager();
@@ -150,10 +152,10 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 		//initialize animations + refresh rate
 		diceanimation = new Animation<>(0.075f, diceFrames);
 		diceanimation2 = new Animation<>(0.075f, diceFrames);
-
 		//set startpoint time
 		stateTime = 0f;
 		stateTime2 = 1f;
+
 
 		soundshake = Gdx.audio.newSound(Gdx.files.internal("assets/shaking-dice-25620.mp3"));
 		gameBoardMap = new TmxMapLoader().load("tiled/export/BackgammonBoardExpanded.tmx");
@@ -179,6 +181,8 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
 		//accumulates animation time
 		stateTime += Gdx.graphics.getDeltaTime();
 		stateTime2 += Gdx.graphics.getDeltaTime();
@@ -274,6 +278,7 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 				// current animation frame for current statetime
 				TextureRegion currentFrame = (TextureRegion) diceanimation.getKeyFrame(stateTime, true); //loop frames
 				TextureRegion currentFrame2 = (TextureRegion) diceanimation2.getKeyFrame(stateTime2, true);
+
 				batch.begin();
 				batch.draw(textureRegion, tileObjectX, tileObjectY, STONE_WIDTH, STONE_HEIGHT);
 
@@ -283,37 +288,32 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 
 					if (Gdx.input.isTouched())
 					{
-						//put in dice class dice.diceanimation(x,y)
+						//zeichnet den aktuellen frame
 						batch.draw(currentFrame, DICE1_BUTTON_X, DICE1_BUTTON_Y);
 						batch.draw(currentFrame2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
 					}
 
 					if (Gdx.input.isTouched() && !controlDiceRoll) {
+						//generiert würfelnummer durch random funktion
 						diceNumber1= dice1.getDiceResult();
 						diceNumber2= dice2.getDiceResult();
-
-						//put in dice class dice.diceanimation(x,y)
-						batch.draw(currentFrame, DICE1_BUTTON_X, DICE1_BUTTON_Y);
-						batch.draw(currentFrame2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
 
 						if(diceNumber1==diceNumber2)
 						{
 							diceNumber2++;
 						}
+						//bekommt passende würfelseite zur gefürwelten zahl
+						diceTexture = dice1.getDiceTexture(DICE1_BUTTON_X, DICE1_BUTTON_Y, diceNumber1);
+						diceTexture2 = dice2.getDiceTexture(DICE2_BUTTON_X, DICE2_BUTTON_Y, diceNumber2);
 
-						Texture diceTexture = dice1.getDiceTexture(DICE1_BUTTON_X, DICE1_BUTTON_Y, diceNumber1);
-						Texture diceTexture2 = dice2.getDiceTexture(DICE2_BUTTON_X, DICE2_BUTTON_Y, diceNumber2);
-
-						diceResultTexture = diceTexture;
-						diceResultTexture2 = diceTexture2;
-						controlDiceRoll =true;
+						controlDiceRoll = true;
 					}
 				}
-				if (!Gdx.input.isTouched() && diceResultTexture != null) {
+				if (!Gdx.input.isTouched() && diceTexture != null) {
 
 					// Draw the result texture when the button is release
-					batch.draw(diceResultTexture, DICE1_BUTTON_X, DICE1_BUTTON_Y);
-					batch.draw(diceResultTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
+					batch.draw(diceTexture, DICE1_BUTTON_X, DICE1_BUTTON_Y);
+					batch.draw(diceTexture2, DICE2_BUTTON_X, DICE2_BUTTON_Y);
 					soundshake.play();
 				}
 			}
@@ -326,8 +326,8 @@ public class Backgammon extends ScreenAdapter implements InputProcessor{
 		gameBoardMap.dispose();
 		whiteTurnTexture.dispose();
 		blackTurnTexture.dispose();
-		diceResultTexture2.dispose();
-		diceResultTexture.dispose();
+		diceTexture2.dispose();
+		diceTexture.dispose();
 	}
 	@Override
 	public boolean keyDown(int keycode) {
