@@ -35,10 +35,10 @@ public class Board {
 
 
 
-       field[0][0] = -1;
-       field[0][1] = -2;
+        field[0][0] = -1;
+        field[0][1] = -2;
 
-       field[5][0] = 11;
+        field[5][0] = 11;
         field[5][1] = 12;
         field[5][2] = 13;
         field[5][3] = 14;
@@ -51,8 +51,8 @@ public class Board {
         field[11][0] = -3;
         field[11][1] = -4;
         field[11][2] = -5;
-      field[11][3] = -6;
-       field[11][4] = -7;
+        field[11][3] = -6;
+        field[11][4] = -7;
 
         field[12][0] = 3;
         field[12][1] = 4;
@@ -64,16 +64,15 @@ public class Board {
         field[16][1] = -9;
         field[16][2] = -10;
 
-      field[18][0] = -11;
+        field[18][0] = -11;
         field[18][1] = -12;
         field[18][2] = -13;
         field[18][3] = -14;
         field[18][4] = -15;
-       // field[23][0] = -1;
-       // field[23][1] =- 2;
-       field[23][0] = 1;
-       field[23][1] = 2;
-
+        // field[23][0] = -1;
+        // field[23][1] =- 2;
+        field[23][0] = 1;
+        field[23][1] = 2;
     }
 
 
